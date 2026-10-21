@@ -16,7 +16,7 @@ Target: a public-ready desktop showcase and a downloadable local toolkit. Hostin
 - [x] Inspect actual rendered examples, transitions, open controls and tour visually.
 - [x] Review the implementation and repair findings.
 - [x] Return applicable renderer and authoring improvements to local Motion Lab.
-- [ ] Commit milestones, push and merge scoped pull requests after verification.
+- [x] Commit milestones, push and merge scoped pull requests after verification.
 - [x] Verify a fresh checkout and the downloaded toolkit.
 - [x] Prepare Vercel/Railway configuration and exact manual deployment steps.
 
@@ -31,6 +31,8 @@ The site must work without an API key or model request. Unknown lessons and file
 3. Hosting configuration, production smoke checks and deployment handoff.
 
 No fabricated history or backdated commits.
+
+Authoring and deployment work landed through [PR 1](https://github.com/carldiederichs/motion-lab/pull/1) and [PR 2](https://github.com/carldiederichs/motion-lab/pull/2). See [the release review](RELEASE-REVIEW.md) for observed results and remaining setup.
 
 ## Account-dependent steps
 

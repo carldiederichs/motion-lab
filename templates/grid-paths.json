@@ -1,0 +1,853 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "grid-paths",
+  "title": "How does a grid DP reuse smaller answers?",
+  "subtitle": "An authored trace built from reusable Motion Lab primitives.",
+  "component": "Systems",
+  "date": "2026-10-22",
+  "aliases": [
+    "Matrix + dependencies",
+    "How does a grid DP reuse smaller answers?"
+  ],
+  "family": "Matrix + dependencies",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "Open grid",
+      "scene": {
+        "actors": [
+          {
+            "id": "row-0",
+            "kind": "cells",
+            "x": 220,
+            "y": 130,
+            "cell": 100,
+            "values": [
+              "?",
+              "?",
+              "?"
+            ]
+          },
+          {
+            "id": "row-1",
+            "kind": "cells",
+            "x": 220,
+            "y": 230,
+            "cell": 100,
+            "values": [
+              "?",
+              "?",
+              "?"
+            ]
+          },
+          {
+            "id": "row-2",
+            "kind": "cells",
+            "x": 220,
+            "y": 330,
+            "cell": 100,
+            "values": [
+              "?",
+              "?",
+              "?"
+            ]
+          },
+          {
+            "id": "answer",
+            "kind": "box",
+            "x": 750,
+            "y": 250,
+            "w": 250,
+            "h": 70,
+            "label": "Paths to bottom right",
+            "value": 0,
+            "valueSmall": true
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Count paths through a grid",
+            "text": "Move only right or down. A cell receives paths from above and from its left; a blocked cell contributes zero.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Cell (0,0)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-0",
+                "index": 0,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-0",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (0,1)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-0",
+                "index": 1,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-0",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (0,2)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-0",
+                "index": 2,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-0",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (1,0)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-1",
+                "index": 0,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-1",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (1,1)",
+            "text": "This cell has 2 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-1",
+                "index": 1,
+                "value": 2
+              },
+              {
+                "do": "cells",
+                "actor": "row-1",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (1,2)",
+            "text": "This cell has 3 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-1",
+                "index": 2,
+                "value": 3
+              },
+              {
+                "do": "cells",
+                "actor": "row-1",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (2,0)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-2",
+                "index": 0,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-2",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (2,1)",
+            "text": "This cell has 3 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-2",
+                "index": 1,
+                "value": 3
+              },
+              {
+                "do": "cells",
+                "actor": "row-2",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (2,2)",
+            "text": "This cell has 6 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-2",
+                "index": 2,
+                "value": 6
+              },
+              {
+                "do": "cells",
+                "actor": "row-2",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Read the final cell",
+            "text": "There are 6 valid paths.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "answer",
+                "value": 6
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Obstacle in the centre",
+      "scene": {
+        "actors": [
+          {
+            "id": "row-0",
+            "kind": "cells",
+            "x": 220,
+            "y": 130,
+            "cell": 100,
+            "values": [
+              "?",
+              "?",
+              "?"
+            ]
+          },
+          {
+            "id": "row-1",
+            "kind": "cells",
+            "x": 220,
+            "y": 230,
+            "cell": 100,
+            "values": [
+              "?",
+              "?",
+              "?"
+            ]
+          },
+          {
+            "id": "row-2",
+            "kind": "cells",
+            "x": 220,
+            "y": 330,
+            "cell": 100,
+            "values": [
+              "?",
+              "?",
+              "?"
+            ]
+          },
+          {
+            "id": "answer",
+            "kind": "box",
+            "x": 750,
+            "y": 250,
+            "w": 250,
+            "h": 70,
+            "label": "Paths to bottom right",
+            "value": 0,
+            "valueSmall": true
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Count paths through a grid",
+            "text": "Move only right or down. A cell receives paths from above and from its left; a blocked cell contributes zero.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Cell (0,0)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-0",
+                "index": 0,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-0",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (0,1)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-0",
+                "index": 1,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-0",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (0,2)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-0",
+                "index": 2,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-0",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (1,0)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-1",
+                "index": 0,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-1",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (1,1)",
+            "text": "This cell has 0 paths. It is blocked.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-1",
+                "index": 1,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "row-1",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "failure"
+              }
+            ]
+          },
+          {
+            "title": "Cell (1,2)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-1",
+                "index": 2,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-1",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (2,0)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-2",
+                "index": 0,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-2",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (2,1)",
+            "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-2",
+                "index": 1,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "row-2",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (2,2)",
+            "text": "This cell has 2 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-2",
+                "index": 2,
+                "value": 2
+              },
+              {
+                "do": "cells",
+                "actor": "row-2",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Read the final cell",
+            "text": "There are 2 valid paths.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "answer",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Blocked start",
+      "scene": {
+        "actors": [
+          {
+            "id": "row-0",
+            "kind": "cells",
+            "x": 220,
+            "y": 130,
+            "cell": 100,
+            "values": [
+              "?",
+              "?",
+              "?"
+            ]
+          },
+          {
+            "id": "row-1",
+            "kind": "cells",
+            "x": 220,
+            "y": 230,
+            "cell": 100,
+            "values": [
+              "?",
+              "?",
+              "?"
+            ]
+          },
+          {
+            "id": "row-2",
+            "kind": "cells",
+            "x": 220,
+            "y": 330,
+            "cell": 100,
+            "values": [
+              "?",
+              "?",
+              "?"
+            ]
+          },
+          {
+            "id": "answer",
+            "kind": "box",
+            "x": 750,
+            "y": 250,
+            "w": 250,
+            "h": 70,
+            "label": "Paths to bottom right",
+            "value": 0,
+            "valueSmall": true
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Count paths through a grid",
+            "text": "Move only right or down. A cell receives paths from above and from its left; a blocked cell contributes zero.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Cell (0,0)",
+            "text": "This cell has 0 paths. It is blocked.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-0",
+                "index": 0,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "row-0",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "failure"
+              }
+            ]
+          },
+          {
+            "title": "Cell (0,1)",
+            "text": "This cell has 0 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-0",
+                "index": 1,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "row-0",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (0,2)",
+            "text": "This cell has 0 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-0",
+                "index": 2,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "row-0",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (1,0)",
+            "text": "This cell has 0 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-1",
+                "index": 0,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "row-1",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (1,1)",
+            "text": "This cell has 0 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-1",
+                "index": 1,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "row-1",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (1,2)",
+            "text": "This cell has 0 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-1",
+                "index": 2,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "row-1",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (2,0)",
+            "text": "This cell has 0 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-2",
+                "index": 0,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "row-2",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (2,1)",
+            "text": "This cell has 0 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-2",
+                "index": 1,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "row-2",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Cell (2,2)",
+            "text": "This cell has 0 paths. Reuse the already computed neighbouring cells.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "row-2",
+                "index": 2,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "row-2",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Read the final cell",
+            "text": "There are 0 valid paths.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "answer",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Obstacle in the centre",
+      "why": "Follow the changed state through this scenario.",
+      "variant": 1
+    },
+    {
+      "label": "Blocked start",
+      "why": "Follow the changed state through this scenario.",
+      "variant": 2
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "balanced-tree",
+  "title": "Balanced Binary Tree",
+  "subtitle": "See heights return from children to parents. Compare a repeated height scan with one postorder pass.",
+  "component": "Algorithms",
+  "date": "2026-10-22",
+  "aliases": [
+    "Balanced Binary Tree",
+    "Tree + call stack"
+  ],
+  "stage": {
+    "width": 960,
+    "height": 620
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "family": "Tree + call stack",
+  "simulation": {
+    "generator": "binary-tree-balance",
+    "params": [
+      {
+        "id": "values",
+        "label": "Tree (level order)",
+        "type": "tree",
+        "default": [
+          3,
+          9,
+          20,
+          null,
+          null,
+          15,
+          7
+        ],
+        "max": 9
+      }
+    ]
+  },
+  "variants": [
+    {
+      "label": "Postorder",
+      "params": {
+        "method": "postorder"
+      },
+      "code": {
+        "language": "ts",
+        "lines": [
+          "function heightOrFail(node) {",
+          "  if (!node) return 0;",
+          "  const left = heightOrFail(node.left);",
+          "  if (left === -1) return -1;",
+          "  const right = heightOrFail(node.right);",
+          "  if (right === -1) return -1;",
+          "  if (Math.abs(left - right) > 1) return -1;",
+          "  return 1 + Math.max(left, right);",
+          "}",
+          "const balanced = heightOrFail(root) !== -1;"
+        ]
+      },
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)",
+        "derivation": [
+          "Each node returns its height once. h is the tree height."
+        ]
+      }
+    },
+    {
+      "label": "Repeated heights",
+      "params": {
+        "method": "repeated"
+      },
+      "code": {
+        "language": "ts",
+        "lines": [
+          "function height(node) {",
+          "  if (!node) return 0;",
+          "  return 1 + Math.max(",
+          "    height(node.left), height(node.right));",
+          "}",
+          "function isBalanced(node) {",
+          "  if (!node) return true;",
+          "  const left = height(node.left);",
+          "  const right = height(node.right);",
+          "  if (Math.abs(left - right) > 1) return false;",
+          "  return isBalanced(node.left) &&",
+          "    isBalanced(node.right);",
+          "}"
+        ]
+      },
+      "complexity": {
+        "time": "O(n\u00b2) upper bound",
+        "space": "O(h)",
+        "derivation": [
+          "Repeated height scans add work. Balanced trees take O(n log n); a skewed tree can fail at the root after one scan."
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Skewed tree",
+      "why": "A long single branch can become unbalanced.",
+      "params": {
+        "values": [
+          1,
+          2,
+          null,
+          3,
+          null,
+          4
+        ]
+      }
+    },
+    {
+      "label": "Single node",
+      "why": "A leaf has two empty child subtrees.",
+      "params": {
+        "values": [
+          1
+        ]
+      }
+    }
+  ]
+}

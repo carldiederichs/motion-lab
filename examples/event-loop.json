@@ -1,0 +1,50 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "event-loop",
+  "title": "JavaScript Event Loop",
+  "subtitle": "Edit a small program and follow callbacks through the stack, microtasks and timers.",
+  "component": "Concurrency",
+  "date": "2026-10-22",
+  "aliases": [
+    "JavaScript Event Loop",
+    "Queues + execution"
+  ],
+  "stage": {
+    "width": 960,
+    "height": 540
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "family": "Queues + execution",
+  "simulation": {
+    "generator": "event-loop",
+    "params": [
+      {
+        "id": "code",
+        "label": "Program",
+        "type": "code",
+        "default": "console.log(\"start\")\nsetTimeout(() => console.log(\"timer\"), 0)\nPromise.resolve().then(() => console.log(\"promise\"))\nconsole.log(\"end\")",
+        "rows": 5
+      }
+    ],
+    "sceneCode": true,
+    "hint": "A restricted teaching interpreter. Supports console.log, setTimeout, queueMicrotask and Promise.resolve().then chains. It does not execute arbitrary JavaScript."
+  },
+  "edgeCases": [
+    {
+      "label": "Nested microtask",
+      "why": "Microtasks queued while draining run before a timer.",
+      "params": {
+        "code": "setTimeout(() => console.log(\"timer\"), 0)\nqueueMicrotask(() => {\n  console.log(\"first\")\n  queueMicrotask(() => console.log(\"second\"))\n})"
+      }
+    },
+    {
+      "label": "Two timers",
+      "why": "Drain microtasks between timer callbacks.",
+      "params": {
+        "code": "setTimeout(() => {\n  console.log(\"one\")\n  queueMicrotask(() => console.log(\"micro\"))\n}, 0)\nsetTimeout(() => console.log(\"two\"), 0)"
+      }
+    }
+  ]
+}

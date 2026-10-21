@@ -1,0 +1,81 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "number-of-islands",
+  "title": "Number of Islands",
+  "subtitle": "Watch depth-first search connect land cells, mark visits and return to the remaining frontier.",
+  "component": "Algorithms",
+  "date": "2026-10-22",
+  "aliases": [
+    "Number of Islands",
+    "Matrix + traversal"
+  ],
+  "stage": {
+    "width": 960,
+    "height": 520
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "family": "Matrix + traversal",
+  "simulation": {
+    "generator": "islands",
+    "params": [
+      {
+        "id": "grid",
+        "label": "Grid rows",
+        "type": "list",
+        "default": [
+          "1100",
+          "0101",
+          "0011"
+        ],
+        "max": 4,
+        "pattern": "^[01]{1,5}$",
+        "formatHint": "Use rows of 1 to 5 binary digits, such as 1100."
+      }
+    ]
+  },
+  "code": {
+    "language": "ts",
+    "lines": [
+      "for (const cell of grid) {",
+      "  if (!cell.land || visited.has(cell)) continue;",
+      "  islands++; stack.push(cell); visited.add(cell);",
+      "  while (stack.length) {",
+      "    visitAndPushUnseenNeighbours(stack.pop());",
+      "  }",
+      "}"
+    ]
+  },
+  "complexity": {
+    "time": "O(rows \u00d7 cols)",
+    "space": "O(rows \u00d7 cols)",
+    "example": "Each cell is inspected, and each land cell enters the frontier at most once. The visited set can contain every cell.",
+    "derivation": [
+      "Each cell is inspected, and each land cell enters the frontier at most once. The visited set can contain every cell."
+    ]
+  },
+  "edgeCases": [
+    {
+      "label": "Diagonal contact",
+      "why": "Diagonal cells remain separate islands.",
+      "params": {
+        "grid": [
+          "100",
+          "010",
+          "001"
+        ]
+      }
+    },
+    {
+      "label": "All water",
+      "why": "No cell starts a traversal.",
+      "params": {
+        "grid": [
+          "000",
+          "000"
+        ]
+      }
+    }
+  ]
+}

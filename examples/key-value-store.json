@@ -1,0 +1,97 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "key-value-store",
+  "title": "Key-Value Store",
+  "subtitle": "Write, read and delete values, then derive a sorted view from the same stored entries.",
+  "component": "Systems",
+  "date": "2026-10-22",
+  "aliases": [
+    "Key-Value Store",
+    "Store + operations"
+  ],
+  "stage": {
+    "width": 960,
+    "height": 500
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "family": "Store + operations",
+  "simulation": {
+    "generator": "memory-db",
+    "params": [
+      {
+        "id": "ops",
+        "label": "Operations",
+        "type": "list",
+        "default": [
+          "set:oak:green",
+          "set:elm:green",
+          "get:oak",
+          "delete:oak",
+          "sort"
+        ],
+        "max": 7
+      }
+    ]
+  },
+  "variants": [
+    {
+      "label": "Stable key tie-break",
+      "params": {
+        "tie": "key"
+      }
+    },
+    {
+      "label": "Value only",
+      "params": {
+        "tie": "none"
+      }
+    }
+  ],
+  "code": {
+    "language": "ts",
+    "lines": [
+      "const store = new Map();",
+      "store.set(key, value);",
+      "const result = store.get(key);",
+      "store.delete(key);",
+      "const entries = [...store.entries()];",
+      "entries.sort(([ka, va], [kb, vb]) =>",
+      "  va.localeCompare(vb) || ka.localeCompare(kb)",
+      ");"
+    ]
+  },
+  "complexity": {
+    "time": "O(1) expected / O(n log n)",
+    "space": "O(n) for sorting",
+    "example": "Map operations are expected constant time. Deriving a sorted list visits and sorts all n entries.",
+    "derivation": [
+      "Map operations are expected constant time. Deriving a sorted list visits and sorts all n entries."
+    ]
+  },
+  "edgeCases": [
+    {
+      "label": "Overwrite a key",
+      "why": "A second write replaces the value, not the key.",
+      "params": {
+        "ops": [
+          "set:oak:green",
+          "set:oak:gold",
+          "get:oak"
+        ]
+      }
+    },
+    {
+      "label": "Missing key",
+      "why": "A deleted key has no stored value.",
+      "params": {
+        "ops": [
+          "set:elm:green",
+          "delete:elm",
+          "get:elm"
+        ]
+      }
+    }
+  ]
+}

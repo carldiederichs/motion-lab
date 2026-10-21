@@ -1,0 +1,83 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "graph-bfs",
+  "title": "Shortest Path with BFS",
+  "subtitle": "Follow a queue through a graph. Try a cycle or a destination that cannot be reached.",
+  "component": "Algorithms",
+  "date": "2026-10-22",
+  "aliases": [
+    "Shortest Path with BFS",
+    "Graph + queue"
+  ],
+  "family": "Graph + queue",
+  "stage": {
+    "width": 960,
+    "height": 600
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "simulation": {
+    "generator": "graph-bfs",
+    "params": [
+      {
+        "id": "mode",
+        "label": "Graph shape",
+        "type": "select",
+        "default": "standard",
+        "options": [
+          {
+            "value": "standard",
+            "label": "Connected"
+          },
+          {
+            "value": "cycle",
+            "label": "Cycle"
+          },
+          {
+            "value": "disconnected",
+            "label": "Disconnected"
+          }
+        ]
+      }
+    ]
+  },
+  "edgeCases": [
+    {
+      "label": "Cycle",
+      "why": "Seen nodes cannot re-enter the queue.",
+      "params": {
+        "mode": "cycle"
+      }
+    },
+    {
+      "label": "Disconnected",
+      "why": "An empty queue can leave some nodes unreachable.",
+      "params": {
+        "mode": "disconnected"
+      }
+    }
+  ],
+  "code": {
+    "language": "ts",
+    "lines": [
+      "const queue = [start], distance = new Map([[start, 0]]);",
+      "while (queue.length) {",
+      "  const node = queue.shift();",
+      "  for (const next of neighbours(node)) {",
+      "    if (distance.has(next)) continue;",
+      "    distance.set(next, distance.get(node) + 1);",
+      "    queue.push(next);",
+      "  }",
+      "}",
+      "return distance;"
+    ]
+  },
+  "complexity": {
+    "time": "O(V + E)*",
+    "space": "O(V)",
+    "derivation": [
+      "Each vertex and edge is examined once with a constant-time queue. This small demo uses Array.shift(); use a head index for the stated bound."
+    ]
+  }
+}

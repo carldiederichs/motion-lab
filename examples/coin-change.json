@@ -1,0 +1,85 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "coin-change",
+  "title": "Coin Change",
+  "subtitle": "Build a dynamic-programming table from smaller amounts and inspect unreachable states.",
+  "component": "Algorithms",
+  "date": "2026-10-22",
+  "aliases": [
+    "Coin Change",
+    "DP table + dependencies"
+  ],
+  "family": "DP table + dependencies",
+  "stage": {
+    "width": 960,
+    "height": 600
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "simulation": {
+    "generator": "coin-change",
+    "params": [
+      {
+        "id": "coins",
+        "label": "Coin values",
+        "type": "numbers",
+        "default": [
+          1,
+          3,
+          4
+        ],
+        "max": 4,
+        "positiveInteger": true
+      },
+      {
+        "id": "amount",
+        "label": "Amount",
+        "type": "int",
+        "default": 6,
+        "min": 0,
+        "max": 10
+      }
+    ]
+  },
+  "edgeCases": [
+    {
+      "label": "Unreachable",
+      "why": "Even-valued coins cannot make an odd amount.",
+      "params": {
+        "coins": [
+          2,
+          4
+        ],
+        "amount": 5
+      }
+    },
+    {
+      "label": "Zero amount",
+      "why": "No coins are needed to make zero.",
+      "params": {
+        "amount": 0
+      }
+    }
+  ],
+  "code": {
+    "language": "ts",
+    "lines": [
+      "const dp = Array(amount + 1).fill(Infinity);",
+      "dp[0] = 0;",
+      "for (let a = 1; a <= amount; a++) {",
+      "  for (const c of coins) {",
+      "    if (c <= a) dp[a] = Math.min(dp[a], dp[a-c] + 1);",
+      "  }",
+      "}",
+      "return dp[amount] === Infinity ? -1 : dp[amount];"
+    ]
+  },
+  "complexity": {
+    "time": "O(amount \u00b7 coins)",
+    "space": "O(amount)",
+    "derivation": [
+      "Each amount tries each positive coin. One table stores the smaller answers."
+    ]
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "two-sum",
+  "title": "Two Sum",
+  "subtitle": "Find a pair by tracking what you have already seen. Change the input and watch the map fill up.",
+  "component": "Algorithms",
+  "date": "2026-10-22",
+  "aliases": [
+    "Two Sum",
+    "Array + map"
+  ],
+  "stage": {
+    "width": 960,
+    "height": 480
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "family": "Array + map",
+  "simulation": {
+    "generator": "two-sum",
+    "params": [
+      {
+        "id": "values",
+        "label": "Numbers",
+        "type": "numbers",
+        "default": [
+          2,
+          7,
+          11,
+          15
+        ],
+        "max": 8,
+        "allowEmpty": true
+      },
+      {
+        "id": "target",
+        "label": "Target",
+        "type": "int",
+        "default": 9,
+        "min": -99,
+        "max": 99
+      }
+    ]
+  },
+  "variants": [
+    {
+      "label": "Hash map",
+      "params": {
+        "method": "map"
+      },
+      "code": {
+        "language": "ts",
+        "lines": [
+          "function twoSum(nums, target) {",
+          "  const seen = new Map();",
+          "  for (let i = 0; i < nums.length; i++) {",
+          "    const need = target - nums[i];",
+          "    if (seen.has(need)) return [seen.get(need), i];",
+          "    seen.set(nums[i], i);",
+          "  }",
+          "  return null;",
+          "}"
+        ]
+      },
+      "complexity": {
+        "time": "O(n) expected",
+        "space": "O(n)",
+        "derivation": [
+          "Each value needs one expected constant-time map lookup."
+        ]
+      }
+    },
+    {
+      "label": "Repeated scan",
+      "params": {
+        "method": "rescan"
+      },
+      "code": {
+        "language": "ts",
+        "lines": [
+          "function twoSum(nums, target) {",
+          "  for (let i = 0; i < nums.length; i++) {",
+          "    for (let j = i + 1; j < nums.length; j++) {",
+          "      if (nums[i] + nums[j] === target) return [i, j];",
+          "    }",
+          "  }",
+          "  return null;",
+          "}"
+        ]
+      },
+      "complexity": {
+        "time": "O(n\u00b2)",
+        "space": "O(1)",
+        "derivation": [
+          "The worst case checks n(n-1)/2 pairs."
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Duplicate values",
+      "why": "Two different indices may hold the same value.",
+      "params": {
+        "values": [
+          3,
+          3
+        ],
+        "target": 6
+      }
+    },
+    {
+      "label": "No pair",
+      "why": "A complete scan may return no result.",
+      "params": {
+        "values": [
+          1,
+          4,
+          8
+        ],
+        "target": 20
+      }
+    }
+  ]
+}

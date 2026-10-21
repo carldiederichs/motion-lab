@@ -1,0 +1,411 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "c4-architecture",
+  "title": "C4 Architecture",
+  "subtitle": "Move from system context to containers while preserving responsibilities and ownership boundaries.",
+  "component": "Architecture",
+  "date": "2026-10-22",
+  "aliases": [
+    "C4 Architecture",
+    "C4 boundaries"
+  ],
+  "stage": {
+    "width": 960,
+    "height": 500
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "family": "C4 boundaries",
+  "variants": [
+    {
+      "label": "System context",
+      "scene": {
+        "actors": [
+          {
+            "id": "customer",
+            "kind": "box",
+            "x": 140,
+            "y": 230,
+            "w": 180,
+            "h": 76,
+            "label": "Customer",
+            "sub": "Person"
+          },
+          {
+            "id": "shop",
+            "kind": "box",
+            "x": 480,
+            "y": 230,
+            "w": 240,
+            "h": 76,
+            "label": "Storefront",
+            "sub": "Software system"
+          },
+          {
+            "id": "payments",
+            "kind": "box",
+            "x": 820,
+            "y": 230,
+            "w": 180,
+            "h": 76,
+            "label": "Payments",
+            "sub": "External system"
+          }
+        ],
+        "links": [
+          {
+            "id": "browse",
+            "to": "shop",
+            "label": "browse / purchase",
+            "bend": -50,
+            "from": "customer"
+          },
+          {
+            "id": "charge",
+            "to": "payments",
+            "label": "authorize payment",
+            "bend": -50,
+            "from": "shop"
+          }
+        ],
+        "tokens": [
+          {
+            "id": "request",
+            "label": "order"
+          }
+        ],
+        "beats": [
+          {
+            "title": "System context",
+            "text": "The customer uses the storefront. Payment processing belongs to an external system.",
+            "dur": 2200,
+            "actions": []
+          },
+          {
+            "title": "Follow the boundary",
+            "text": "An order crosses from the customer into the storefront, then asks the payment system for authorization.",
+            "dur": 2200,
+            "actions": [
+              {
+                "do": "move",
+                "token": "request",
+                "link": "browse"
+              },
+              {
+                "do": "tone",
+                "actor": "shop",
+                "tone": "mechanism"
+              }
+            ]
+          },
+          {
+            "title": "External dependency",
+            "text": "The storefront depends on a separate payment system. That boundary affects ownership and failure handling.",
+            "dur": 2200,
+            "actions": [
+              {
+                "do": "move",
+                "token": "request",
+                "link": "charge"
+              },
+              {
+                "do": "tone",
+                "actor": "payments",
+                "tone": "warning"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Containers",
+      "scene": {
+        "actors": [
+          {
+            "id": "boundary",
+            "kind": "lane",
+            "x": 260,
+            "y": 40,
+            "w": 670,
+            "h": 420,
+            "label": "Storefront \u00b7 software system"
+          },
+          {
+            "id": "customer",
+            "kind": "box",
+            "x": 120,
+            "y": 230,
+            "w": 180,
+            "h": 76,
+            "label": "Customer",
+            "sub": "Person"
+          },
+          {
+            "id": "web",
+            "kind": "box",
+            "x": 410,
+            "y": 160,
+            "w": 220,
+            "h": 76,
+            "label": "Web app",
+            "sub": "Browser \u00b7 JavaScript"
+          },
+          {
+            "id": "api",
+            "kind": "box",
+            "x": 710,
+            "y": 160,
+            "w": 220,
+            "h": 76,
+            "label": "API",
+            "sub": "Server \u00b7 Node.js"
+          },
+          {
+            "id": "db",
+            "kind": "store",
+            "x": 710,
+            "y": 360,
+            "w": 220,
+            "h": 110,
+            "label": "Product database",
+            "rows": [
+              "product 42"
+            ],
+            "sub": "Database \u00b7 SQL"
+          }
+        ],
+        "links": [
+          {
+            "id": "browse",
+            "to": "web",
+            "label": "HTTPS",
+            "bend": -20,
+            "from": "customer"
+          },
+          {
+            "id": "fetch",
+            "to": "api",
+            "label": "JSON / HTTPS",
+            "bend": -35,
+            "from": "web"
+          },
+          {
+            "id": "query",
+            "to": "db",
+            "label": "SQL",
+            "bend": 0,
+            "from": "api"
+          }
+        ],
+        "tokens": [
+          {
+            "id": "request",
+            "label": "GET"
+          }
+        ],
+        "beats": [
+          {
+            "title": "Container view",
+            "text": "Zoom inside the storefront boundary. A web app, API and database each have a distinct responsibility.",
+            "dur": 2200,
+            "actions": []
+          },
+          {
+            "title": "Browser to web app",
+            "text": "The customer interacts with code running in their browser.",
+            "dur": 2200,
+            "actions": [
+              {
+                "do": "move",
+                "token": "request",
+                "link": "browse"
+              }
+            ]
+          },
+          {
+            "title": "Web app to API",
+            "text": "The web app asks the API for a product over HTTPS.",
+            "dur": 2200,
+            "actions": [
+              {
+                "do": "move",
+                "token": "request",
+                "link": "fetch"
+              }
+            ]
+          },
+          {
+            "title": "API to database",
+            "text": "The API reads persisted product data. The browser never queries this database directly.",
+            "dur": 2200,
+            "actions": [
+              {
+                "do": "move",
+                "token": "request",
+                "link": "query"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Database unavailable",
+      "scene": {
+        "actors": [
+          {
+            "id": "boundary",
+            "kind": "lane",
+            "x": 260,
+            "y": 40,
+            "w": 670,
+            "h": 420,
+            "label": "Storefront \u00b7 software system"
+          },
+          {
+            "id": "customer",
+            "kind": "box",
+            "x": 120,
+            "y": 230,
+            "w": 180,
+            "h": 76,
+            "label": "Customer",
+            "sub": "Person"
+          },
+          {
+            "id": "web",
+            "kind": "box",
+            "x": 410,
+            "y": 160,
+            "w": 220,
+            "h": 76,
+            "label": "Web app",
+            "sub": "Browser \u00b7 JavaScript"
+          },
+          {
+            "id": "api",
+            "kind": "box",
+            "x": 710,
+            "y": 160,
+            "w": 220,
+            "h": 76,
+            "label": "API",
+            "sub": "Server \u00b7 Node.js"
+          },
+          {
+            "id": "db",
+            "kind": "store",
+            "x": 710,
+            "y": 360,
+            "w": 220,
+            "h": 110,
+            "label": "Product database",
+            "rows": [
+              "product 42"
+            ],
+            "sub": "Database \u00b7 SQL"
+          }
+        ],
+        "links": [
+          {
+            "id": "browse",
+            "to": "web",
+            "label": "HTTPS",
+            "bend": -20,
+            "from": "customer"
+          },
+          {
+            "id": "fetch",
+            "to": "api",
+            "label": "JSON / HTTPS",
+            "bend": -35,
+            "from": "web"
+          },
+          {
+            "id": "query",
+            "to": "db",
+            "label": "SQL",
+            "bend": 0,
+            "from": "api"
+          }
+        ],
+        "tokens": [
+          {
+            "id": "request",
+            "label": "GET"
+          }
+        ],
+        "beats": [
+          {
+            "title": "Container view",
+            "text": "Zoom inside the storefront boundary. A web app, API and database each have a distinct responsibility.",
+            "dur": 2200,
+            "actions": []
+          },
+          {
+            "title": "Browser to web app",
+            "text": "The customer interacts with code running in their browser.",
+            "dur": 2200,
+            "actions": [
+              {
+                "do": "move",
+                "token": "request",
+                "link": "browse"
+              }
+            ]
+          },
+          {
+            "title": "Web app to API",
+            "text": "The web app asks the API for a product over HTTPS.",
+            "dur": 2200,
+            "actions": [
+              {
+                "do": "move",
+                "token": "request",
+                "link": "fetch"
+              }
+            ]
+          },
+          {
+            "title": "API to database",
+            "text": "The API reads persisted product data. The browser never queries this database directly.",
+            "dur": 2200,
+            "actions": [
+              {
+                "do": "move",
+                "token": "request",
+                "link": "query"
+              }
+            ]
+          },
+          {
+            "title": "A dependency fails",
+            "text": "The database is inside the system boundary but can still fail independently. The API must return a clear error.",
+            "dur": 1800,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "db",
+                "tone": "failure"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Inside the system",
+      "why": "Inspect the containers that implement this system.",
+      "variant": 1
+    },
+    {
+      "label": "Dependency failure",
+      "why": "A container boundary is also a failure boundary.",
+      "variant": 2
+    }
+  ]
+}

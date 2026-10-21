@@ -1,0 +1,78 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "reverse-linked-list",
+  "title": "Reverse a Linked List",
+  "subtitle": "Save the next node before reversing a pointer. Watch the prefix and suffix change.",
+  "component": "Algorithms",
+  "date": "2026-10-22",
+  "aliases": [
+    "Reverse a Linked List",
+    "Linked list + pointers"
+  ],
+  "family": "Linked list + pointers",
+  "stage": {
+    "width": 960,
+    "height": 600
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "simulation": {
+    "generator": "linked-list",
+    "params": [
+      {
+        "id": "values",
+        "label": "Node values",
+        "type": "numbers",
+        "default": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "max": 6,
+        "allowEmpty": true
+      }
+    ]
+  },
+  "edgeCases": [
+    {
+      "label": "Empty list",
+      "why": "No node can be dereferenced.",
+      "params": {
+        "values": []
+      }
+    },
+    {
+      "label": "Single node",
+      "why": "Its next pointer is already null.",
+      "params": {
+        "values": [
+          7
+        ]
+      }
+    }
+  ],
+  "code": {
+    "language": "ts",
+    "lines": [
+      "function reverse(head) {",
+      "  let prev = null, curr = head;",
+      "  while (curr) {",
+      "    const next = curr.next;",
+      "    curr.next = prev;",
+      "    prev = curr;",
+      "    curr = next;",
+      "  }",
+      "  return prev;",
+      "}"
+    ]
+  },
+  "complexity": {
+    "time": "O(n)",
+    "space": "O(1)",
+    "derivation": [
+      "Each node is visited once. Only three references are kept."
+    ]
+  }
+}

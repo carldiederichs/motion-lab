@@ -1,0 +1,107 @@
+[
+  {
+    "slug": "two-sum",
+    "title": "Two Sum",
+    "description": "Find a pair by tracking what you have already seen. Change the input and watch the map fill up.",
+    "category": "Algorithms",
+    "family": "Array + map"
+  },
+  {
+    "slug": "sliding-window",
+    "title": "Sliding Window",
+    "description": "Move a fixed-size window without adding the same values again. Compare with a fresh sum each time.",
+    "category": "Algorithms",
+    "family": "Window + pointers"
+  },
+  {
+    "slug": "binary-search",
+    "title": "Binary Search",
+    "description": "Keep the possible interval visible while each comparison removes half the candidates.",
+    "category": "Algorithms",
+    "family": "Search interval"
+  },
+  {
+    "slug": "number-of-islands",
+    "title": "Number of Islands",
+    "description": "Watch depth-first search connect land cells, mark visits and return to the remaining frontier.",
+    "category": "Algorithms",
+    "family": "Matrix + traversal"
+  },
+  {
+    "slug": "balanced-tree",
+    "title": "Balanced Binary Tree",
+    "description": "See heights return from children to parents. Compare a repeated height scan with one postorder pass.",
+    "category": "Algorithms",
+    "family": "Tree + call stack"
+  },
+  {
+    "slug": "consistent-hashing",
+    "title": "Consistent Hashing",
+    "description": "Add a server to a hash ring and see exactly which keys change owner.",
+    "category": "Systems",
+    "family": "Hash ring"
+  },
+  {
+    "slug": "key-value-store",
+    "title": "Key-Value Store",
+    "description": "Write, read and delete values, then derive a sorted view from the same stored entries.",
+    "category": "Systems",
+    "family": "Store + operations"
+  },
+  {
+    "slug": "lost-update",
+    "title": "Lost Update",
+    "description": "Interleave two stock updates and watch a correct-looking read-modify-write lose an update.",
+    "category": "Concurrency",
+    "family": "Interleaving"
+  },
+  {
+    "slug": "event-loop",
+    "title": "JavaScript Event Loop",
+    "description": "Edit a small program and follow callbacks through the stack, microtasks and timers.",
+    "category": "Concurrency",
+    "family": "Queues + execution"
+  },
+  {
+    "slug": "request-sequence",
+    "title": "Request Sequence",
+    "description": "Follow a cache hit and a cache miss across browser, API, cache and database.",
+    "category": "Architecture",
+    "family": "Sequence diagram"
+  },
+  {
+    "slug": "c4-architecture",
+    "title": "C4 Architecture",
+    "description": "Move from system context to containers while preserving responsibilities and ownership boundaries.",
+    "category": "Architecture",
+    "family": "C4 boundaries"
+  },
+  {
+    "slug": "reverse-linked-list",
+    "title": "Reverse a Linked List",
+    "description": "Save the next node before reversing a pointer. Watch the prefix and suffix change.",
+    "category": "Algorithms",
+    "family": "Linked list + pointers"
+  },
+  {
+    "slug": "coin-change",
+    "title": "Coin Change",
+    "description": "Build a dynamic-programming table from smaller amounts and inspect unreachable states.",
+    "category": "Algorithms",
+    "family": "DP table + dependencies"
+  },
+  {
+    "slug": "graph-bfs",
+    "title": "Shortest Path with BFS",
+    "description": "Follow a queue through a graph. Try a cycle or a destination that cannot be reached.",
+    "category": "Algorithms",
+    "family": "Graph + queue"
+  },
+  {
+    "slug": "idempotent-retry",
+    "title": "Retries without Duplicate Orders",
+    "description": "A lost response triggers a retry. Compare creating twice with reusing an idempotency key.",
+    "category": "Systems",
+    "family": "Sequence + failure recovery"
+  }
+]

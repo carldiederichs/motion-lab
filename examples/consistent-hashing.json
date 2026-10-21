@@ -1,0 +1,81 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "consistent-hashing",
+  "title": "Consistent Hashing",
+  "subtitle": "Add a server to a hash ring and see exactly which keys change owner.",
+  "component": "Systems",
+  "date": "2026-10-22",
+  "aliases": [
+    "Consistent Hashing",
+    "Hash ring"
+  ],
+  "stage": {
+    "width": 960,
+    "height": 500
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "family": "Hash ring",
+  "simulation": {
+    "generator": "consistent-hash",
+    "params": [
+      {
+        "id": "keys",
+        "label": "Key hash positions",
+        "type": "numbers",
+        "default": [
+          12,
+          35,
+          60,
+          92
+        ],
+        "max": 6
+      }
+    ]
+  },
+  "code": {
+    "language": "ts",
+    "lines": [
+      "const ring = servers.sort((a, b) => a.hash - b.hash);",
+      "function owner(hash) {",
+      "  return ring.find(server => server.hash >= hash)",
+      "    ?? ring[0];",
+      "}",
+      "ring.push({ name: \"D\", hash: 64 });",
+      "ring.sort((a, b) => a.hash - b.hash);"
+    ]
+  },
+  "complexity": {
+    "time": "O(v) demo lookup",
+    "space": "O(v)",
+    "derivation": [
+      "The visible code scans v server positions. A production ring can binary-search sorted virtual nodes in O(log v)."
+    ]
+  },
+  "edgeCases": [
+    {
+      "label": "Wrap around",
+      "why": "Positions beyond the final server wrap to the first.",
+      "params": {
+        "keys": [
+          88,
+          95,
+          99
+        ]
+      }
+    },
+    {
+      "label": "Boundary positions",
+      "why": "A key at the server position belongs to that server.",
+      "params": {
+        "keys": [
+          48,
+          49,
+          64,
+          65
+        ]
+      }
+    }
+  ]
+}

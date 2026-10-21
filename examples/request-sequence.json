@@ -1,0 +1,249 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "request-sequence",
+  "title": "Request Sequence",
+  "subtitle": "Follow a cache hit and a cache miss across browser, API, cache and database.",
+  "component": "Architecture",
+  "date": "2026-10-22",
+  "aliases": [
+    "Request Sequence",
+    "Sequence diagram"
+  ],
+  "stage": {
+    "width": 960,
+    "height": 510
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "family": "Sequence diagram",
+  "simulation": {
+    "generator": "sequence",
+    "params": []
+  },
+  "variants": [
+    {
+      "label": "Cache miss",
+      "params": {
+        "flow": {
+          "participants": [
+            {
+              "id": "browser",
+              "label": "Browser"
+            },
+            {
+              "id": "api",
+              "label": "API"
+            },
+            {
+              "id": "cache",
+              "label": "Cache"
+            },
+            {
+              "id": "db",
+              "label": "Database"
+            }
+          ],
+          "messages": [
+            {
+              "to": "api",
+              "label": "GET /products/42",
+              "title": "Request a product",
+              "text": "The browser asks the API for product 42.",
+              "from": "browser"
+            },
+            {
+              "to": "cache",
+              "label": "GET product:42",
+              "title": "Check the cache",
+              "text": "No cached product is present.",
+              "from": "api"
+            },
+            {
+              "to": "api",
+              "label": "miss",
+              "reply": true,
+              "title": "Cache miss",
+              "text": "The API must read the source of truth.",
+              "from": "cache"
+            },
+            {
+              "to": "db",
+              "label": "SELECT product 42",
+              "title": "Read the database",
+              "text": "The database supplies the current stored product.",
+              "from": "api"
+            },
+            {
+              "to": "api",
+              "label": "product row",
+              "reply": true,
+              "title": "Receive the row",
+              "text": "The API now has a value it can return and cache.",
+              "from": "db"
+            },
+            {
+              "to": "browser",
+              "label": "200 OK",
+              "reply": true,
+              "title": "Return the result",
+              "text": "The browser receives the product. A cache-write policy would decide how future requests reuse it.",
+              "from": "api"
+            }
+          ],
+          "width": 960,
+          "height": 510,
+          "rowH": 60
+        }
+      }
+    },
+    {
+      "label": "Cache hit",
+      "params": {
+        "flow": {
+          "participants": [
+            {
+              "id": "browser",
+              "label": "Browser"
+            },
+            {
+              "id": "api",
+              "label": "API"
+            },
+            {
+              "id": "cache",
+              "label": "Cache"
+            },
+            {
+              "id": "db",
+              "label": "Database"
+            }
+          ],
+          "messages": [
+            {
+              "to": "api",
+              "label": "GET /products/42",
+              "title": "Request a product",
+              "text": "The browser asks the API for product 42.",
+              "from": "browser"
+            },
+            {
+              "to": "cache",
+              "label": "GET product:42",
+              "title": "Check the cache",
+              "text": "The API checks its fast cache first.",
+              "from": "api"
+            },
+            {
+              "to": "api",
+              "label": "cached product",
+              "reply": true,
+              "title": "Cache hit",
+              "text": "A cached response avoids a database query.",
+              "from": "cache"
+            },
+            {
+              "to": "browser",
+              "label": "200 OK",
+              "reply": true,
+              "title": "Return the result",
+              "text": "The API returns the cached product to the browser.",
+              "from": "api"
+            }
+          ],
+          "width": 960,
+          "height": 510,
+          "rowH": 60
+        }
+      }
+    },
+    {
+      "label": "Database timeout",
+      "params": {
+        "flow": {
+          "participants": [
+            {
+              "id": "browser",
+              "label": "Browser"
+            },
+            {
+              "id": "api",
+              "label": "API"
+            },
+            {
+              "id": "cache",
+              "label": "Cache"
+            },
+            {
+              "id": "db",
+              "label": "Database"
+            }
+          ],
+          "messages": [
+            {
+              "to": "api",
+              "label": "GET /products/42",
+              "title": "Request a product",
+              "text": "The browser asks the API for product 42.",
+              "from": "browser"
+            },
+            {
+              "to": "cache",
+              "label": "GET product:42",
+              "title": "Check the cache",
+              "text": "No cached product is present.",
+              "from": "api"
+            },
+            {
+              "to": "api",
+              "label": "miss",
+              "reply": true,
+              "title": "Cache miss",
+              "text": "The API must read the source of truth.",
+              "from": "cache"
+            },
+            {
+              "to": "db",
+              "label": "SELECT product 42",
+              "title": "Read the database",
+              "text": "The database supplies the current stored product.",
+              "from": "api"
+            },
+            {
+              "from": "db",
+              "to": "api",
+              "label": "timeout",
+              "tone": "failure",
+              "title": "Database unavailable",
+              "text": "The database did not respond before the deadline."
+            },
+            {
+              "from": "api",
+              "to": "browser",
+              "label": "503 Unavailable",
+              "reply": true,
+              "tone": "failure",
+              "title": "Return a retryable failure",
+              "text": "No product is returned. The client can retry with a bounded backoff policy."
+            }
+          ],
+          "width": 960,
+          "height": 510,
+          "rowH": 60
+        }
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Hit path",
+      "why": "No database query is required.",
+      "variant": 1
+    },
+    {
+      "label": "Database timeout",
+      "why": "Failure should not look like a valid empty product.",
+      "variant": 2
+    }
+  ]
+}

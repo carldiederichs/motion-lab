@@ -1,0 +1,73 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "lost-update",
+  "title": "Lost Update",
+  "subtitle": "Interleave two stock updates and watch a correct-looking read-modify-write lose an update.",
+  "component": "Concurrency",
+  "date": "2026-10-22",
+  "aliases": [
+    "Lost Update",
+    "Interleaving"
+  ],
+  "stage": {
+    "width": 960,
+    "height": 480
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "family": "Interleaving",
+  "simulation": {
+    "generator": "lost-update",
+    "params": [
+      {
+        "id": "start",
+        "label": "Initial stock",
+        "type": "int",
+        "default": 2,
+        "min": 1,
+        "max": 5
+      }
+    ]
+  },
+  "variants": [
+    {
+      "label": "Interleaved",
+      "params": {
+        "schedule": "interleaved"
+      }
+    },
+    {
+      "label": "Serial",
+      "params": {
+        "schedule": "serial"
+      }
+    }
+  ],
+  "code": {
+    "language": "ts",
+    "lines": [
+      "const stock = await readStock();",
+      "if (stock > 0) {",
+      "  await writeStock(stock - 1);",
+      "  await recordSale();",
+      "}"
+    ]
+  },
+  "edgeCases": [
+    {
+      "label": "One item",
+      "why": "Two requests can both observe the last item.",
+      "params": {
+        "start": 1
+      }
+    },
+    {
+      "label": "More stock",
+      "why": "A lost update can happen without overselling.",
+      "params": {
+        "start": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,252 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "idempotent-retry",
+  "title": "Retries without Duplicate Orders",
+  "subtitle": "A lost response triggers a retry. Compare creating twice with reusing an idempotency key.",
+  "component": "Systems",
+  "date": "2026-10-22",
+  "aliases": [
+    "idempotency",
+    "retry",
+    "duplicate order"
+  ],
+  "stage": {
+    "width": 960,
+    "height": 510
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "family": "Sequence + failure recovery",
+  "simulation": {
+    "generator": "sequence",
+    "params": []
+  },
+  "variants": [
+    {
+      "label": "No deduplication",
+      "params": {
+        "flow": {
+          "participants": [
+            {
+              "id": "client",
+              "label": "Client"
+            },
+            {
+              "id": "api",
+              "label": "API"
+            },
+            {
+              "id": "db",
+              "label": "Order store"
+            }
+          ],
+          "messages": [
+            {
+              "from": "client",
+              "to": "api",
+              "label": "POST /orders; key=abc",
+              "title": "Create an order",
+              "text": "The client chooses one stable key for this purchase."
+            },
+            {
+              "from": "api",
+              "to": "db",
+              "label": "insert order 101",
+              "title": "Commit the purchase",
+              "text": "The store commits the order before the response reaches the client."
+            },
+            {
+              "from": "api",
+              "to": "client",
+              "label": "201 Created",
+              "title": "The response is lost",
+              "text": "The client cannot tell whether the purchase succeeded.",
+              "lost": true
+            },
+            {
+              "from": "client",
+              "to": "api",
+              "label": "POST /orders; key=abc",
+              "title": "Retry the same purchase",
+              "text": "A timeout is not proof that the server did nothing."
+            },
+            {
+              "from": "api",
+              "to": "db",
+              "label": "insert order 102",
+              "title": "Duplicate purchase",
+              "text": "Without deduplication, the retry creates a second order.",
+              "tone": "failure"
+            },
+            {
+              "from": "api",
+              "to": "client",
+              "label": "201; order 102",
+              "title": "Two orders for one intent",
+              "text": "The customer may now be charged twice.",
+              "tone": "failure",
+              "reply": true
+            }
+          ],
+          "width": 960,
+          "height": 510,
+          "rowH": 60
+        }
+      }
+    },
+    {
+      "label": "Idempotency key",
+      "params": {
+        "flow": {
+          "participants": [
+            {
+              "id": "client",
+              "label": "Client"
+            },
+            {
+              "id": "api",
+              "label": "API"
+            },
+            {
+              "id": "db",
+              "label": "Order store"
+            }
+          ],
+          "messages": [
+            {
+              "from": "client",
+              "to": "api",
+              "label": "POST /orders; key=abc",
+              "title": "Create an order",
+              "text": "The client chooses one stable key for this purchase."
+            },
+            {
+              "from": "api",
+              "to": "db",
+              "label": "insert order 101",
+              "title": "Commit the purchase",
+              "text": "The store commits the order before the response reaches the client."
+            },
+            {
+              "from": "api",
+              "to": "client",
+              "label": "201 Created",
+              "title": "The response is lost",
+              "text": "The client cannot tell whether the purchase succeeded.",
+              "lost": true
+            },
+            {
+              "from": "client",
+              "to": "api",
+              "label": "POST /orders; key=abc",
+              "title": "Retry the same purchase",
+              "text": "A timeout is not proof that the server did nothing."
+            },
+            {
+              "from": "api",
+              "to": "db",
+              "label": "lookup key=abc",
+              "title": "Reuse the committed result",
+              "text": "A unique idempotency key is stored atomically with the order."
+            },
+            {
+              "from": "api",
+              "to": "client",
+              "label": "201; order 101",
+              "title": "One order, repeatable response",
+              "text": "The same key returns the original result. The request payload must match.",
+              "reply": true
+            }
+          ],
+          "width": 960,
+          "height": 510,
+          "rowH": 60
+        }
+      }
+    },
+    {
+      "label": "Changed payload",
+      "params": {
+        "flow": {
+          "participants": [
+            {
+              "id": "client",
+              "label": "Client"
+            },
+            {
+              "id": "api",
+              "label": "API"
+            },
+            {
+              "id": "db",
+              "label": "Order store"
+            }
+          ],
+          "messages": [
+            {
+              "from": "client",
+              "to": "api",
+              "label": "POST /orders; key=abc",
+              "title": "Create an order",
+              "text": "The client chooses one stable key for this purchase."
+            },
+            {
+              "from": "api",
+              "to": "db",
+              "label": "insert order 101",
+              "title": "Commit the purchase",
+              "text": "The store commits the order before the response reaches the client."
+            },
+            {
+              "from": "api",
+              "to": "client",
+              "label": "201 Created",
+              "title": "The response is lost",
+              "text": "The client cannot tell whether the purchase succeeded.",
+              "lost": true
+            },
+            {
+              "from": "client",
+              "to": "api",
+              "label": "POST /orders; key=abc",
+              "title": "Retry the same purchase",
+              "text": "A timeout is not proof that the server did nothing."
+            },
+            {
+              "from": "api",
+              "to": "db",
+              "label": "key=abc; payload differs",
+              "title": "Detect a key conflict",
+              "text": "The same key cannot silently refer to a different purchase."
+            },
+            {
+              "from": "api",
+              "to": "client",
+              "label": "409 Conflict",
+              "title": "Reject changed intent",
+              "text": "Require a new key for a genuinely new purchase.",
+              "tone": "warning",
+              "reply": true
+            }
+          ],
+          "width": 960,
+          "height": 510,
+          "rowH": 60
+        }
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Lost response, safe retry",
+      "why": "A committed result survives a response timeout.",
+      "variant": 1
+    },
+    {
+      "label": "Key reused for new payload",
+      "why": "Keys must identify one intent.",
+      "variant": 2
+    }
+  ]
+}

@@ -13,7 +13,7 @@ export const prohibited = [
   ],
   [/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/, "private key"],
   [
-    /\b(?:00-interview-practice|prep-2026|memories_v2|rollout_summaries)\b/,
+    /\b(?:memories_v2|rollout_summaries|shared-context)\b/,
     "private workspace reference",
   ],
   [

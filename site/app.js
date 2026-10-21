@@ -337,35 +337,39 @@ const steps = [
     text: "Play, pause or move one chapter at a time. Change an input or choose an edge case to see a different result.",
   },
   {
-    target: "examples",
+    target: "filters",
     title: "Choose a useful starting point",
     text: "Filter by the question you have. The library includes algorithms, architecture, data structures and concurrency.",
   },
   {
-    target: "make-your-own",
+    target: "local-toolkit",
     title: "Make the next one locally",
     text: "Download the toolkit when you are ready. It includes the same player and a skill your assistant can read. Nothing is downloaded automatically.",
   },
 ];
-function positionTour() {
-  if ($("tour-layer").hidden) return;
-  let r = $(steps[tourIndex].target).getBoundingClientRect();
+function tourTargetRect() {
   if (tourIndex === 1) {
-    const frame = $("demo-frame"),
-      control = frame.contentDocument?.querySelector(".mp-transport");
+    const frame = $("demo-frame");
+    const control = frame.contentDocument?.querySelector(".mp-transport");
     if (control) {
       const fr = frame.getBoundingClientRect(),
         cr = control.getBoundingClientRect();
-      r = {
+      return {
         left: fr.left + cr.left,
         right: fr.left + cr.right,
         top: fr.top + cr.top,
+        bottom: fr.top + cr.bottom,
         width: cr.width,
         height: cr.height,
       };
     }
   }
-  const card = $("tour-card"),
+  return $(steps[tourIndex].target).getBoundingClientRect();
+}
+function positionTour() {
+  if ($("tour-layer").hidden) return;
+  const r = tourTargetRect(),
+    card = $("tour-card"),
     shade = $("tour-shade");
   const top = Math.max(16, r.top),
     height = Math.min(r.height, innerHeight - 300);
@@ -374,7 +378,16 @@ function positionTour() {
   shade.style.width = `${Math.min(r.width + 10, innerWidth - 32)}px`;
   shade.style.height = `${height + 10}px`;
   card.style.left = `${Math.max(16, Math.min(innerWidth - 356, r.right - 340))}px`;
-  card.style.top = `${Math.max(16, Math.min(innerHeight - card.offsetHeight - 16, top + height + 18))}px`;
+  const above = top + height + 18 + card.offsetHeight > innerHeight - 16;
+  card.classList.toggle("above", above);
+  card.style.top = `${Math.max(16, Math.min(innerHeight - card.offsetHeight - 16, above ? top - card.offsetHeight - 18 : top + height + 18))}px`;
+}
+function ensureTourVisible() {
+  if ($("tour-layer").hidden) return;
+  const r = tourTargetRect();
+  if (r.top < 24 || r.bottom > innerHeight - 280)
+    window.scrollBy({ top: r.top - 40, behavior: "instant" });
+  positionTour();
 }
 function showTour(index) {
   tourIndex = index;
@@ -382,7 +395,7 @@ function showTour(index) {
   const step = steps[index];
   $(step.target).scrollIntoView({ block: "start", behavior: "instant" });
   if (index === 1)
-    $("demo-frame").addEventListener("load", positionTour, { once: true });
+    $("demo-frame").addEventListener("load", ensureTourVisible, { once: true });
   $("tour-layer").hidden = false;
   for (const el of document.querySelectorAll(
     "body > header, body > main, body > footer",
@@ -394,8 +407,8 @@ function showTour(index) {
   $("tour-back").disabled = index === 0;
   $("tour-next").textContent =
     index === steps.length - 1 ? "Finish tour ✓" : "Next →";
-  positionTour();
-  $("tour-card").focus();
+  ensureTourVisible();
+  $("tour-card").focus({ preventScroll: true });
 }
 function closeTour() {
   $("tour-layer").hidden = true;

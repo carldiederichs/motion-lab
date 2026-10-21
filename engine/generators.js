@@ -806,7 +806,7 @@ const GENERATORS = {
       links.push({ id: `m${k}`, from: a, to: b, bend: 0, tone: 'hidden' });
       tokens.push({ id: `k${k}`, label: m.label });
       const tone = m.lost ? 'failure' : m.tone === 'failure' ? 'failure' : m.tone === 'warning' ? 'warning' : m.reply ? 'success' : 'mechanism';
-      if (m.lost) beat.actions.push({ do: 'drop', token: `k${k}`, link: `m${k}`, stopAt: 0.55, at: [0.05, 0.7] }, { do: 'tone', link: `m${k}`, tone: 'failure', at: [0.05, 0.1] }, { do: 'text', actor: `t${k}`, field: 'text', value: `${m.label}  ✕ lost`, at: [0.6, 0.65] });
+      if (m.lost) beat.actions.push({ do: 'drop', token: `k${k}`, link: `m${k}`, stopAt: 0.55, at: [0.05, 0.7] }, { do: 'tone', link: `m${k}`, tone: 'failure', at: [0.05, 0.1] }, { do: 'text', actor: `t${k}`, field: 'text', value: `${m.label}  ✕ lost`, at: [0.86, 0.9] }, { do: 'hide', token: `k${k}`, at: [0.8, 0.85] });
       else beat.actions.push({ do: 'move', token: `k${k}`, link: `m${k}`, at: [0.05, 0.6] }, { do: 'hide', token: `k${k}`, at: [0.62, 0.65] }, { do: 'tone', link: `m${k}`, tone, at: [0.05, 0.1] }, { do: 'text', actor: `t${k}`, field: 'text', value: m.label, at: [0.6, 0.65] });
       if (m.note) beat.actions.push({ do: 'note', actor: b, text: m.note, tone: m.noteTone || 'mechanism', at: [0.62, 1] });
       if (m.save) { if (m.replaceSaved) saved.length = 0; saved.push(m.save); beat.actions.push({ do: 'rows', actor: 'saved', value: saved.slice(-savedCap), at: [0.65, 0.7] }); }

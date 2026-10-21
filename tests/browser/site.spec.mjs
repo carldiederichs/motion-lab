@@ -180,3 +180,37 @@ test("reduced-motion demo remains user controlled", async ({ page }) => {
   await page.locator("#demo-run").click();
   await expect(page.locator("#demo-result")).toBeVisible();
 });
+
+for (const [width, height] of [
+  [1024, 768],
+  [1440, 900],
+])
+  test(`tour highlights stay in the viewport ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.goto("/");
+    await page.locator("#tour-start").click();
+    for (let step = 0; step < 4; step++) {
+      if (step === 1)
+        await expect(
+          page.frameLocator("#demo-frame").locator("#mp-next"),
+        ).toBeVisible();
+      for (const id of ["#tour-card", "#tour-shade"]) {
+        const r = await page.locator(id).boundingBox();
+        expect(r.y, `${id} step ${step}`).toBeGreaterThanOrEqual(0);
+        expect(r.y + r.height, `${id} step ${step}`).toBeLessThanOrEqual(
+          height + 1,
+        );
+      }
+      await page.locator("#tour-next").click();
+    }
+  });
+test("paused chapter stepping shows the completed state", async ({ page }) => {
+  await page.goto("/lessons/two-sum.html");
+  await page.locator("#mp-next").click();
+  await page.locator("#mp-next").click();
+  await expect(page.locator("#mp-cap-title")).toContainText("i=1");
+  await expect(page.locator("#mp-stage-a")).toContainText("2");
+  await expect(page.locator("#mp-time")).toContainText("5.6");
+  await page.locator("#mp-prev").click();
+  await expect(page.locator("#mp-cap-title")).toContainText("i=0");
+});

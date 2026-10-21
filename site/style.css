@@ -750,3 +750,11 @@ dialog > p {
   gap: 14px;
   flex-wrap: wrap;
 }
+
+#tour-card.above::before {
+  top: auto;
+  bottom: -8px;
+  border: 0;
+  border-right: 1px solid var(--blue);
+  border-bottom: 1px solid var(--blue);
+}

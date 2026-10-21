@@ -1,0 +1,40 @@
+name: Verify public release
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm test
+      - run: npm run build
+      - run: npm run check:privacy
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+      - run: node scripts/test-release.mjs --checkout
+      - run: docker build -t motion-lab-verify .
+      - run: |
+          docker run --detach --rm --name motion-lab-verify --read-only --cap-drop ALL -p 127.0.0.1:4178:3000 motion-lab-verify
+          for attempt in 1 2 3 4 5; do
+            if curl --fail --silent http://127.0.0.1:4178/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/smoke.mjs http://127.0.0.1:4178
+      - run: docker stop motion-lab-verify || true
+        if: always()
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-failures
+          path: artifacts/browser
+          retention-days: 3

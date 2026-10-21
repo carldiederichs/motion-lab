@@ -213,7 +213,7 @@
             "h": 220,
             "label": "Most recent first",
             "rows": [
-              "B"
+              "A"
             ]
           },
           {
@@ -256,14 +256,14 @@
                 "do": "rows",
                 "actor": "cache",
                 "value": [
-                  "B"
+                  "A"
                 ]
               }
             ]
           },
           {
             "title": "Insert C",
-            "text": "Evict B and keep the newest 1 entries.",
+            "text": "Evict A and keep the newest 1 entry.",
             "dur": 1600,
             "actions": [
               {
@@ -281,7 +281,7 @@
               {
                 "do": "set",
                 "actor": "evicted",
-                "value": "B"
+                "value": "A"
               }
             ]
           }

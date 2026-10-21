@@ -90,12 +90,24 @@
               {
                 "do": "move",
                 "token": "request",
-                "link": "browse"
+                "link": "browse",
+                "at": [
+                  0,
+                  0.75
+                ]
               },
               {
                 "do": "tone",
                 "actor": "shop",
                 "tone": "mechanism"
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [
+                  0.8,
+                  0.9
+                ]
               }
             ]
           },
@@ -107,12 +119,24 @@
               {
                 "do": "move",
                 "token": "request",
-                "link": "charge"
+                "link": "charge",
+                "at": [
+                  0,
+                  0.75
+                ]
               },
               {
                 "do": "tone",
                 "actor": "payments",
                 "tone": "warning"
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [
+                  0.8,
+                  0.9
+                ]
               }
             ]
           }
@@ -220,7 +244,19 @@
               {
                 "do": "move",
                 "token": "request",
-                "link": "browse"
+                "link": "browse",
+                "at": [
+                  0,
+                  0.75
+                ]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [
+                  0.8,
+                  0.9
+                ]
               }
             ]
           },
@@ -232,7 +268,19 @@
               {
                 "do": "move",
                 "token": "request",
-                "link": "fetch"
+                "link": "fetch",
+                "at": [
+                  0,
+                  0.75
+                ]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [
+                  0.8,
+                  0.9
+                ]
               }
             ]
           },
@@ -244,7 +292,19 @@
               {
                 "do": "move",
                 "token": "request",
-                "link": "query"
+                "link": "query",
+                "at": [
+                  0,
+                  0.75
+                ]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [
+                  0.8,
+                  0.9
+                ]
               }
             ]
           }
@@ -352,7 +412,19 @@
               {
                 "do": "move",
                 "token": "request",
-                "link": "browse"
+                "link": "browse",
+                "at": [
+                  0,
+                  0.75
+                ]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [
+                  0.8,
+                  0.9
+                ]
               }
             ]
           },
@@ -364,7 +436,19 @@
               {
                 "do": "move",
                 "token": "request",
-                "link": "fetch"
+                "link": "fetch",
+                "at": [
+                  0,
+                  0.75
+                ]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [
+                  0.8,
+                  0.9
+                ]
               }
             ]
           },
@@ -376,7 +460,19 @@
               {
                 "do": "move",
                 "token": "request",
-                "link": "query"
+                "link": "query",
+                "at": [
+                  0,
+                  0.75
+                ]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [
+                  0.8,
+                  0.9
+                ]
               }
             ]
           },

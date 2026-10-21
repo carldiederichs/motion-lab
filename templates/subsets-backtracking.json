@@ -1,0 +1,378 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "subsets-backtracking",
+  "title": "Why must recursive search undo its changes?",
+  "subtitle": "An authored trace built from reusable Motion Lab primitives.",
+  "component": "Systems",
+  "date": "2026-10-22",
+  "aliases": [
+    "Backtracking + stack",
+    "Why must recursive search undo its changes?"
+  ],
+  "family": "Backtracking + stack",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "Two choices",
+      "scene": {
+        "actors": [
+          {
+            "id": "path",
+            "kind": "store",
+            "x": 280,
+            "y": 250,
+            "w": 320,
+            "h": 220,
+            "label": "Current subset",
+            "rows": []
+          },
+          {
+            "id": "results",
+            "kind": "store",
+            "x": 700,
+            "y": 250,
+            "w": 320,
+            "h": 220,
+            "label": "Completed subsets",
+            "rows": []
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Choose, explore, undo",
+            "text": "For each value, branch on excluding or including it. Undo each inclusion before returning to the previous branch.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Exclude 1",
+            "text": "Keep the current subset and explore the next choice.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Exclude 2",
+            "text": "Keep the current subset and explore the next choice.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Record a subset",
+            "text": "All choices are decided: [].",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "results",
+                "value": [
+                  "[]"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Include 2",
+            "text": "Append one value before exploring this branch.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "path",
+                "value": [
+                  "2"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Record a subset",
+            "text": "All choices are decided: [2].",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "results",
+                "value": [
+                  "[]",
+                  "[2]"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Undo 2",
+            "text": "Restore the earlier subset so a sibling branch cannot inherit this choice.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "path",
+                "value": []
+              }
+            ]
+          },
+          {
+            "title": "Include 1",
+            "text": "Append one value before exploring this branch.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "path",
+                "value": [
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Exclude 2",
+            "text": "Keep the current subset and explore the next choice.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Record a subset",
+            "text": "All choices are decided: [1].",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "results",
+                "value": [
+                  "[]",
+                  "[2]",
+                  "[1]"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Include 2",
+            "text": "Append one value before exploring this branch.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "path",
+                "value": [
+                  "1",
+                  "2"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Record a subset",
+            "text": "All choices are decided: [1, 2].",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "results",
+                "value": [
+                  "[]",
+                  "[2]",
+                  "[1]",
+                  "[1, 2]"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Undo 2",
+            "text": "Restore the earlier subset so a sibling branch cannot inherit this choice.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "path",
+                "value": [
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Undo 1",
+            "text": "Restore the earlier subset so a sibling branch cannot inherit this choice.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "path",
+                "value": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "One choice",
+      "scene": {
+        "actors": [
+          {
+            "id": "path",
+            "kind": "store",
+            "x": 280,
+            "y": 250,
+            "w": 320,
+            "h": 220,
+            "label": "Current subset",
+            "rows": []
+          },
+          {
+            "id": "results",
+            "kind": "store",
+            "x": 700,
+            "y": 250,
+            "w": 320,
+            "h": 220,
+            "label": "Completed subsets",
+            "rows": []
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Choose, explore, undo",
+            "text": "For each value, branch on excluding or including it. Undo each inclusion before returning to the previous branch.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Exclude 7",
+            "text": "Keep the current subset and explore the next choice.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Record a subset",
+            "text": "All choices are decided: [].",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "results",
+                "value": [
+                  "[]"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Include 7",
+            "text": "Append one value before exploring this branch.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "path",
+                "value": [
+                  "7"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Record a subset",
+            "text": "All choices are decided: [7].",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "results",
+                "value": [
+                  "[]",
+                  "[7]"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Undo 7",
+            "text": "Restore the earlier subset so a sibling branch cannot inherit this choice.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "path",
+                "value": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Empty input",
+      "scene": {
+        "actors": [
+          {
+            "id": "path",
+            "kind": "store",
+            "x": 280,
+            "y": 250,
+            "w": 320,
+            "h": 220,
+            "label": "Current subset",
+            "rows": []
+          },
+          {
+            "id": "results",
+            "kind": "store",
+            "x": 700,
+            "y": 250,
+            "w": 320,
+            "h": 220,
+            "label": "Completed subsets",
+            "rows": []
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Choose, explore, undo",
+            "text": "For each value, branch on excluding or including it. Undo each inclusion before returning to the previous branch.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Record a subset",
+            "text": "All choices are decided: [].",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "results",
+                "value": [
+                  "[]"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "One choice",
+      "why": "Follow the changed state through this scenario.",
+      "variant": 1
+    },
+    {
+      "label": "Empty input",
+      "why": "Follow the changed state through this scenario.",
+      "variant": 2
+    }
+  ]
+}

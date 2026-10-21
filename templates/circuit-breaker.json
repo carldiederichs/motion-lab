@@ -1,0 +1,458 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "circuit-breaker",
+  "title": "When should a failed dependency receive another request?",
+  "subtitle": "An authored trace built from reusable Motion Lab primitives.",
+  "component": "Systems",
+  "date": "2026-10-22",
+  "aliases": [
+    "State machine",
+    "When should a failed dependency receive another request?"
+  ],
+  "family": "State machine",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "Recovery probe",
+      "scene": {
+        "actors": [
+          {
+            "id": "closed",
+            "kind": "circle",
+            "x": 180,
+            "y": 210,
+            "r": 50,
+            "label": "Closed"
+          },
+          {
+            "id": "open",
+            "kind": "circle",
+            "x": 480,
+            "y": 210,
+            "r": 50,
+            "label": "Open"
+          },
+          {
+            "id": "half",
+            "kind": "circle",
+            "x": 780,
+            "y": 210,
+            "r": 50,
+            "label": "Half-open"
+          },
+          {
+            "id": "count",
+            "kind": "box",
+            "x": 480,
+            "y": 410,
+            "w": 250,
+            "h": 70,
+            "label": "Consecutive failures",
+            "value": 0,
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "trip",
+            "from": "closed",
+            "to": "open",
+            "label": "threshold",
+            "bend": -30
+          },
+          {
+            "id": "probe",
+            "from": "open",
+            "to": "half",
+            "label": "cooldown",
+            "bend": -30
+          }
+        ],
+        "beats": [
+          {
+            "title": "Allow requests",
+            "text": "Closed means requests pass through. This example trips after three consecutive failures.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "closed",
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Failure 1",
+            "text": "Record failure 1. The threshold is three.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "count",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "title": "Failure 2",
+            "text": "Record failure 2. The threshold is three.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "count",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "title": "Failure 3",
+            "text": "Record failure 3. The threshold is three.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "count",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "title": "Open the circuit",
+            "text": "Reject new calls while the dependency recovers.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "closed",
+                "tone": "muted"
+              },
+              {
+                "do": "tone",
+                "actor": "open",
+                "tone": "failure"
+              }
+            ]
+          },
+          {
+            "title": "Allow one probe",
+            "text": "After cooldown, allow one request in half-open state.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "open",
+                "tone": "muted"
+              },
+              {
+                "do": "tone",
+                "actor": "half",
+                "tone": "warning"
+              }
+            ]
+          },
+          {
+            "title": "Close after success",
+            "text": "A successful probe resets the counter.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "half",
+                "tone": "muted"
+              },
+              {
+                "do": "tone",
+                "actor": "closed",
+                "tone": "success"
+              },
+              {
+                "do": "set",
+                "actor": "count",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Probe fails",
+      "scene": {
+        "actors": [
+          {
+            "id": "closed",
+            "kind": "circle",
+            "x": 180,
+            "y": 210,
+            "r": 50,
+            "label": "Closed"
+          },
+          {
+            "id": "open",
+            "kind": "circle",
+            "x": 480,
+            "y": 210,
+            "r": 50,
+            "label": "Open"
+          },
+          {
+            "id": "half",
+            "kind": "circle",
+            "x": 780,
+            "y": 210,
+            "r": 50,
+            "label": "Half-open"
+          },
+          {
+            "id": "count",
+            "kind": "box",
+            "x": 480,
+            "y": 410,
+            "w": 250,
+            "h": 70,
+            "label": "Consecutive failures",
+            "value": 0,
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "trip",
+            "from": "closed",
+            "to": "open",
+            "label": "threshold",
+            "bend": -30
+          },
+          {
+            "id": "probe",
+            "from": "open",
+            "to": "half",
+            "label": "cooldown",
+            "bend": -30
+          }
+        ],
+        "beats": [
+          {
+            "title": "Allow requests",
+            "text": "Closed means requests pass through. This example trips after three consecutive failures.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "closed",
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Failure 1",
+            "text": "Record failure 1. The threshold is three.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "count",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "title": "Failure 2",
+            "text": "Record failure 2. The threshold is three.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "count",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "title": "Failure 3",
+            "text": "Record failure 3. The threshold is three.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "count",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "title": "Open the circuit",
+            "text": "Reject new calls while the dependency recovers.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "closed",
+                "tone": "muted"
+              },
+              {
+                "do": "tone",
+                "actor": "open",
+                "tone": "failure"
+              }
+            ]
+          },
+          {
+            "title": "Allow one probe",
+            "text": "After cooldown, allow one request in half-open state.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "open",
+                "tone": "muted"
+              },
+              {
+                "do": "tone",
+                "actor": "half",
+                "tone": "warning"
+              }
+            ]
+          },
+          {
+            "title": "Reopen after failure",
+            "text": "A failed probe restarts the cooldown.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "half",
+                "tone": "muted"
+              },
+              {
+                "do": "tone",
+                "actor": "open",
+                "tone": "failure"
+              },
+              {
+                "do": "set",
+                "actor": "count",
+                "value": 3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Below threshold",
+      "scene": {
+        "actors": [
+          {
+            "id": "closed",
+            "kind": "circle",
+            "x": 180,
+            "y": 210,
+            "r": 50,
+            "label": "Closed"
+          },
+          {
+            "id": "open",
+            "kind": "circle",
+            "x": 480,
+            "y": 210,
+            "r": 50,
+            "label": "Open"
+          },
+          {
+            "id": "half",
+            "kind": "circle",
+            "x": 780,
+            "y": 210,
+            "r": 50,
+            "label": "Half-open"
+          },
+          {
+            "id": "count",
+            "kind": "box",
+            "x": 480,
+            "y": 410,
+            "w": 250,
+            "h": 70,
+            "label": "Consecutive failures",
+            "value": 0,
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "trip",
+            "from": "closed",
+            "to": "open",
+            "label": "threshold",
+            "bend": -30
+          },
+          {
+            "id": "probe",
+            "from": "open",
+            "to": "half",
+            "label": "cooldown",
+            "bend": -30
+          }
+        ],
+        "beats": [
+          {
+            "title": "Allow requests",
+            "text": "Closed means requests pass through. This example trips after three consecutive failures.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "closed",
+                "tone": "success"
+              }
+            ]
+          },
+          {
+            "title": "Failure 1",
+            "text": "Record failure 1. The threshold is three.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "count",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "title": "Failure 2",
+            "text": "Record failure 2. The threshold is three.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "count",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Probe fails",
+      "why": "Follow the changed state through this scenario.",
+      "variant": 1
+    },
+    {
+      "label": "Below threshold",
+      "why": "Follow the changed state through this scenario.",
+      "variant": 2
+    }
+  ]
+}

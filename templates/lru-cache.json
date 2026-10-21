@@ -1,0 +1,304 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "lru-cache",
+  "title": "Why did the cache evict a recently used key?",
+  "subtitle": "An authored trace built from reusable Motion Lab primitives.",
+  "component": "Systems",
+  "date": "2026-10-22",
+  "aliases": [
+    "Store + recency",
+    "Why did the cache evict a recently used key?"
+  ],
+  "family": "Store + recency",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "Touch before eviction",
+      "scene": {
+        "actors": [
+          {
+            "id": "cache",
+            "kind": "store",
+            "x": 280,
+            "y": 240,
+            "w": 320,
+            "h": 220,
+            "label": "Most recent first",
+            "rows": [
+              "B",
+              "A"
+            ]
+          },
+          {
+            "id": "operation",
+            "kind": "box",
+            "x": 700,
+            "y": 180,
+            "w": 250,
+            "h": 70,
+            "label": "Operation",
+            "value": "get A",
+            "valueSmall": true
+          },
+          {
+            "id": "evicted",
+            "kind": "box",
+            "x": 700,
+            "y": 350,
+            "w": 250,
+            "h": 70,
+            "label": "Evicted",
+            "value": "none",
+            "valueSmall": true
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "A bounded cache",
+            "text": "The cache can hold 2 entries. The least recent entry is at the bottom.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Access an entry",
+            "text": "A successful read refreshes recency; forgetting that step changes the next eviction.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "cache",
+                "value": [
+                  "A",
+                  "B"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Insert C",
+            "text": "Evict B and keep the newest 2 entries.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "cache",
+                "value": [
+                  "C",
+                  "A"
+                ]
+              },
+              {
+                "do": "set",
+                "actor": "operation",
+                "value": "set C"
+              },
+              {
+                "do": "set",
+                "actor": "evicted",
+                "value": "B"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Forgotten recency",
+      "scene": {
+        "actors": [
+          {
+            "id": "cache",
+            "kind": "store",
+            "x": 280,
+            "y": 240,
+            "w": 320,
+            "h": 220,
+            "label": "Most recent first",
+            "rows": [
+              "B",
+              "A"
+            ]
+          },
+          {
+            "id": "operation",
+            "kind": "box",
+            "x": 700,
+            "y": 180,
+            "w": 250,
+            "h": 70,
+            "label": "Operation",
+            "value": "get A",
+            "valueSmall": true
+          },
+          {
+            "id": "evicted",
+            "kind": "box",
+            "x": 700,
+            "y": 350,
+            "w": 250,
+            "h": 70,
+            "label": "Evicted",
+            "value": "none",
+            "valueSmall": true
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "A bounded cache",
+            "text": "The cache can hold 2 entries. The least recent entry is at the bottom.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Access an entry",
+            "text": "A successful read refreshes recency; forgetting that step changes the next eviction.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "cache",
+                "value": [
+                  "B",
+                  "A"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Insert C",
+            "text": "Evict A and keep the newest 2 entries.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "cache",
+                "value": [
+                  "C",
+                  "B"
+                ]
+              },
+              {
+                "do": "set",
+                "actor": "operation",
+                "value": "set C"
+              },
+              {
+                "do": "set",
+                "actor": "evicted",
+                "value": "A"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Capacity one",
+      "scene": {
+        "actors": [
+          {
+            "id": "cache",
+            "kind": "store",
+            "x": 280,
+            "y": 240,
+            "w": 320,
+            "h": 220,
+            "label": "Most recent first",
+            "rows": [
+              "B"
+            ]
+          },
+          {
+            "id": "operation",
+            "kind": "box",
+            "x": 700,
+            "y": 180,
+            "w": 250,
+            "h": 70,
+            "label": "Operation",
+            "value": "get A",
+            "valueSmall": true
+          },
+          {
+            "id": "evicted",
+            "kind": "box",
+            "x": 700,
+            "y": 350,
+            "w": 250,
+            "h": 70,
+            "label": "Evicted",
+            "value": "none",
+            "valueSmall": true
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "A bounded cache",
+            "text": "The cache can hold 1 entries. The least recent entry is at the bottom.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Access an entry",
+            "text": "A successful read refreshes recency; forgetting that step changes the next eviction.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "cache",
+                "value": [
+                  "B"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Insert C",
+            "text": "Evict B and keep the newest 1 entries.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "cache",
+                "value": [
+                  "C"
+                ]
+              },
+              {
+                "do": "set",
+                "actor": "operation",
+                "value": "set C"
+              },
+              {
+                "do": "set",
+                "actor": "evicted",
+                "value": "B"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Forgotten recency",
+      "why": "Follow the changed state through this scenario.",
+      "variant": 1
+    },
+    {
+      "label": "Capacity one",
+      "why": "Follow the changed state through this scenario.",
+      "variant": 2
+    }
+  ]
+}

@@ -1,0 +1,376 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "heap-insertion",
+  "title": "How does a priority queue restore heap order?",
+  "subtitle": "An authored trace built from reusable Motion Lab primitives.",
+  "component": "Systems",
+  "date": "2026-10-22",
+  "aliases": [
+    "Tree + heap array",
+    "How does a priority queue restore heap order?"
+  ],
+  "family": "Tree + heap array",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "New minimum",
+      "scene": {
+        "actors": [
+          {
+            "id": "n-0",
+            "kind": "circle",
+            "x": 480,
+            "y": 80,
+            "r": 30,
+            "label": "2"
+          },
+          {
+            "id": "n-1",
+            "kind": "circle",
+            "x": 260,
+            "y": 230,
+            "r": 30,
+            "label": "5"
+          },
+          {
+            "id": "n-2",
+            "kind": "circle",
+            "x": 700,
+            "y": 230,
+            "r": 30,
+            "label": "8"
+          },
+          {
+            "id": "n-3",
+            "kind": "circle",
+            "x": 130,
+            "y": 400,
+            "r": 30,
+            "label": "1"
+          },
+          {
+            "id": "heap",
+            "kind": "store",
+            "x": 740,
+            "y": 430,
+            "w": 320,
+            "h": 220,
+            "label": "Array representation",
+            "rows": [
+              "[2, 5, 8, 1]"
+            ]
+          }
+        ],
+        "links": [
+          {
+            "id": "e-1",
+            "from": "n-0",
+            "to": "n-1"
+          },
+          {
+            "id": "e-2",
+            "from": "n-0",
+            "to": "n-2"
+          },
+          {
+            "id": "e-3",
+            "from": "n-1",
+            "to": "n-3"
+          }
+        ],
+        "beats": [
+          {
+            "title": "Append at the next leaf",
+            "text": "Keep the tree complete. Only ancestors of the new leaf can violate the min-heap rule.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Swap with the parent",
+            "text": "The smaller priority moves up. The array is now [2, 1, 8, 5].",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "text",
+                "actor": "n-3",
+                "field": "label",
+                "value": "5"
+              },
+              {
+                "do": "text",
+                "actor": "n-1",
+                "field": "label",
+                "value": "1"
+              },
+              {
+                "do": "rows",
+                "actor": "heap",
+                "value": [
+                  "[2, 1, 8, 5]"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Swap with the parent",
+            "text": "The smaller priority moves up. The array is now [1, 2, 8, 5].",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "text",
+                "actor": "n-1",
+                "field": "label",
+                "value": "2"
+              },
+              {
+                "do": "text",
+                "actor": "n-0",
+                "field": "label",
+                "value": "1"
+              },
+              {
+                "do": "rows",
+                "actor": "heap",
+                "value": [
+                  "[1, 2, 8, 5]"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "The heap rule holds",
+            "text": "The root priority is 1. Equal priorities do not require a swap.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "n-0",
+                "tone": "success"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Larger child",
+      "scene": {
+        "actors": [
+          {
+            "id": "n-0",
+            "kind": "circle",
+            "x": 480,
+            "y": 80,
+            "r": 30,
+            "label": "2"
+          },
+          {
+            "id": "n-1",
+            "kind": "circle",
+            "x": 260,
+            "y": 230,
+            "r": 30,
+            "label": "5"
+          },
+          {
+            "id": "n-2",
+            "kind": "circle",
+            "x": 700,
+            "y": 230,
+            "r": 30,
+            "label": "8"
+          },
+          {
+            "id": "n-3",
+            "kind": "circle",
+            "x": 130,
+            "y": 400,
+            "r": 30,
+            "label": "7"
+          },
+          {
+            "id": "heap",
+            "kind": "store",
+            "x": 740,
+            "y": 430,
+            "w": 320,
+            "h": 220,
+            "label": "Array representation",
+            "rows": [
+              "[2, 5, 8, 7]"
+            ]
+          }
+        ],
+        "links": [
+          {
+            "id": "e-1",
+            "from": "n-0",
+            "to": "n-1"
+          },
+          {
+            "id": "e-2",
+            "from": "n-0",
+            "to": "n-2"
+          },
+          {
+            "id": "e-3",
+            "from": "n-1",
+            "to": "n-3"
+          }
+        ],
+        "beats": [
+          {
+            "title": "Append at the next leaf",
+            "text": "Keep the tree complete. Only ancestors of the new leaf can violate the min-heap rule.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "The heap rule holds",
+            "text": "The root priority is 2. Equal priorities do not require a swap.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "n-0",
+                "tone": "success"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Duplicate priority",
+      "scene": {
+        "actors": [
+          {
+            "id": "n-0",
+            "kind": "circle",
+            "x": 480,
+            "y": 80,
+            "r": 30,
+            "label": "2"
+          },
+          {
+            "id": "n-1",
+            "kind": "circle",
+            "x": 260,
+            "y": 230,
+            "r": 30,
+            "label": "5"
+          },
+          {
+            "id": "n-2",
+            "kind": "circle",
+            "x": 700,
+            "y": 230,
+            "r": 30,
+            "label": "8"
+          },
+          {
+            "id": "n-3",
+            "kind": "circle",
+            "x": 130,
+            "y": 400,
+            "r": 30,
+            "label": "2"
+          },
+          {
+            "id": "heap",
+            "kind": "store",
+            "x": 740,
+            "y": 430,
+            "w": 320,
+            "h": 220,
+            "label": "Array representation",
+            "rows": [
+              "[2, 5, 8, 2]"
+            ]
+          }
+        ],
+        "links": [
+          {
+            "id": "e-1",
+            "from": "n-0",
+            "to": "n-1"
+          },
+          {
+            "id": "e-2",
+            "from": "n-0",
+            "to": "n-2"
+          },
+          {
+            "id": "e-3",
+            "from": "n-1",
+            "to": "n-3"
+          }
+        ],
+        "beats": [
+          {
+            "title": "Append at the next leaf",
+            "text": "Keep the tree complete. Only ancestors of the new leaf can violate the min-heap rule.",
+            "dur": 1600,
+            "actions": []
+          },
+          {
+            "title": "Swap with the parent",
+            "text": "The smaller priority moves up. The array is now [2, 2, 8, 5].",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "text",
+                "actor": "n-3",
+                "field": "label",
+                "value": "5"
+              },
+              {
+                "do": "text",
+                "actor": "n-1",
+                "field": "label",
+                "value": "2"
+              },
+              {
+                "do": "rows",
+                "actor": "heap",
+                "value": [
+                  "[2, 2, 8, 5]"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "The heap rule holds",
+            "text": "The root priority is 2. Equal priorities do not require a swap.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "n-0",
+                "tone": "success"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Larger child",
+      "why": "Follow the changed state through this scenario.",
+      "variant": 1
+    },
+    {
+      "label": "Duplicate priority",
+      "why": "Follow the changed state through this scenario.",
+      "variant": 2
+    }
+  ]
+}

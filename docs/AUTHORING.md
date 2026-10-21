@@ -40,3 +40,28 @@ Only trusted code in `engine/` is executed. A spec is data. The builder escapes 
 Each generator must have bounded inputs and a deterministic result. The event-loop example is a restricted interpreter, not JavaScript evaluation. Never add `eval`, arbitrary imports or network requests to generate a scene.
 
 Build locally, run the verifier, then inspect the rendered states. A schema pass does not establish geometry or explanation accuracy. A geometry pass does not establish correctness. Keep all three checks distinct.
+
+## More starting points
+
+`node scripts/cli.mjs new my-explanation --template <name>` accepts both gallery examples and the reusable scenes in `templates/`.
+
+| Question to explain | Starting point | Make visible |
+| --- | --- | --- |
+| Which keys move when a server joins? | consistent-hashing | Clockwise ownership and the changed interval |
+| Why does a retry create a duplicate? | idempotent-retry | Commit, lost response and deduplication |
+| Why did this cache evict a useful item? | lru-cache | Recency order and capacity |
+| When do we retry a failed dependency? | circuit-breaker | Closed, open and half-open states |
+| How do grid subproblems depend on each other? | grid-paths | Above/left dependencies and blocked cells |
+| Why must this recursive branch undo its state? | subsets-backtracking | Current path, completed results and restoration |
+| How does a queue maintain priority? | heap-insertion | Parent/child order and the array representation |
+| Which service owns this responsibility? | c4-architecture | Person, system and container boundaries |
+| Which request waits on which service? | request-sequence | Messages, replies and failure paths |
+| Why is a stock update lost? | lost-update | Two local copies and one shared store |
+| Why does a callback run first? | event-loop | Stack, microtask queue and timer queue |
+| Which nodes are reachable? | graph-bfs | Frontier order, visits, cycles and distance |
+| How does a list reverse without losing its tail? | reverse-linked-list | Saved next pointer and reversed prefix |
+| Why does dynamic programming avoid repeated work? | coin-change | Smaller solved amounts and unreachable states |
+
+For an interval sweep, compose a `cells` timeline, an event `store`, and a counter `box`. For a new API or storage protocol, write fresh participants and message traces. Keep these authored traces explicitly illustrative. If the user needs arbitrary editable inputs, add and test a bounded deterministic generator instead of presenting a fixed trace as a simulator.
+
+Inputs are deliberately small enough to inspect. The public numeric controls accept finite values between -999 and 999, with at most six displayed characters. Each lesson sets its own item limit. Coin values must be positive integers; grid rows use 0 and 1. Invalid edits preserve the last valid scene.

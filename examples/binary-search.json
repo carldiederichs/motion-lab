@@ -53,7 +53,7 @@
     "space": "O(1)",
     "example": "Each comparison halves the remaining interval. Bounds and midpoint use constant extra memory.",
     "derivation": [
-      "Each comparison halves the remaining interval. Bounds and midpoint use constant extra memory."
+      "n is the number of values in an already sorted input. Each comparison halves the remaining interval. Bounds and midpoint use O(1) extra memory. Sorting an unsorted input is separate work."
     ]
   },
   "edgeCases": [

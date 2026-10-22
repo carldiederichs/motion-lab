@@ -82,6 +82,13 @@ export const coreGenerators: Record<string, Generator> = {
             actions: [],
           },
         ];
+        const links: Link[] = useMap
+          ? [
+              { id: 'lookup', from: 'need', to: 'seen', bend: -155, tone: 'hidden' },
+              { id: 'insert', from: 'arr', to: 'seen', bend: -30, tone: 'hidden' },
+            ]
+          : [];
+        const tokens: Token[] = useMap ? [{ id: 'lookup-value', label: '' }] : [];
         let work = 0;
         let found: [number, number] | null = null;
         const seen = new Map<number, number>();
@@ -97,14 +104,23 @@ export const coreGenerators: Record<string, Generator> = {
               { do: 'cells', actor: 'arr', range: [i, i], tone: 'mechanism', at: [0.2, 0.25] },
               { do: 'set', actor: 'need', value: need, at: [0.25, 0.45] },
               { do: 'set', actor: 'reads', value: work, at: [0.45, 0.55] },
-              { do: 'pulse', actor: 'seen', at: [0.45, 0.75] },
+              { do: 'label', token: 'lookup-value', text: `get ${need}` },
+              { do: 'move', token: 'lookup-value', link: 'lookup', at: [0.28, 0.48] },
+              {
+                do: 'label',
+                token: 'lookup-value',
+                text: hit === undefined ? 'missing' : `index ${hit}`,
+                at: [0.49, 0.49],
+              },
+              { do: 'move', token: 'lookup-value', link: 'lookup', reverse: true, at: [0.5, 0.67] },
+              { do: 'hide', token: 'lookup-value', at: [0.68, 0.68] },
             ];
             if (hit !== undefined) {
               found = [hit, i];
               acts.push(
-                { do: 'cells', actor: 'arr', range: [hit, hit], tone: 'success', at: [0.6, 0.65] },
-                { do: 'cells', actor: 'arr', range: [i, i], tone: 'success', at: [0.6, 0.65] },
-                { do: 'tone', actor: 'need', tone: 'success', at: [0.6, 1] },
+                { do: 'cells', actor: 'arr', range: [hit, hit], tone: 'success', at: [0.68, 0.68] },
+                { do: 'cells', actor: 'arr', range: [i, i], tone: 'success', at: [0.68, 0.68] },
+                { do: 'tone', actor: 'need', tone: 'success', at: [0.68, 1] },
               );
               beats.push({
                 title: `i=${i}: ${need} is in the map → [${found[0]}, ${i}]`,
@@ -118,7 +134,10 @@ export const coreGenerators: Record<string, Generator> = {
               seen.set(v, i);
               rows.push(`${v} → ${i}`);
               acts.push(
-                { do: 'rows', actor: 'seen', value: rows.slice(), at: [0.75, 0.8] },
+                { do: 'label', token: 'lookup-value', text: `${v} → ${i}`, at: [0.7, 0.7] },
+                { do: 'move', token: 'lookup-value', link: 'insert', at: [0.7, 0.9] },
+                { do: 'hide', token: 'lookup-value', at: [0.91, 0.91] },
+                { do: 'rows', actor: 'seen', value: rows.slice(), at: [0.91, 0.91] },
                 { do: 'cells', actor: 'arr', range: [i, i], tone: 'context', at: [0.85, 0.9] },
               );
               beats.push({
@@ -218,7 +237,7 @@ export const coreGenerators: Record<string, Generator> = {
             label: 'negative numbers',
             why: 'target − value still works with negatives; nothing about the map assumes positive values.',
           };
-        return { actors, beats, edge };
+        return { actors, links, tokens, beats, edge };
       },
     };
 
@@ -278,6 +297,8 @@ export const coreGenerators: Record<string, Generator> = {
               : 'Sliding window: one number enters, one leaves',
           },
         ];
+        const links: Link[] = [{ id: 'operand', from: 'arr', to: 'sum', tone: 'hidden' }];
+        const tokens: Token[] = [{ id: 'operand', label: '' }];
         let edge = null;
         if (n === 0)
           edge = {
@@ -337,7 +358,7 @@ export const coreGenerators: Record<string, Generator> = {
             dur: 1400,
             actions: [{ do: 'tone', actor: 'sum', tone: 'failure' }],
           });
-          return { actors, beats, edge };
+          return { actors, links, tokens, beats, edge };
         }
         // first window: add k values one by one
         const first: Action[] = [];
@@ -360,7 +381,12 @@ export const coreGenerators: Record<string, Generator> = {
             tone: 'mechanism',
             at: [s + (e - s) * 0.5, e],
           });
-          first.push({ do: 'set', actor: 'sum', value: sum, at: [s + (e - s) * 0.5, e] });
+          first.push(
+            { do: 'label', token: 'operand', text: `+(${values[i]})`, at: [s, s] },
+            { do: 'move', token: 'operand', link: 'operand', at: [s, s + (e - s) * 0.8] },
+            { do: 'hide', token: 'operand', at: [s + (e - s) * 0.82, s + (e - s) * 0.82] },
+            { do: 'set', actor: 'sum', value: sum, at: [s + (e - s) * 0.82, s + (e - s) * 0.82] },
+          );
           first.push({ do: 'set', actor: 'ops', value: ops, at: [s + (e - s) * 0.5, e] });
         }
         best = sum;
@@ -369,7 +395,7 @@ export const coreGenerators: Record<string, Generator> = {
           title: 'Build the first window',
           text: `Add the first ${k} values: ${values.slice(0, k).join(' + ')} = ${sum}. That is ${k} additions.`,
           dur: 600 * k + 600,
-          lines: [2, 3],
+          lines: brute ? [5, 6, 7, 9] : [3, 4, 5],
           actions: first,
         });
         for (let start = 1; start + k - 1 < n; start += 1) {
@@ -411,7 +437,17 @@ export const coreGenerators: Record<string, Generator> = {
                 tone: 'repeated',
                 at: [a + (b - a) * 0.5, b],
               });
-              actions.push({ do: 'set', actor: 'sum', value: s2, at: [a + (b - a) * 0.5, b] });
+              actions.push(
+                { do: 'label', token: 'operand', text: `+(${values[i]})`, at: [a, a] },
+                { do: 'move', token: 'operand', link: 'operand', at: [a, a + (b - a) * 0.8] },
+                { do: 'hide', token: 'operand', at: [a + (b - a) * 0.82, a + (b - a) * 0.82] },
+                {
+                  do: 'set',
+                  actor: 'sum',
+                  value: s2,
+                  at: [a + (b - a) * 0.82, a + (b - a) * 0.82],
+                },
+              );
               actions.push({ do: 'set', actor: 'ops', value: ops, at: [a + (b - a) * 0.5, b] });
             }
             sum = s2;
@@ -448,7 +484,12 @@ export const coreGenerators: Record<string, Generator> = {
               tone: 'success',
               at: [0.25, 0.4],
             });
-            actions.push({ do: 'set', actor: 'sum', value: afterAdd, at: [0.25, 0.45] });
+            actions.push(
+              { do: 'label', token: 'operand', text: `+(${inn})` },
+              { do: 'move', token: 'operand', link: 'operand', at: [0.05, 0.4] },
+              { do: 'hide', token: 'operand', at: [0.41, 0.41] },
+              { do: 'set', actor: 'sum', value: afterAdd, at: [0.41, 0.41] },
+            );
             actions.push({ do: 'set', actor: 'ops', value: ops, at: [0.25, 0.45] });
             actions.push({
               do: 'cells',
@@ -464,7 +505,12 @@ export const coreGenerators: Record<string, Generator> = {
               index: start,
               at: [0.55, 0.8],
             });
-            actions.push({ do: 'set', actor: 'sum', value: newSum, at: [0.6, 0.8] });
+            actions.push(
+              { do: 'label', token: 'operand', text: `−(${out})`, at: [0.5, 0.5] },
+              { do: 'move', token: 'operand', link: 'operand', at: [0.5, 0.8] },
+              { do: 'hide', token: 'operand', at: [0.81, 0.81] },
+              { do: 'set', actor: 'sum', value: newSum, at: [0.81, 0.81] },
+            );
             actions.push({
               do: 'cells',
               actor: 'arr',
@@ -490,7 +536,7 @@ export const coreGenerators: Record<string, Generator> = {
               title: `Slide to ${start}..${end}`,
               text: `R brings in ${inn} (sum ${sum} → ${afterAdd}), L drops ${out} (→ ${newSum}). ${better ? 'New best!' : `Best stays ${best}.`}`,
               dur: 2200,
-              lines: [5, 6, 7],
+              lines: [6, 7, 8],
               actions,
             };
             if (start === 1)
@@ -533,6 +579,8 @@ export const coreGenerators: Record<string, Generator> = {
           });
           return {
             actors,
+            links,
+            tokens,
             beats,
             edge: edge || {
               label: 'off by one',
@@ -551,7 +599,7 @@ export const coreGenerators: Record<string, Generator> = {
             { do: 'tone', actor: 'ops', tone: brute ? 'repeated' : 'success' },
           ],
         });
-        return { actors, beats, edge };
+        return { actors, links, tokens, beats, edge };
       },
     };
 
@@ -1795,7 +1843,11 @@ export const coreGenerators: Record<string, Generator> = {
                 .join(', ')})`,
               at: [0, 0.1],
             },
-            { do: 'label', token: 'op', text: cmd },
+            {
+              do: 'label',
+              token: 'op',
+              text: cmd === 'set' ? `${key}=${val}` : `${cmd} ${key}`.trim(),
+            },
             { do: 'move', token: 'op', link: 'c2s', at: [0.1, 0.45] },
             { do: 'hide', token: 'op', at: [0.46, 0.5] },
           ];
@@ -1887,8 +1939,11 @@ export const coreGenerators: Record<string, Generator> = {
           }
           acts.push(
             { do: 'rows', actor: 'store', value: rows(), at: [0.5, 0.55] },
-            { do: 'set', actor: 'result', value: ret, at: [0.6, 0.7] },
-            { do: 'tone', actor: 'result', tone: tone || 'success', at: [0.6, 1] },
+            { do: 'label', token: 'op', text: ret, at: [0.56, 0.56] },
+            { do: 'move', token: 'op', link: 's2r', at: [0.56, 0.88] },
+            { do: 'hide', token: 'op', at: [0.9, 0.9] },
+            { do: 'set', actor: 'result', value: ret, at: [0.9, 0.9] },
+            { do: 'tone', actor: 'result', tone: tone || 'success', at: [0.9, 1] },
           );
           beats.push({ title, text, tone, dur: 1900, lines, actions: acts });
         }

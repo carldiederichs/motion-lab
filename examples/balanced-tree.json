@@ -50,7 +50,10 @@
       "complexity": {
         "time": "O(n)",
         "space": "O(h)",
-        "derivation": ["Each node returns its height once. h is the tree height."]
+        "derivation": [
+          "n is the number of nodes and h the tree height. Recursion uses at most h stack frames.",
+          "Each node returns its height once. h is the tree height."
+        ]
       }
     },
     {
@@ -77,9 +80,10 @@
         ]
       },
       "complexity": {
-        "time": "O(n\u00b2) upper bound",
+        "time": "O(n²) upper bound",
         "space": "O(h)",
         "derivation": [
+          "n is the number of nodes and h the tree height. Recursion uses at most h stack frames.",
           "Repeated height scans add work. Balanced trees take O(n log n); a skewed tree can fail at the root after one scan."
         ]
       }

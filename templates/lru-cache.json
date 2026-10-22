@@ -52,7 +52,20 @@
             "valueSmall": true
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-operation-cache",
+            "from": "operation",
+            "to": "cache",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-cache-evicted",
+            "from": "cache",
+            "to": "evicted",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "A bounded cache",
@@ -63,36 +76,97 @@
           {
             "title": "Access an entry",
             "text": "A successful read refreshes recency; forgetting that step changes the next eviction.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "get A",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-operation-cache",
+                "at": [0.05, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": ["A", "B"]
+                "value": ["A", "B"],
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Insert C",
             "text": "Evict B and keep the newest 2 entries.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "set C",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-operation-cache",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "B",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-cache-evicted",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": ["C", "A"]
+                "value": ["C", "A"],
+                "at": [0.84, 0.84]
               },
               {
                 "do": "set",
                 "actor": "operation",
-                "value": "set C"
+                "value": "set C",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "set",
                 "actor": "evicted",
-                "value": "B"
+                "value": "B",
+                "at": [0.84, 0.84]
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }
@@ -134,7 +208,20 @@
             "valueSmall": true
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-operation-cache",
+            "from": "operation",
+            "to": "cache",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-cache-evicted",
+            "from": "cache",
+            "to": "evicted",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "A bounded cache",
@@ -145,36 +232,97 @@
           {
             "title": "Access an entry",
             "text": "A successful read refreshes recency; forgetting that step changes the next eviction.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "get A",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-operation-cache",
+                "at": [0.05, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": ["B", "A"]
+                "value": ["B", "A"],
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Insert C",
             "text": "Evict A and keep the newest 2 entries.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "set C",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-operation-cache",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "A",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-cache-evicted",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": ["C", "B"]
+                "value": ["C", "B"],
+                "at": [0.84, 0.84]
               },
               {
                 "do": "set",
                 "actor": "operation",
-                "value": "set C"
+                "value": "set C",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "set",
                 "actor": "evicted",
-                "value": "A"
+                "value": "A",
+                "at": [0.84, 0.84]
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }
@@ -216,7 +364,20 @@
             "valueSmall": true
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-operation-cache",
+            "from": "operation",
+            "to": "cache",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-cache-evicted",
+            "from": "cache",
+            "to": "evicted",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "A bounded cache",
@@ -227,36 +388,97 @@
           {
             "title": "Access an entry",
             "text": "A successful read refreshes recency; forgetting that step changes the next eviction.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "get A",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-operation-cache",
+                "at": [0.05, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": ["A"]
+                "value": ["A"],
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Insert C",
             "text": "Evict A and keep the newest 1 entry.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "set C",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-operation-cache",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "A",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-cache-evicted",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": ["C"]
+                "value": ["C"],
+                "at": [0.84, 0.84]
               },
               {
                 "do": "set",
                 "actor": "operation",
-                "value": "set C"
+                "value": "set C",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "set",
                 "actor": "evicted",
-                "value": "A"
+                "value": "A",
+                "at": [0.84, 0.84]
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }

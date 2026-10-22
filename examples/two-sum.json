@@ -58,7 +58,10 @@
       "complexity": {
         "time": "O(n) expected",
         "space": "O(n)",
-        "derivation": ["Each value needs one expected constant-time map lookup."]
+        "derivation": [
+          "n is the number of input values. Auxiliary space excludes the supplied array.",
+          "Each value needs one expected constant-time map lookup."
+        ]
       }
     },
     {
@@ -80,9 +83,12 @@
         ]
       },
       "complexity": {
-        "time": "O(n\u00b2)",
+        "time": "O(n²)",
         "space": "O(1)",
-        "derivation": ["The worst case checks n(n-1)/2 pairs."]
+        "derivation": [
+          "n is the number of input values. Auxiliary space excludes the supplied array.",
+          "The worst case checks n(n-1)/2 pairs."
+        ]
       }
     }
   ],

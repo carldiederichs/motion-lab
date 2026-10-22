@@ -40,7 +40,14 @@
             "rows": []
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-path-results",
+            "from": "path",
+            "to": "results",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "Choose, explore, undo",
@@ -62,13 +69,31 @@
           },
           {
             "title": "Record a subset",
-            "text": "All choices are decided: [].",
-            "dur": 1600,
+            "text": "All choices are decided: []. Copy these values into a separate result; later undo operations change only the current path.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "[]",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-path-results",
+                "at": [0.05, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "results",
-                "value": ["[]"]
+                "value": ["[]"],
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -86,13 +111,31 @@
           },
           {
             "title": "Record a subset",
-            "text": "All choices are decided: [2].",
-            "dur": 1600,
+            "text": "All choices are decided: [2]. Copy these values into a separate result; later undo operations change only the current path.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "[2]",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-path-results",
+                "at": [0.05, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "results",
-                "value": ["[]", "[2]"]
+                "value": ["[]", "[2]"],
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -128,13 +171,31 @@
           },
           {
             "title": "Record a subset",
-            "text": "All choices are decided: [1].",
-            "dur": 1600,
+            "text": "All choices are decided: [1]. Copy these values into a separate result; later undo operations change only the current path.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "[1]",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-path-results",
+                "at": [0.05, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "results",
-                "value": ["[]", "[2]", "[1]"]
+                "value": ["[]", "[2]", "[1]"],
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -152,13 +213,31 @@
           },
           {
             "title": "Record a subset",
-            "text": "All choices are decided: [1, 2].",
-            "dur": 1600,
+            "text": "All choices are decided: [1, 2]. Copy these values into a separate result; later undo operations change only the current path.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "[1, 2]",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-path-results",
+                "at": [0.05, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "results",
-                "value": ["[]", "[2]", "[1]", "[1, 2]"]
+                "value": ["[]", "[2]", "[1]", "[1, 2]"],
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -185,6 +264,12 @@
                 "value": []
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }
@@ -214,7 +299,14 @@
             "rows": []
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-path-results",
+            "from": "path",
+            "to": "results",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "Choose, explore, undo",
@@ -230,13 +322,31 @@
           },
           {
             "title": "Record a subset",
-            "text": "All choices are decided: [].",
-            "dur": 1600,
+            "text": "All choices are decided: []. Copy these values into a separate result; later undo operations change only the current path.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "[]",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-path-results",
+                "at": [0.05, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "results",
-                "value": ["[]"]
+                "value": ["[]"],
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -254,13 +364,31 @@
           },
           {
             "title": "Record a subset",
-            "text": "All choices are decided: [7].",
-            "dur": 1600,
+            "text": "All choices are decided: [7]. Copy these values into a separate result; later undo operations change only the current path.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "[7]",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-path-results",
+                "at": [0.05, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "results",
-                "value": ["[]", "[7]"]
+                "value": ["[]", "[7]"],
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -275,6 +403,12 @@
                 "value": []
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }
@@ -304,7 +438,14 @@
             "rows": []
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-path-results",
+            "from": "path",
+            "to": "results",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "Choose, explore, undo",
@@ -314,15 +455,39 @@
           },
           {
             "title": "Record a subset",
-            "text": "All choices are decided: [].",
-            "dur": 1600,
+            "text": "All choices are decided: []. Copy these values into a separate result; later undo operations change only the current path.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "[]",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-path-results",
+                "at": [0.05, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "rows",
                 "actor": "results",
-                "value": ["[]"]
+                "value": ["[]"],
+                "at": [0.84, 0.84]
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }

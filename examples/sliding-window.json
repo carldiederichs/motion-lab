@@ -65,9 +65,11 @@
         ]
       },
       "complexity": {
-        "time": "O(n\u00b7k)",
+        "time": "O(n·k)",
         "space": "O(1)",
-        "derivation": ["Each of n-k+1 windows adds k values again."]
+        "derivation": [
+          "n is the array length and k the window size. Each of n−k+1 windows adds k values again. Only counters and a running sum are stored."
+        ]
       }
     }
   ],
@@ -76,7 +78,8 @@
     "lines": [
       "function maxWindow(nums, k) {",
       "  if (k < 1 || k > nums.length) return null;",
-      "  let sum = nums.slice(0, k).reduce((a, b) => a + b, 0);",
+      "  let sum = 0;",
+      "  for (let j = 0; j < k; j++) sum += nums[j];",
       "  let best = sum;",
       "  for (let i = k; i < nums.length; i++) {",
       "    sum += nums[i] - nums[i - k];",
@@ -89,9 +92,9 @@
   "complexity": {
     "time": "O(n)",
     "space": "O(1)",
-    "example": "Prime k values, then make n\u2212k updates with one addition and one subtraction. Brute force repeats k additions per window.",
+    "example": "Prime k values, then make n−k updates with one addition and one subtraction. Brute force repeats k additions per window.",
     "derivation": [
-      "Prime k values, then make n\u2212k updates with one addition and one subtraction. Brute force repeats k additions per window."
+      "n is the array length and k the window size. Prime k values, then make n−k updates with one addition and one subtraction. Only counters and running sums are stored; the input array is not copied."
     ]
   },
   "edgeCases": [

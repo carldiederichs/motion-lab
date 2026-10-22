@@ -53,9 +53,154 @@
             "label": "Paths to bottom right",
             "value": 0,
             "valueSmall": true
+          },
+          {
+            "id": "row-0-at-0",
+            "kind": "text",
+            "x": 220,
+            "y": 130,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-0-at-1",
+            "kind": "text",
+            "x": 320,
+            "y": 130,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-0-at-2",
+            "kind": "text",
+            "x": 420,
+            "y": 130,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-1-at-0",
+            "kind": "text",
+            "x": 220,
+            "y": 230,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-1-at-1",
+            "kind": "text",
+            "x": 320,
+            "y": 230,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-1-at-2",
+            "kind": "text",
+            "x": 420,
+            "y": 230,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-2-at-0",
+            "kind": "text",
+            "x": 220,
+            "y": 330,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-2-at-1",
+            "kind": "text",
+            "x": 320,
+            "y": 330,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-2-at-2",
+            "kind": "text",
+            "x": 420,
+            "y": 330,
+            "text": "",
+            "inspect": false
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-row-0-at-0-row-0-at-1",
+            "from": "row-0-at-0",
+            "to": "row-0-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-0-at-1-row-0-at-2",
+            "from": "row-0-at-1",
+            "to": "row-0-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-0-at-0-row-1-at-0",
+            "from": "row-0-at-0",
+            "to": "row-1-at-0",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-0-at-1-row-1-at-1",
+            "from": "row-0-at-1",
+            "to": "row-1-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-1-at-0-row-1-at-1",
+            "from": "row-1-at-0",
+            "to": "row-1-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-0-at-2-row-1-at-2",
+            "from": "row-0-at-2",
+            "to": "row-1-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-1-at-1-row-1-at-2",
+            "from": "row-1-at-1",
+            "to": "row-1-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-1-at-0-row-2-at-0",
+            "from": "row-1-at-0",
+            "to": "row-2-at-0",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-1-at-1-row-2-at-1",
+            "from": "row-1-at-1",
+            "to": "row-2-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-2-at-0-row-2-at-1",
+            "from": "row-2-at-0",
+            "to": "row-2-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-1-at-2-row-2-at-2",
+            "from": "row-1-at-2",
+            "to": "row-2-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-2-at-1-row-2-at-2",
+            "from": "row-2-at-1",
+            "to": "row-2-at-2",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "Count paths through a grid",
@@ -85,152 +230,372 @@
           {
             "title": "Cell (0,1)",
             "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-0-at-0-row-0-at-1",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-0",
                 "index": 1,
-                "value": 1
+                "value": 1,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-0",
                 "range": [1, 1],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (0,2)",
             "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-0-at-1-row-0-at-2",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-0",
                 "index": 2,
-                "value": 1
+                "value": 1,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-0",
                 "range": [2, 2],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (1,0)",
             "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-0-at-0-row-1-at-0",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-1",
                 "index": 0,
-                "value": 1
+                "value": 1,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-1",
                 "range": [0, 0],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (1,1)",
             "text": "This cell has 2 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-0-at-1-row-1-at-1",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.45, 0.45]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-1-at-0-row-1-at-1",
+                "at": [0.45, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-1",
                 "index": 1,
-                "value": 2
+                "value": 2,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-1",
                 "range": [1, 1],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (1,2)",
             "text": "This cell has 3 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-0-at-2-row-1-at-2",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "2",
+                "at": [0.45, 0.45]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-1-at-1-row-1-at-2",
+                "at": [0.45, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-1",
                 "index": 2,
-                "value": 3
+                "value": 3,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-1",
                 "range": [2, 2],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (2,0)",
             "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-1-at-0-row-2-at-0",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-2",
                 "index": 0,
-                "value": 1
+                "value": 1,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-2",
                 "range": [0, 0],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (2,1)",
             "text": "This cell has 3 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "2",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-1-at-1-row-2-at-1",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.45, 0.45]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-2-at-0-row-2-at-1",
+                "at": [0.45, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-2",
                 "index": 1,
-                "value": 3
+                "value": 3,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-2",
                 "range": [1, 1],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (2,2)",
             "text": "This cell has 6 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "3",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-1-at-2-row-2-at-2",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "3",
+                "at": [0.45, 0.45]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-2-at-1-row-2-at-2",
+                "at": [0.45, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-2",
                 "index": 2,
-                "value": 6
+                "value": 6,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-2",
                 "range": [2, 2],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -245,6 +610,12 @@
                 "value": 6
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }
@@ -287,9 +658,142 @@
             "label": "Paths to bottom right",
             "value": 0,
             "valueSmall": true
+          },
+          {
+            "id": "row-0-at-0",
+            "kind": "text",
+            "x": 220,
+            "y": 130,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-0-at-1",
+            "kind": "text",
+            "x": 320,
+            "y": 130,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-0-at-2",
+            "kind": "text",
+            "x": 420,
+            "y": 130,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-1-at-0",
+            "kind": "text",
+            "x": 220,
+            "y": 230,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-1-at-2",
+            "kind": "text",
+            "x": 420,
+            "y": 230,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-1-at-1",
+            "kind": "text",
+            "x": 320,
+            "y": 230,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-2-at-0",
+            "kind": "text",
+            "x": 220,
+            "y": 330,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-2-at-1",
+            "kind": "text",
+            "x": 320,
+            "y": 330,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "row-2-at-2",
+            "kind": "text",
+            "x": 420,
+            "y": 330,
+            "text": "",
+            "inspect": false
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-row-0-at-0-row-0-at-1",
+            "from": "row-0-at-0",
+            "to": "row-0-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-0-at-1-row-0-at-2",
+            "from": "row-0-at-1",
+            "to": "row-0-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-0-at-0-row-1-at-0",
+            "from": "row-0-at-0",
+            "to": "row-1-at-0",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-0-at-2-row-1-at-2",
+            "from": "row-0-at-2",
+            "to": "row-1-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-1-at-1-row-1-at-2",
+            "from": "row-1-at-1",
+            "to": "row-1-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-1-at-0-row-2-at-0",
+            "from": "row-1-at-0",
+            "to": "row-2-at-0",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-1-at-1-row-2-at-1",
+            "from": "row-1-at-1",
+            "to": "row-2-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-2-at-0-row-2-at-1",
+            "from": "row-2-at-0",
+            "to": "row-2-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-1-at-2-row-2-at-2",
+            "from": "row-1-at-2",
+            "to": "row-2-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-row-2-at-1-row-2-at-2",
+            "from": "row-2-at-1",
+            "to": "row-2-at-2",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "Count paths through a grid",
@@ -319,57 +823,114 @@
           {
             "title": "Cell (0,1)",
             "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-0-at-0-row-0-at-1",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-0",
                 "index": 1,
-                "value": 1
+                "value": 1,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-0",
                 "range": [1, 1],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (0,2)",
             "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-0-at-1-row-0-at-2",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-0",
                 "index": 2,
-                "value": 1
+                "value": 1,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-0",
                 "range": [2, 2],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (1,0)",
             "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-0-at-0-row-1-at-0",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-1",
                 "index": 0,
-                "value": 1
+                "value": 1,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-1",
                 "range": [0, 0],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -395,76 +956,203 @@
           {
             "title": "Cell (1,2)",
             "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-0-at-2-row-1-at-2",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "0",
+                "at": [0.45, 0.45]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-1-at-1-row-1-at-2",
+                "at": [0.45, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-1",
                 "index": 2,
-                "value": 1
+                "value": 1,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-1",
                 "range": [2, 2],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (2,0)",
             "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-1-at-0-row-2-at-0",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-2",
                 "index": 0,
-                "value": 1
+                "value": 1,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-2",
                 "range": [0, 0],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (2,1)",
             "text": "This cell has 1 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "0",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-1-at-1-row-2-at-1",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.45, 0.45]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-2-at-0-row-2-at-1",
+                "at": [0.45, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-2",
                 "index": 1,
-                "value": 1
+                "value": 1,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-2",
                 "range": [1, 1],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Cell (2,2)",
             "text": "This cell has 2 paths. Reuse the already computed neighbouring cells.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-1-at-2-row-2-at-2",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "1",
+                "at": [0.45, 0.45]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-row-2-at-1-row-2-at-2",
+                "at": [0.45, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "row-2",
                 "index": 2,
-                "value": 2
+                "value": 2,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "row-2",
                 "range": [2, 2],
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -479,6 +1167,12 @@
                 "value": 2
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }
@@ -714,7 +1408,8 @@
               }
             ]
           }
-        ]
+        ],
+        "tokens": []
       }
     }
   ],

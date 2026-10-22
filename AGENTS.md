@@ -6,4 +6,4 @@ Use only synthetic, generic examples. No personal records, local paths, secrets,
 
 The canonical portable skill is `.agents/skills/motion-lab/SKILL.md`. Read it when creating a visualization. Keep this AGENTS.md as the only maintained project instruction entrypoint.
 
-Run unit/security tests, production build and browser tests before release. Inspect real pixels in both themes at desktop widths. Preserve manual playback and accessible keyboard controls. Commit coherent, verified milestones.
+Run `npm run check` (strict types, lint and formatting), unit/security tests, production build and browser tests before release. Runtime code, tools and tests share the same strict rules; do not add type suppressions or test exemptions. Inspect real pixels in both themes at desktop widths. Preserve manual playback and accessible keyboard controls. Commit coherent, verified milestones.

@@ -1,10 +1,9 @@
 import { readFile, writeFile, mkdir, rm, readdir, lstat } from 'node:fs/promises';
 import path from 'node:path';
 
-import { build } from 'esbuild';
-
 import { toolkitZip } from './archive.ts';
 import { compileBrowser } from './browser.ts';
+import { licenseNotices } from './licenses.ts';
 import { printLine } from './output.ts';
 import { ROOT, render, slugPattern, validate } from './renderer.ts';
 import { catalogueSchema } from '../engine/model.ts';
@@ -44,15 +43,7 @@ for (const file of await readdir(path.join(ROOT, 'site'))) {
   if (!info.isFile() || info.isSymbolicLink()) throw Error('Site assets must be regular files');
   if (file === 'hero.ts') continue;
   if (file === 'app.ts') {
-    await build({
-      entryPoints: [path.join(ROOT, 'site/app.ts')],
-      outfile: path.join(out, 'app.js'),
-      bundle: true,
-      format: 'iife',
-      platform: 'browser',
-      target: 'es2023',
-      legalComments: 'none',
-    });
+    await writeFile(path.join(out, 'app.js'), await compileBrowser('site/app.ts'));
     continue;
   }
   if (file === 'index.html') {
@@ -67,6 +58,8 @@ for (const file of await readdir(path.join(ROOT, 'site'))) {
   await writeFile(path.join(out, file), await readFile(path.join(ROOT, 'site', file)));
 }
 await writeFile(path.join(out, 'catalogue.json'), JSON.stringify(catalogue));
+await writeFile(path.join(out, 'LICENSE.txt'), await readFile(path.join(ROOT, 'LICENSE')));
+await writeFile(path.join(out, 'THIRD-PARTY-NOTICES.txt'), await licenseNotices());
 await writeFile(path.join(out, 'downloads/motion-lab-toolkit.zip'), await toolkitZip());
 printLine(
   `Built ${catalogue.length} public examples and the local toolkit in dist/. No local work was included.`,

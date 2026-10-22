@@ -68,9 +68,29 @@ for (const width of [360, 1024, 1440])
       await expect(
         page.getByRole('navigation').getByRole('link', { name: 'GitHub' }),
       ).toBeVisible();
+      const primary = page.locator('#home .actions .primary');
+      const secondary = page.locator('#home .actions .quiet');
+      await expect(primary).toHaveText('See how it works ↓');
+      await expect(primary).toHaveAttribute('href', '#demo');
+      await expect(secondary).toHaveText('Explore examples →');
+      await expect(secondary).toHaveAttribute('href', '#examples');
+      await primary.click();
+      await expect(page).toHaveURL(/#demo$/);
+      await expect(page.locator('#prompt-panel')).toBeInViewport();
+      await page.locator('#demo-run').click();
+      await expect(
+        page.frameLocator('#demo-frame').getByRole('textbox', { name: 'Key hash positions' }),
+      ).toBeVisible();
+      await secondary.click();
+      await expect(page).toHaveURL(/#examples$/);
+      await expect(page.locator('#examples-heading')).toBeInViewport();
       const logo = await page.request.get('/github.svg');
       expect(logo.ok()).toBe(true);
       expect(await logo.text()).toContain('<svg');
+      const notices = await page.request.get('/THIRD-PARTY-NOTICES.txt');
+      expect(notices.ok()).toBe(true);
+      expect(notices.headers()['content-type']).toBe('text/plain; charset=utf-8');
+      expect(await notices.text()).toContain('Copyright (c) 2025 Colin McDonnell');
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
         true,
       );

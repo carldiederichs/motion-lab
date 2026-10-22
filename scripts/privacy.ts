@@ -38,6 +38,8 @@ export async function audit(root = ROOT): Promise<{ files: number; issues: strin
     'github.svg',
     '404.html',
     'catalogue.json',
+    'LICENSE.txt',
+    'THIRD-PARTY-NOTICES.txt',
     'downloads/motion-lab-toolkit.zip',
   ]);
   const catalogue = catalogueSchema.parse(

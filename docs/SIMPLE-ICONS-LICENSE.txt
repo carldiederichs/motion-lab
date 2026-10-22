@@ -1,3 +1,6 @@
+Historical notice: the Simple Icons LeetCode artwork was removed from current builds.
+This notice is retained for older copies. CC0 does not grant trademark rights.
+
 LeetCode icon source: https://github.com/simple-icons/simple-icons/blob/develop/icons/leetcode.svg
 
 # CC0 1.0 Universal

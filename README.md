@@ -1,5 +1,7 @@
 # Motion Lab
 
+[Explore the live demo](https://motion-lab-alpha-three.vercel.app/) in a desktop browser.
+
 Interactive explanations for the engineering question in front of you. Follow a request, step through an algorithm, inspect a state change or compare two designs. Change the inputs and watch the explanation respond.
 
 The public site is a static collection of examples. New explanations are created locally by your own AI coding assistant using the included skill. There is no hosted chatbot, model billing, account system or analytics.

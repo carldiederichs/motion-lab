@@ -1,6 +1,6 @@
 # Delivery checklist
 
-Target: a public-ready desktop showcase and a downloadable local toolkit. Hosting account connection is deferred to the owner.
+Target: a public desktop showcase and a downloadable local toolkit. Live on [Vercel](https://motion-lab-alpha-three.vercel.app/).
 
 - [x] Inspect the existing renderer and catalogue to identify reusable visual families.
 - [x] Establish a new repository with no inherited Git history or personal catalogue data.
@@ -36,8 +36,8 @@ Authoring and deployment work landed through [PR 1](https://github.com/carldiede
 
 ## Account-dependent steps
 
-- [ ] Owner connects the GitHub repository to Vercel or Railway.
-- [ ] Run the live smoke check on the resulting public URL.
+- [x] Connect the GitHub repository to Vercel with the owner's approval and deploy `main`.
+- [x] Run the live smoke check on the public URL and inspect the deployed site in Chrome.
 - [ ] Owner reviews the live site before using its link.
 - [ ] Optional: enable the prepared GitHub Actions workflow and verify its first run. The current OAuth login cannot upload workflow files; hosting does not depend on this step.
 
@@ -49,4 +49,4 @@ No application form is part of this workflow.
 - [x] Stop the hero connector outside server labels in both ownership states.
 - [x] Give each gallery preview a distinct, relevant representation of its topic.
 - [x] Verify geometry, both themes and desktop widths; inspect the rendered changes.
-- [ ] Commit, publish and merge the verified update.
+- [x] Commit, publish and merge the verified update through [PR 3](https://github.com/carldiederichs/motion-lab/pull/3).

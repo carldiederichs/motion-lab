@@ -2,6 +2,10 @@
 
 The application is static: no database, API keys, model account or environment secrets are required. Vercel is the shorter setup. Railway runs the included static server in a container.
 
+## Current deployment
+
+Production: **https://motion-lab-alpha-three.vercel.app/**. Vercel is connected to this repository with `main` as the production branch. Push reviewed changes to `main` to trigger a new production build, then run the public smoke check below. The initial deployment passed unauthenticated route checks and a visual/interaction review in Chrome.
+
 ## Vercel
 
 1. Sign in to Vercel and choose **Add New → Project**.
@@ -11,7 +15,7 @@ The application is static: no database, API keys, model account or environment s
 5. Open the production URL in a signed-out browser. Check that deployment protection does not require visitors to sign in before sharing the link.
 6. Run the smoke check below, then review the tour, a lesson and the toolkit download on the live URL.
 
-The [Vercel build configuration documentation](https://vercel.com/docs/builds/configure-a-build) explains framework selection and the output directory. No deployment account has been connected by this repository.
+The [Vercel build configuration documentation](https://vercel.com/docs/builds/configure-a-build) explains framework selection and the output directory. The steps above are for recreating the deployment; the current project is already connected.
 
 ## Railway
 
@@ -24,10 +28,10 @@ See Railway's [Dockerfile guide](https://docs.railway.com/builds/dockerfiles) an
 
 ## Live smoke check
 
-From the repository, replace the example URL with the deployed HTTPS URL:
+From the repository:
 
 ```sh
-node scripts/smoke.mjs https://your-project.example
+node scripts/smoke.mjs https://motion-lab-alpha-three.vercel.app
 ```
 
 This performs read-only requests to the landing page, catalogue, every lesson, assets and toolkit ZIP. It checks that private and unknown routes return 404. It does not fill forms, call a model or send local files.

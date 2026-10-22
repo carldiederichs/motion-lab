@@ -61,6 +61,8 @@
   "complexity": {
     "time": "O(n)",
     "space": "O(1)",
-    "derivation": ["Each node is visited once. Only three references are kept."]
+    "derivation": [
+      "n is the number of list nodes. Each node is visited once. Only three references are kept; node values are not copied."
+    ]
   }
 }

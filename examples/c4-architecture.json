@@ -85,6 +85,11 @@
             "dur": 2200,
             "actions": [
               {
+                "do": "label",
+                "token": "request",
+                "text": "order #42"
+              },
+              {
                 "do": "move",
                 "token": "request",
                 "link": "browse",
@@ -93,7 +98,8 @@
               {
                 "do": "tone",
                 "actor": "shop",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.8, 0.8]
               },
               {
                 "do": "hide",
@@ -108,6 +114,11 @@
             "dur": 2200,
             "actions": [
               {
+                "do": "label",
+                "token": "request",
+                "text": "pay #42"
+              },
+              {
                 "do": "move",
                 "token": "request",
                 "link": "charge",
@@ -116,7 +127,8 @@
               {
                 "do": "tone",
                 "actor": "payments",
-                "tone": "warning"
+                "tone": "warning",
+                "at": [0.8, 0.8]
               },
               {
                 "do": "hide",
@@ -139,7 +151,7 @@
             "y": 40,
             "w": 670,
             "h": 420,
-            "label": "Storefront \u00b7 software system"
+            "label": "Storefront · software system"
           },
           {
             "id": "customer",
@@ -159,7 +171,7 @@
             "w": 220,
             "h": 76,
             "label": "Web app",
-            "sub": "Browser \u00b7 JavaScript"
+            "sub": "Browser · JavaScript"
           },
           {
             "id": "api",
@@ -169,7 +181,7 @@
             "w": 220,
             "h": 76,
             "label": "API",
-            "sub": "Server \u00b7 Node.js"
+            "sub": "Server · Node.js"
           },
           {
             "id": "db",
@@ -180,7 +192,7 @@
             "h": 110,
             "label": "Product database",
             "rows": ["product 42"],
-            "sub": "Database \u00b7 SQL"
+            "sub": "Database · SQL"
           }
         ],
         "links": [
@@ -225,6 +237,11 @@
             "dur": 2200,
             "actions": [
               {
+                "do": "label",
+                "token": "request",
+                "text": "page /42"
+              },
+              {
                 "do": "move",
                 "token": "request",
                 "link": "browse",
@@ -242,6 +259,11 @@
             "text": "The web app asks the API for a product over HTTPS.",
             "dur": 2200,
             "actions": [
+              {
+                "do": "label",
+                "token": "request",
+                "text": "GET /42"
+              },
               {
                 "do": "move",
                 "token": "request",
@@ -261,6 +283,11 @@
             "dur": 2200,
             "actions": [
               {
+                "do": "label",
+                "token": "request",
+                "text": "SELECT 42"
+              },
+              {
                 "do": "move",
                 "token": "request",
                 "link": "query",
@@ -270,6 +297,78 @@
                 "do": "hide",
                 "token": "request",
                 "at": [0.8, 0.9]
+              }
+            ]
+          },
+          {
+            "title": "Return the product",
+            "text": "The result returns across the same boundary. C4 describes ownership; this trace illustrates one concrete interaction.",
+            "dur": 1800,
+            "actions": [
+              {
+                "do": "label",
+                "token": "request",
+                "text": "product 42"
+              },
+              {
+                "do": "move",
+                "token": "request",
+                "link": "query",
+                "reverse": true,
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [0.82, 0.82]
+              }
+            ]
+          },
+          {
+            "title": "Return the API response",
+            "text": "The result returns across the same boundary. C4 describes ownership; this trace illustrates one concrete interaction.",
+            "dur": 1800,
+            "actions": [
+              {
+                "do": "label",
+                "token": "request",
+                "text": "200: #42"
+              },
+              {
+                "do": "move",
+                "token": "request",
+                "link": "fetch",
+                "reverse": true,
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [0.82, 0.82]
+              }
+            ]
+          },
+          {
+            "title": "Show the result",
+            "text": "The result returns across the same boundary. C4 describes ownership; this trace illustrates one concrete interaction.",
+            "dur": 1800,
+            "actions": [
+              {
+                "do": "label",
+                "token": "request",
+                "text": "product 42"
+              },
+              {
+                "do": "move",
+                "token": "request",
+                "link": "browse",
+                "reverse": true,
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [0.82, 0.82]
               }
             ]
           }
@@ -287,7 +386,7 @@
             "y": 40,
             "w": 670,
             "h": 420,
-            "label": "Storefront \u00b7 software system"
+            "label": "Storefront · software system"
           },
           {
             "id": "customer",
@@ -307,7 +406,7 @@
             "w": 220,
             "h": 76,
             "label": "Web app",
-            "sub": "Browser \u00b7 JavaScript"
+            "sub": "Browser · JavaScript"
           },
           {
             "id": "api",
@@ -317,7 +416,7 @@
             "w": 220,
             "h": 76,
             "label": "API",
-            "sub": "Server \u00b7 Node.js"
+            "sub": "Server · Node.js"
           },
           {
             "id": "db",
@@ -328,7 +427,7 @@
             "h": 110,
             "label": "Product database",
             "rows": ["product 42"],
-            "sub": "Database \u00b7 SQL"
+            "sub": "Database · SQL"
           }
         ],
         "links": [
@@ -373,6 +472,11 @@
             "dur": 2200,
             "actions": [
               {
+                "do": "label",
+                "token": "request",
+                "text": "page /42"
+              },
+              {
                 "do": "move",
                 "token": "request",
                 "link": "browse",
@@ -391,6 +495,11 @@
             "dur": 2200,
             "actions": [
               {
+                "do": "label",
+                "token": "request",
+                "text": "GET /42"
+              },
+              {
                 "do": "move",
                 "token": "request",
                 "link": "fetch",
@@ -405,11 +514,16 @@
           },
           {
             "title": "API to database",
-            "text": "The API reads persisted product data. The browser never queries this database directly.",
+            "text": "The API sends SELECT 42, but the database is unavailable. No product result returns.",
             "dur": 2200,
             "actions": [
               {
-                "do": "move",
+                "do": "label",
+                "token": "request",
+                "text": "SELECT 42"
+              },
+              {
+                "do": "drop",
                 "token": "request",
                 "link": "query",
                 "at": [0, 0.75]
@@ -430,6 +544,54 @@
                 "do": "tone",
                 "actor": "db",
                 "tone": "failure"
+              }
+            ]
+          },
+          {
+            "title": "Return the API response",
+            "text": "The API reports the failed dependency; no product is fabricated.",
+            "dur": 1800,
+            "actions": [
+              {
+                "do": "label",
+                "token": "request",
+                "text": "503"
+              },
+              {
+                "do": "move",
+                "token": "request",
+                "link": "fetch",
+                "reverse": true,
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [0.82, 0.82]
+              }
+            ]
+          },
+          {
+            "title": "Show the result",
+            "text": "The API reports the failed dependency; no product is fabricated.",
+            "dur": 1800,
+            "actions": [
+              {
+                "do": "label",
+                "token": "request",
+                "text": "unavailable"
+              },
+              {
+                "do": "move",
+                "token": "request",
+                "link": "browse",
+                "reverse": true,
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "request",
+                "at": [0.82, 0.82]
               }
             ]
           }

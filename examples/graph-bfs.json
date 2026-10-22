@@ -59,8 +59,9 @@
     "language": "ts",
     "lines": [
       "const queue = [start], distance = new Map([[start, 0]]);",
-      "while (queue.length) {",
-      "  const node = queue.shift();",
+      "let head = 0;",
+      "while (head < queue.length) {",
+      "  const node = queue[head++];",
       "  for (const next of neighbours(node)) {",
       "    if (distance.has(next)) continue;",
       "    distance.set(next, distance.get(node) + 1);",
@@ -71,10 +72,12 @@
     ]
   },
   "complexity": {
-    "time": "O(V + E)*",
+    "time": "O(V + E)",
     "space": "O(V)",
     "derivation": [
-      "Each vertex and edge is examined once with a constant-time queue. This small demo uses Array.shift(); use a head index for the stated bound."
+      "V is the number of vertices (nodes); E is the number of directed edges.",
+      "With adjacency lists, each reachable node is enqueued once and each outgoing edge is checked once. Advancing the queue head costs O(1); no array shifting is needed.",
+      "Map lookups take expected O(1). The queue and distances store at most V entries. These bounds describe the shown algorithm, excluding the input graph and visualization snapshots."
     ]
   }
 }

@@ -66,8 +66,10 @@
     ]
   },
   "complexity": {
-    "time": "O(amount \u00b7 coins)",
+    "time": "O(amount · coins)",
     "space": "O(amount)",
-    "derivation": ["Each amount tries each positive coin. One table stores the smaller answers."]
+    "derivation": [
+      "amount is the target value; coins is the number of positive denominations. Each amount tries every denomination. The table contains amount + 1 entries, including zero."
+    ]
   }
 }

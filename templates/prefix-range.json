@@ -66,9 +66,130 @@
             "x": 420,
             "y": 450,
             "text": "p[right] - p[left] removes the earlier values"
+          },
+          {
+            "id": "prefix-at-0",
+            "kind": "text",
+            "x": 135,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-1",
+            "kind": "text",
+            "x": 225,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-0",
+            "kind": "text",
+            "x": 180,
+            "y": 150,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-2",
+            "kind": "text",
+            "x": 315,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-1",
+            "kind": "text",
+            "x": 270,
+            "y": 150,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-3",
+            "kind": "text",
+            "x": 405,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-2",
+            "kind": "text",
+            "x": 360,
+            "y": 150,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-4",
+            "kind": "text",
+            "x": 495,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-3",
+            "kind": "text",
+            "x": 450,
+            "y": 150,
+            "text": "",
+            "inspect": false
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-prefix-at-0-prefix-at-1",
+            "from": "prefix-at-0",
+            "to": "prefix-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-0-prefix-at-1",
+            "from": "input-at-0",
+            "to": "prefix-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-prefix-at-1-prefix-at-2",
+            "from": "prefix-at-1",
+            "to": "prefix-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-1-prefix-at-2",
+            "from": "input-at-1",
+            "to": "prefix-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-prefix-at-2-prefix-at-3",
+            "from": "prefix-at-2",
+            "to": "prefix-at-3",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-2-prefix-at-3",
+            "from": "input-at-2",
+            "to": "prefix-at-3",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-prefix-at-3-prefix-at-4",
+            "from": "prefix-at-3",
+            "to": "prefix-at-4",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-3-prefix-at-4",
+            "from": "input-at-3",
+            "to": "prefix-at-4",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "Start before the first item",
@@ -86,19 +207,55 @@
           {
             "title": "Build prefix 1",
             "text": "Add 2 to the earlier total 0. Prefix 1 is now 2.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "0",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-0-prefix-at-1",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(2)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-0-prefix-at-1",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 1,
-                "value": 2
+                "value": 2,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [0, 0],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -106,19 +263,55 @@
           {
             "title": "Build prefix 2",
             "text": "Add 1 to the earlier total 2. Prefix 2 is now 3.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "2",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-1-prefix-at-2",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(1)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-1-prefix-at-2",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 2,
-                "value": 3
+                "value": 3,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [1, 1],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -126,19 +319,55 @@
           {
             "title": "Build prefix 3",
             "text": "Add 3 to the earlier total 3. Prefix 3 is now 6.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "3",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-2-prefix-at-3",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(3)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-2-prefix-at-3",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 3,
-                "value": 6
+                "value": 6,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [2, 2],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -146,19 +375,55 @@
           {
             "title": "Build prefix 4",
             "text": "Add 4 to the earlier total 6. Prefix 4 is now 10.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "6",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-3-prefix-at-4",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(4)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-3-prefix-at-4",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 4,
-                "value": 10
+                "value": 10,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [3, 3],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -200,6 +465,12 @@
               }
             ],
             "lines": [6]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }
@@ -255,9 +526,130 @@
             "x": 420,
             "y": 450,
             "text": "p[right] - p[left] removes the earlier values"
+          },
+          {
+            "id": "prefix-at-0",
+            "kind": "text",
+            "x": 135,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-1",
+            "kind": "text",
+            "x": 225,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-0",
+            "kind": "text",
+            "x": 180,
+            "y": 150,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-2",
+            "kind": "text",
+            "x": 315,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-1",
+            "kind": "text",
+            "x": 270,
+            "y": 150,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-3",
+            "kind": "text",
+            "x": 405,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-2",
+            "kind": "text",
+            "x": 360,
+            "y": 150,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-4",
+            "kind": "text",
+            "x": 495,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-3",
+            "kind": "text",
+            "x": 450,
+            "y": 150,
+            "text": "",
+            "inspect": false
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-prefix-at-0-prefix-at-1",
+            "from": "prefix-at-0",
+            "to": "prefix-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-0-prefix-at-1",
+            "from": "input-at-0",
+            "to": "prefix-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-prefix-at-1-prefix-at-2",
+            "from": "prefix-at-1",
+            "to": "prefix-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-1-prefix-at-2",
+            "from": "input-at-1",
+            "to": "prefix-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-prefix-at-2-prefix-at-3",
+            "from": "prefix-at-2",
+            "to": "prefix-at-3",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-2-prefix-at-3",
+            "from": "input-at-2",
+            "to": "prefix-at-3",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-prefix-at-3-prefix-at-4",
+            "from": "prefix-at-3",
+            "to": "prefix-at-4",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-3-prefix-at-4",
+            "from": "input-at-3",
+            "to": "prefix-at-4",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "Start before the first item",
@@ -275,19 +667,55 @@
           {
             "title": "Build prefix 1",
             "text": "Add 2 to the earlier total 0. Prefix 1 is now 2.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "0",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-0-prefix-at-1",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(2)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-0-prefix-at-1",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 1,
-                "value": 2
+                "value": 2,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [0, 0],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -295,19 +723,55 @@
           {
             "title": "Build prefix 2",
             "text": "Add 1 to the earlier total 2. Prefix 2 is now 3.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "2",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-1-prefix-at-2",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(1)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-1-prefix-at-2",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 2,
-                "value": 3
+                "value": 3,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [1, 1],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -315,19 +779,55 @@
           {
             "title": "Build prefix 3",
             "text": "Add 3 to the earlier total 3. Prefix 3 is now 6.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "3",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-2-prefix-at-3",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(3)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-2-prefix-at-3",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 3,
-                "value": 6
+                "value": 6,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [2, 2],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -335,19 +835,55 @@
           {
             "title": "Build prefix 4",
             "text": "Add 4 to the earlier total 6. Prefix 4 is now 10.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "6",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-3-prefix-at-4",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(4)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-3-prefix-at-4",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 4,
-                "value": 10
+                "value": 10,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [3, 3],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -389,6 +925,12 @@
               }
             ],
             "lines": [6]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }
@@ -444,9 +986,130 @@
             "x": 420,
             "y": 450,
             "text": "p[right] - p[left] removes the earlier values"
+          },
+          {
+            "id": "prefix-at-0",
+            "kind": "text",
+            "x": 135,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-1",
+            "kind": "text",
+            "x": 225,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-0",
+            "kind": "text",
+            "x": 180,
+            "y": 150,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-2",
+            "kind": "text",
+            "x": 315,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-1",
+            "kind": "text",
+            "x": 270,
+            "y": 150,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-3",
+            "kind": "text",
+            "x": 405,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-2",
+            "kind": "text",
+            "x": 360,
+            "y": 150,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "prefix-at-4",
+            "kind": "text",
+            "x": 495,
+            "y": 300,
+            "text": "",
+            "inspect": false
+          },
+          {
+            "id": "input-at-3",
+            "kind": "text",
+            "x": 450,
+            "y": 150,
+            "text": "",
+            "inspect": false
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "id": "route-prefix-at-0-prefix-at-1",
+            "from": "prefix-at-0",
+            "to": "prefix-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-0-prefix-at-1",
+            "from": "input-at-0",
+            "to": "prefix-at-1",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-prefix-at-1-prefix-at-2",
+            "from": "prefix-at-1",
+            "to": "prefix-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-1-prefix-at-2",
+            "from": "input-at-1",
+            "to": "prefix-at-2",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-prefix-at-2-prefix-at-3",
+            "from": "prefix-at-2",
+            "to": "prefix-at-3",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-2-prefix-at-3",
+            "from": "input-at-2",
+            "to": "prefix-at-3",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-prefix-at-3-prefix-at-4",
+            "from": "prefix-at-3",
+            "to": "prefix-at-4",
+            "tone": "hidden"
+          },
+          {
+            "id": "route-input-at-3-prefix-at-4",
+            "from": "input-at-3",
+            "to": "prefix-at-4",
+            "tone": "hidden"
+          }
+        ],
         "beats": [
           {
             "title": "Start before the first item",
@@ -464,19 +1127,55 @@
           {
             "title": "Build prefix 1",
             "text": "Add -2 to the earlier total 0. Prefix 1 is now -2.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "0",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-0-prefix-at-1",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(-2)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-0-prefix-at-1",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 1,
-                "value": -2
+                "value": -2,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [0, 0],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -484,19 +1183,55 @@
           {
             "title": "Build prefix 2",
             "text": "Add 5 to the earlier total -2. Prefix 2 is now 3.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "-2",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-1-prefix-at-2",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(5)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-1-prefix-at-2",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 2,
-                "value": 3
+                "value": 3,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [1, 1],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -504,19 +1239,55 @@
           {
             "title": "Build prefix 3",
             "text": "Add -1 to the earlier total 3. Prefix 3 is now 2.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "3",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-2-prefix-at-3",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(-1)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-2-prefix-at-3",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 3,
-                "value": 2
+                "value": 2,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [2, 2],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -524,19 +1295,55 @@
           {
             "title": "Build prefix 4",
             "text": "Add 4 to the earlier total 2. Prefix 4 is now 6.",
-            "dur": 1600,
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "data",
+                "text": "2",
+                "at": [0.05, 0.05]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-prefix-at-3-prefix-at-4",
+                "at": [0.05, 0.38]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.39, 0.39]
+              },
+              {
+                "do": "label",
+                "token": "data",
+                "text": "+(4)",
+                "at": [0.43, 0.43]
+              },
+              {
+                "do": "move",
+                "token": "data",
+                "link": "route-input-at-3-prefix-at-4",
+                "at": [0.43, 0.78]
+              },
+              {
+                "do": "hide",
+                "token": "data",
+                "at": [0.79, 0.79]
+              },
               {
                 "do": "cellValue",
                 "actor": "prefix",
                 "index": 4,
-                "value": 6
+                "value": 6,
+                "at": [0.84, 0.84]
               },
               {
                 "do": "cells",
                 "actor": "input",
                 "range": [3, 3],
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -578,6 +1385,12 @@
               }
             ],
             "lines": [6]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "data",
+            "label": ""
           }
         ]
       }

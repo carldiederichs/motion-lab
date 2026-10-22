@@ -59,3 +59,16 @@ No application form is part of this workflow.
 - [x] Document visual families and distinguish editable simulations from composed traces.
 - [x] Verify installation from the toolkit and a fresh checkout, plus read-only container serving.
 - [x] Enable hosted verification and check its first full run.
+
+## Learning workflow and transport follow-up
+
+- [x] Carry labelled requests, values, results and control events between actors, with receiving state updated after arrival.
+- [x] Review every public example and authoring template for movement semantics.
+- [x] Make code panels follow the active theme and verify text contrast.
+- [x] Explain complexity variables and align the displayed BFS and window algorithms with their bounds.
+- [x] Clarify local skill invocation and preserve the exact visible command when copying.
+- [x] Add transactional outbox, replica-read and monotonic-stack authoring cases.
+- [x] Fix chapter selection, End navigation and theme switching from explicit theme links.
+- [x] Verify intermediate frames, reverse scrubbing, desktop layouts and fresh authoring.
+
+See [the transport audit](TRANSPORT-AUDIT.md) for per-family behavior and verification limits.

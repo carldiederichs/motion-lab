@@ -182,49 +182,42 @@
             >Download toolkit .zip ↓</a
           ><span class="small">Or clone the repository:</span>
           <div class="command">
-            <code>git clone https://github.com/carldiederichs/motion-lab.git</code
-            ><button
-              class="quiet copy"
-              data-copy="git clone https://github.com/carldiederichs/motion-lab.git"
-              aria-label="Copy clone command"
-            >
-              Copy
-            </button>
+            <pre><code>git clone https://github.com/carldiederichs/motion-lab.git</code></pre>
+            <button class="quiet copy" aria-label="Copy clone command">Copy</button>
           </div>
         </li>
         <li>
           <strong>Open the folder in a terminal.</strong>
           <div class="command">
-            <code>cd motion-lab<br />npm ci --ignore-scripts<br />npm run dev</code
-            ><button
-              class="quiet copy"
-              data-copy="cd motion-lab&#10;npm ci --ignore-scripts&#10;npm run dev"
-              aria-label="Copy run commands"
-            >
-              Copy
-            </button>
+            <pre><code>cd motion-lab
+npm ci --ignore-scripts
+npm run dev</code></pre>
+            <button class="quiet copy" aria-label="Copy run commands">Copy</button>
           </div>
           <span class="small"
             >Open http://127.0.0.1:4173. The gallery runs locally in your browser.</span
           >
         </li>
         <li>
-          <strong>Open your assistant in this folder and ask:</strong>
+          <strong>Describe your own engineering question.</strong>
+          <p class="small">
+            Open this folder in your own file-capable AI coding assistant. In Codex, select Motion
+            Lab from the / skill menu, or type $motion-lab. Replace the bracketed text below with
+            your question or relevant code.
+          </p>
           <div class="command">
-            <code
-              >Use the motion-lab skill to explain how a retry can create duplicate records. Show
-              the broken and safe versions.</code
-            ><button
-              class="quiet copy"
-              data-copy="Read .agents/skills/motion-lab/SKILL.md and use it to explain how a retry can create duplicate records. Show the broken and safe versions."
-              aria-label="Copy assistant prompt"
-            >
-              Copy
-            </button>
+            <pre><code>$motion-lab Explain [my code, system or engineering question] visually. Show what moves, what changes and why. Include a contrasting case.</code></pre>
+            <button class="quiet copy" aria-label="Copy assistant prompt">Copy</button>
+          </div>
+          <p class="small">If your assistant does not discover the skill, use this instead:</p>
+          <div class="command">
+            <pre><code>Read .agents/skills/motion-lab/SKILL.md and use it to create a visual explanation of [my engineering question]. Build it, verify it and show me the local result.</code></pre>
+            <button class="quiet copy" aria-label="Copy fallback prompt">Copy</button>
           </div>
           <span class="small"
-            >The skill is included in .agents/skills/motion-lab/. Assistants without skill discovery
-            can read that file directly.</span
+            >The gallery shows starting points. You can ask about your own algorithms, architecture,
+            requests or state changes. Your assistant creates and revises the explanation locally
+            using your chosen model; this website does not connect to a model.</span
           >
         </li>
       </ol>

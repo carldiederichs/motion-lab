@@ -58,7 +58,7 @@
     "space": "O(n) for sorting",
     "example": "Map operations are expected constant time. Deriving a sorted list visits and sorts all n entries.",
     "derivation": [
-      "Map operations are expected constant time. Deriving a sorted list visits and sorts all n entries."
+      "n is the number of stored entries. Map operations take expected O(1); sorting copies and orders n entries in O(n log n) time and O(n) extra space, assuming bounded key/value comparison cost. The store itself also occupies O(n) space."
     ]
   },
   "edgeCases": [

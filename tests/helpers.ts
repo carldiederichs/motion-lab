@@ -36,7 +36,11 @@ export function finalValue(scene: Scene, id: string): unknown {
     .at(-1)?.value;
 }
 export function rowValues(scene: Scene, beat: number): (string | number | boolean | null)[] {
-  const action = required(required(scene.beats[beat]).actions[0]);
+  const action = required(
+    required(scene.beats[beat])
+      .actions.filter((item) => item.do === 'rows')
+      .at(-1),
+  );
   assert(action.do === 'rows');
   return action.value;
 }

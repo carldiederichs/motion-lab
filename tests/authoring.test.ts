@@ -41,7 +41,9 @@ await test('subsets fixture enumerates every subset exactly once', async () => {
   for (const [index, n] of [2, 1, 0].entries()) {
     const scene = required(required(spec.variants?.[index]).scene);
     const action = required(
-      required(scene.beats.filter((beat) => beat.title === 'Record a subset').at(-1)).actions[0],
+      required(scene.beats.filter((beat) => beat.title === 'Record a subset').at(-1)).actions.find(
+        (item) => item.do === 'rows',
+      ),
     );
     assert(action.do === 'rows');
     assert.equal(action.value.length, 2 ** n);

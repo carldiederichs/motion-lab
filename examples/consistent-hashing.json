@@ -42,7 +42,8 @@
     "time": "O(v) demo lookup",
     "space": "O(v)",
     "derivation": [
-      "The visible code scans v server positions. A production ring can binary-search sorted virtual nodes in O(log v)."
+      "v is the number of server positions. Each lookup scans at most v positions in the sorted ring.",
+      "Building or re-sorting the ring costs O(v log v); migration additionally processes the affected keys. The ring stores v positions. A binary-search implementation could reduce lookup time to O(log v)."
     ]
   },
   "edgeCases": [

@@ -111,7 +111,44 @@ export const extraGenerators: Record<string, Generator> = {
         ],
       },
     ];
-    return { actors, links: [], tokens: [], beats };
+    const migration = required(beats[3]);
+    migration.dur = Math.min(8000, 2200 + moved.length * 650);
+    migration.actions = [];
+    const current = [...before];
+    moved.forEach((key, index) => {
+      const start = index / moved.length;
+      const end = (index + 1) / moved.length;
+      const arrival = start + (end - start) * 0.82;
+      keys.forEach((k, i) => {
+        if (k === key) current[i] = required(after[i]);
+      });
+      migration.actions.push(
+        { do: 'label', token: 'key', text: `key ${key}`, at: [start, start] },
+        { do: 'move', token: 'key', link: 'migrate', at: [start, arrival] },
+        { do: 'hide', token: 'key', at: [arrival, arrival] },
+        { do: 'rows', actor: 'mapping', value: [...current], at: [arrival, arrival] },
+        ...keys.flatMap((k, i): Action[] =>
+          k === key
+            ? [
+                {
+                  do: 'cells',
+                  actor: 'keys',
+                  range: [i, i],
+                  tone: 'warning',
+                  at: [arrival, arrival],
+                },
+              ]
+            : [],
+        ),
+      );
+    });
+    if (!moved.length) migration.actions.push({ do: 'rows', actor: 'mapping', value: after });
+    return {
+      actors,
+      links: [{ id: 'migrate', from: 'node-c', to: 'node-d', bend: -38, tone: 'hidden' }],
+      tokens: [{ id: 'key', label: 'key' }],
+      beats,
+    };
   },
   'binary-search': (raw) => {
     const p = inputSchemas['binary-search'].parse(raw);
@@ -258,6 +295,24 @@ export const extraGenerators: Record<string, Generator> = {
         actions: [],
       },
     ];
+    const links: Link[] = [];
+    for (let r = 0; r < grid.length; r++)
+      for (let c = 0; c < width; c++) {
+        actors.push({
+          id: `cell-${r}-${c}`,
+          kind: 'text',
+          x: 150 + c * 60,
+          y: 110 + r * 80,
+          text: '',
+          inspect: false,
+        });
+        links.push({
+          id: `visit-${r}-${c}`,
+          from: 'frontier',
+          to: `cell-${r}-${c}`,
+          tone: 'hidden',
+        });
+      }
     const seen = new Set();
     let count = 0;
     for (let r = 0; r < grid.length; r++)
@@ -271,7 +326,10 @@ export const extraGenerators: Record<string, Generator> = {
           text: `Cell (${r},${c}) is unvisited land. Increase the count once, then visit all land reachable from this cell.`,
           dur: 1700,
           lines: [2, 3],
-          actions: [{ do: 'set', actor: 'count', value: count }],
+          actions: [
+            { do: 'set', actor: 'count', value: count },
+            { do: 'rows', actor: 'frontier', value: [`(${r},${c})`] },
+          ],
         });
         while (stack.length) {
           const [y, x] = required(stack.pop());
@@ -295,16 +353,21 @@ export const extraGenerators: Record<string, Generator> = {
             dur: 1400,
             lines: [4, 5],
             actions: [
+              { do: 'label', token: 'visit', text: `(${y},${x})` },
+              { do: 'move', token: 'visit', link: `visit-${y}-${x}`, at: [0.05, 0.72] },
+              { do: 'hide', token: 'visit', at: [0.78, 0.78] },
               {
                 do: 'cells',
                 actor: `row-${y}`,
                 range: [x, x],
                 tone: 'success',
+                at: [0.78, 0.78],
               },
               {
                 do: 'rows',
                 actor: 'frontier',
                 value: stack.slice(-4).map(([a, b]) => `(${a},${b})`),
+                at: [0.78, 0.78],
               },
             ],
           });
@@ -317,7 +380,7 @@ export const extraGenerators: Record<string, Generator> = {
       lines: [6],
       actions: [{ do: 'tone', actor: 'count', tone: 'success' }],
     });
-    return { actors, links: [], tokens: [], beats };
+    return { actors, links, tokens: [{ id: 'visit', label: '' }], beats };
   },
 
   'linked-list': (raw) => {
@@ -489,10 +552,25 @@ export const extraGenerators: Record<string, Generator> = {
         beats.push({
           title: `Amount ${a}, try coin ${c}`,
           text: `Use the answer for ${a - c}, then add one coin of value ${c}. ${candidate === Infinity ? 'That smaller amount is unreachable.' : `Candidate ${candidate}; keep ${required(dp[a])}.`}`,
-          dur: 1400,
+          dur: 2200,
           lines: [3, 4, 5],
           actions: [
             { do: 'pointer', actor: 'dp', pointer: 'amount', index: a },
+            {
+              do: 'label',
+              token: 'dependency',
+              text: `dp[${a - c}]=${candidate === Infinity ? '∞' : candidate - 1}`,
+            },
+            { do: 'move', token: 'dependency', link: 'read', at: [0.05, 0.38] },
+            { do: 'hide', token: 'dependency', at: [0.4, 0.4] },
+            {
+              do: 'label',
+              token: 'dependency',
+              text: `min=${dp[a] === Infinity ? '∞' : dp[a]}`,
+              at: [0.5, 0.5],
+            },
+            { do: 'move', token: 'dependency', link: 'read', reverse: true, at: [0.5, 0.82] },
+            { do: 'hide', token: 'dependency', at: [0.84, 0.84] },
             {
               do: 'cells',
               actor: 'dp',
@@ -503,14 +581,14 @@ export const extraGenerators: Record<string, Generator> = {
               do: 'set',
               actor: 'candidate',
               value: `dp[${a - c}] + 1`,
-              at: [0, 0.3],
+              at: [0.4, 0.4],
             },
             {
               do: 'cellValue',
               actor: 'dp',
               index: a,
               value: required(dp[a]) === Infinity ? '∞' : required(dp[a]),
-              at: [0.6, 0.8],
+              at: [0.84, 0.84],
             },
           ],
         });
@@ -533,7 +611,12 @@ export const extraGenerators: Record<string, Generator> = {
         },
       ],
     });
-    return { actors, beats };
+    return {
+      actors,
+      links: [{ id: 'read', from: 'dp', to: 'candidate', tone: 'hidden' }],
+      tokens: [{ id: 'dependency', label: '' }],
+      beats,
+    };
   },
   'graph-bfs': (raw) => {
     const p = inputSchemas['graph-bfs'].parse(raw);
@@ -606,30 +689,59 @@ export const extraGenerators: Record<string, Generator> = {
         actions: [],
       },
     ];
-    while (queue.length) {
-      const node = required(queue.shift());
-      const acts: Action[] = [{ do: 'tone', actor: `node-${node}`, tone: 'success' }];
-      for (const [a, b] of edges) {
-        if (a !== node || dist.has(b)) continue;
-        dist.set(b, required(dist.get(node)) + 1);
-        queue.push(b);
-        acts.push({ do: 'tone', actor: `node-${b}`, tone: 'mechanism' });
-      }
-      acts.push(
-        { do: 'rows', actor: 'queue', value: queue.map(String) },
-        {
-          do: 'rows',
-          actor: 'distance',
-          value: [...dist].map(([n, d]) => `${n} → ${d}`),
-        },
-      );
+    const adjacency = new Map<number, { next: number; link: string }[]>();
+    edges.forEach(([from, next], i) => {
+      const outgoing = adjacency.get(from) ?? [];
+      outgoing.push({ next, link: `edge-${i}` });
+      adjacency.set(from, outgoing);
+    });
+    let head = 0;
+    while (head < queue.length) {
+      const node = required(queue[head++]);
       beats.push({
         title: `Visit node ${node}`,
-        text: `Remove ${node} from the front. Enqueue each unseen outgoing neighbour and record its distance once.${p.mode === 'cycle' && node === 3 ? ' The edge back to 1 is skipped because 1 is already seen.' : ' Seen nodes never enter the queue again.'}`,
-        dur: 1900,
-        lines: [3, 4, 5, 6],
-        actions: acts,
+        text: `Advance the queue head to visit ${node}. The existing array entries do not move. Now inspect each outgoing edge.`,
+        dur: 1300,
+        lines: [3, 4],
+        actions: [
+          { do: 'tone', actor: `node-${node}`, tone: 'success' },
+          { do: 'rows', actor: 'queue', value: queue.slice(head).map(String) },
+        ],
       });
+      for (const { next, link } of adjacency.get(node) ?? []) {
+        const seen = dist.has(next);
+        const candidate = required(dist.get(node)) + 1;
+        if (!seen) {
+          dist.set(next, candidate);
+          queue.push(next);
+        }
+        beats.push({
+          title: seen ? `Skip seen node ${next}` : `Discover node ${next}`,
+          text: seen
+            ? `The traversal follows ${node} → ${next}, but ${next} already has distance ${dist.get(next)}. Keep the earlier discovery and do not enqueue it again.`
+            : `Carry candidate distance ${candidate} along ${node} → ${next}. On arrival, record it and enqueue ${next}. The packet represents traversal state, not a network message.`,
+          dur: 1900,
+          lines: seen ? [5, 6] : [5, 6, 7, 8],
+          actions: [
+            { do: 'label', token: 'visit', text: `d=${candidate}` },
+            { do: 'move', token: 'visit', link, at: [0.08, 0.7] },
+            { do: 'hide', token: 'visit', at: [0.76, 0.76] },
+            {
+              do: 'tone',
+              actor: `node-${next}`,
+              tone: seen ? 'repeated' : 'mechanism',
+              at: [0.76, 0.76],
+            },
+            { do: 'rows', actor: 'queue', value: queue.slice(head).map(String), at: [0.76, 0.76] },
+            {
+              do: 'rows',
+              actor: 'distance',
+              value: [...dist].map(([n, d]) => `${n} → ${d}`),
+              at: [0.76, 0.76],
+            },
+          ],
+        });
+      }
     }
     beats.push({
       title: dist.has(4) ? `Node 4 is ${dist.get(4)} edges away` : 'Node 4 is unreachable',
@@ -637,9 +749,9 @@ export const extraGenerators: Record<string, Generator> = {
         ? 'The first discovered path is shortest because every edge has the same cost. Weighted edges require a different algorithm.'
         : 'The queue is empty. No directed path from node 0 reaches node 4.',
       dur: 1800,
-      lines: [9],
+      lines: [11],
       actions: [],
     });
-    return { actors, links, beats };
+    return { actors, links, tokens: [{ id: 'visit', label: 'distance' }], beats };
   },
 };

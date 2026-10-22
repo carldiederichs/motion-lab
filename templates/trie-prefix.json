@@ -141,54 +141,108 @@
           },
           {
             "title": "Follow c",
-            "text": "Consume c; the matched prefix is now c.",
-            "dur": 1600,
+            "text": "Consume c; the matched prefix is now c. The marker carries the next query character; it does not copy a trie node.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "c"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "root_c",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "c",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "link": "root_c",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
           },
           {
             "title": "Follow a",
-            "text": "Consume a; the matched prefix is now ca.",
-            "dur": 1600,
+            "text": "Consume a; the matched prefix is now ca. The marker carries the next query character; it does not copy a trie node.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "a"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "c_a",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "a",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "link": "c_a",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
           },
           {
             "title": "Follow r",
-            "text": "Consume r; the matched prefix is now car.",
-            "dur": 1600,
+            "text": "Consume r; the matched prefix is now car. The marker carries the next query character; it does not copy a trie node.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "r"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "a_r",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "r",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "link": "a_r",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -210,6 +264,12 @@
               }
             ],
             "lines": [6]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "payload",
+            "label": "event"
           }
         ]
       }
@@ -340,36 +400,72 @@
           },
           {
             "title": "Follow c",
-            "text": "Consume c; the matched prefix is now c.",
-            "dur": 1600,
+            "text": "Consume c; the matched prefix is now c. The marker carries the next query character; it does not copy a trie node.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "c"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "root_c",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "c",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "link": "root_c",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
           },
           {
             "title": "Follow a",
-            "text": "Consume a; the matched prefix is now ca.",
-            "dur": 1600,
+            "text": "Consume a; the matched prefix is now ca. The marker carries the next query character; it does not copy a trie node.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "a"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "c_a",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "a",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "link": "c_a",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -391,6 +487,12 @@
               }
             ],
             "lines": [6]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "payload",
+            "label": "event"
           }
         ]
       }
@@ -521,54 +623,108 @@
           },
           {
             "title": "Follow c",
-            "text": "Consume c; the matched prefix is now c.",
-            "dur": 1600,
+            "text": "Consume c; the matched prefix is now c. The marker carries the next query character; it does not copy a trie node.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "c"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "root_c",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "c",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "link": "root_c",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
           },
           {
             "title": "Follow a",
-            "text": "Consume a; the matched prefix is now ca.",
-            "dur": 1600,
+            "text": "Consume a; the matched prefix is now ca. The marker carries the next query character; it does not copy a trie node.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "a"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "c_a",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "a",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "link": "c_a",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
           },
           {
             "title": "Follow t",
-            "text": "Consume t; the matched prefix is now cat.",
-            "dur": 1600,
+            "text": "Consume t; the matched prefix is now cat. The marker carries the next query character; it does not copy a trie node.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "t"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "a_t",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "t",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "link": "a_t",
-                "tone": "mechanism"
+                "tone": "mechanism",
+                "at": [0.84, 0.84]
               }
             ],
             "lines": [3, 4]
@@ -604,6 +760,12 @@
             ],
             "lines": [6]
           }
+        ],
+        "tokens": [
+          {
+            "id": "payload",
+            "label": "event"
+          }
         ]
       }
     }
@@ -636,6 +798,7 @@
     "space": "O(1) per lookup",
     "example": "Look up m characters in an existing trie.",
     "derivation": [
+      "m is the query length. Child-map lookup is expected O(1).",
       "Each character follows one child map lookup.",
       "The existing trie storage is not allocated by the query."
     ]

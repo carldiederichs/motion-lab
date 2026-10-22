@@ -88,49 +88,123 @@
           },
           {
             "title": "Swap with the parent",
-            "text": "The smaller priority moves up. The array is now [2, 1, 8, 5].",
-            "dur": 1600,
+            "text": "The smaller priority moves up. The array is now [2, 1, 8, 5]. The labelled values trade positions; the tree nodes stay in place.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "1"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "e-3",
+                "reverse": true,
+                "at": [0.05, 0.4]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.42, 0.42]
+              },
+              {
+                "do": "label",
+                "token": "return",
+                "text": "5",
+                "at": [0.45, 0.45]
+              },
+              {
+                "do": "move",
+                "token": "return",
+                "link": "e-3",
+                "at": [0.45, 0.8]
+              },
+              {
+                "do": "hide",
+                "token": "return",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "text",
                 "actor": "n-3",
                 "field": "label",
-                "value": "5"
+                "value": "5",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "text",
                 "actor": "n-1",
                 "field": "label",
-                "value": "1"
+                "value": "1",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "rows",
                 "actor": "heap",
-                "value": ["[2, 1, 8, 5]"]
+                "value": ["[2, 1, 8, 5]"],
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Swap with the parent",
-            "text": "The smaller priority moves up. The array is now [1, 2, 8, 5].",
-            "dur": 1600,
+            "text": "The smaller priority moves up. The array is now [1, 2, 8, 5]. The labelled values trade positions; the tree nodes stay in place.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "1"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "e-1",
+                "reverse": true,
+                "at": [0.05, 0.4]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.42, 0.42]
+              },
+              {
+                "do": "label",
+                "token": "return",
+                "text": "2",
+                "at": [0.45, 0.45]
+              },
+              {
+                "do": "move",
+                "token": "return",
+                "link": "e-1",
+                "at": [0.45, 0.8]
+              },
+              {
+                "do": "hide",
+                "token": "return",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "text",
                 "actor": "n-1",
                 "field": "label",
-                "value": "2"
+                "value": "2",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "text",
                 "actor": "n-0",
                 "field": "label",
-                "value": "1"
+                "value": "1",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "rows",
                 "actor": "heap",
-                "value": ["[1, 2, 8, 5]"]
+                "value": ["[1, 2, 8, 5]"],
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -145,6 +219,16 @@
                 "tone": "success"
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "payload",
+            "label": "event"
+          },
+          {
+            "id": "return",
+            "label": "value"
           }
         ]
       }
@@ -232,6 +316,16 @@
               }
             ]
           }
+        ],
+        "tokens": [
+          {
+            "id": "payload",
+            "label": "event"
+          },
+          {
+            "id": "return",
+            "label": "value"
+          }
         ]
       }
     },
@@ -308,25 +402,62 @@
           },
           {
             "title": "Swap with the parent",
-            "text": "The smaller priority moves up. The array is now [2, 2, 8, 5].",
-            "dur": 1600,
+            "text": "The smaller priority moves up. The array is now [2, 2, 8, 5]. The labelled values trade positions; the tree nodes stay in place.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "2"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "e-3",
+                "reverse": true,
+                "at": [0.05, 0.4]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.42, 0.42]
+              },
+              {
+                "do": "label",
+                "token": "return",
+                "text": "5",
+                "at": [0.45, 0.45]
+              },
+              {
+                "do": "move",
+                "token": "return",
+                "link": "e-3",
+                "at": [0.45, 0.8]
+              },
+              {
+                "do": "hide",
+                "token": "return",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "text",
                 "actor": "n-3",
                 "field": "label",
-                "value": "5"
+                "value": "5",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "text",
                 "actor": "n-1",
                 "field": "label",
-                "value": "2"
+                "value": "2",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "rows",
                 "actor": "heap",
-                "value": ["[2, 2, 8, 5]"]
+                "value": ["[2, 2, 8, 5]"],
+                "at": [0.84, 0.84]
               }
             ]
           },
@@ -341,6 +472,16 @@
                 "tone": "success"
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "payload",
+            "label": "event"
+          },
+          {
+            "id": "return",
+            "label": "value"
           }
         ]
       }

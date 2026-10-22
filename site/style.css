@@ -548,12 +548,17 @@ dialog > p {
   border-radius: 7px;
   align-items: flex-start;
 }
-.command code {
-  font: 12px/1.7 var(--mono);
+.command pre {
   flex: 1;
-  overflow-wrap: anywhere;
-  white-space: normal;
+  margin: 0;
   min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.command code {
+  display: block;
+  font: 12px/1.7 var(--mono);
+  white-space: pre-wrap;
 }
 .command button {
   flex-shrink: 0;

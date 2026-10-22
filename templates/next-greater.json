@@ -1,0 +1,921 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "next-greater",
+  "title": "Why does a monotonic stack avoid rescanning?",
+  "subtitle": "An authored trace. Step through a concrete case and compare its alternatives.",
+  "component": "Engineering",
+  "date": "2026-10-22",
+  "aliases": ["Why does a monotonic stack avoid rescanning?"],
+  "family": "Stack + resolved results",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "Mixed heights",
+      "scene": {
+        "actors": [
+          {
+            "id": "input",
+            "kind": "cells",
+            "x": 180,
+            "y": 140,
+            "cell": 100,
+            "values": [2, 1, 4, 3],
+            "pointers": [
+              {
+                "id": "i",
+                "label": "i",
+                "index": 0
+              }
+            ]
+          },
+          {
+            "id": "stack",
+            "kind": "store",
+            "x": 240,
+            "y": 300,
+            "w": 230,
+            "h": 160,
+            "label": "Unresolved indices",
+            "rows": []
+          },
+          {
+            "id": "answer",
+            "kind": "store",
+            "x": 720,
+            "y": 300,
+            "w": 230,
+            "h": 160,
+            "label": "Next greater values",
+            "rows": []
+          }
+        ],
+        "links": [
+          {
+            "id": "push",
+            "from": "input",
+            "to": "stack",
+            "tone": "hidden"
+          },
+          {
+            "id": "resolve",
+            "from": "stack",
+            "to": "answer",
+            "tone": "hidden"
+          }
+        ],
+        "tokens": [
+          {
+            "id": "message",
+            "label": ""
+          }
+        ],
+        "beats": [
+          {
+            "title": "Keep unresolved positions",
+            "text": "A decreasing stack stores indices whose next greater value has not appeared. Equal values do not resolve one another.",
+            "actions": [],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 0",
+            "text": "The current value is 2. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 0
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 0",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "0: 2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["0: 2"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 1",
+            "text": "The current value is 1. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 1
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 1",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "1: 1"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["0: 2", "1: 1"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 2",
+            "text": "The current value is 4. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 2
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Resolve index 1",
+            "text": "4 is the first later value greater than 1. Remove index 1 from the unresolved stack.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "[1] \u2192 4"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "resolve",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["0: 2"],
+                "at": [0.82, 0.82]
+              },
+              {
+                "do": "rows",
+                "actor": "answer",
+                "value": ["0 \u2192 -1", "1 \u2192 4", "2 \u2192 -1", "3 \u2192 -1"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Resolve index 0",
+            "text": "4 is the first later value greater than 2. Remove index 0 from the unresolved stack.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "[0] \u2192 4"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "resolve",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": [],
+                "at": [0.82, 0.82]
+              },
+              {
+                "do": "rows",
+                "actor": "answer",
+                "value": ["0 \u2192 4", "1 \u2192 4", "2 \u2192 -1", "3 \u2192 -1"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 2",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "2: 4"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["2: 4"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 3",
+            "text": "The current value is 3. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 3
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 3",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "3: 3"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["2: 4", "3: 3"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Finish unresolved positions",
+            "text": "Any index still on the stack has no greater value to its right; its answer stays \u22121.",
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "answer",
+                "value": ["0 \u2192 4", "1 \u2192 4", "2 \u2192 -1", "3 \u2192 -1"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          }
+        ]
+      }
+    },
+    {
+      "label": "No later greater value",
+      "scene": {
+        "actors": [
+          {
+            "id": "input",
+            "kind": "cells",
+            "x": 180,
+            "y": 140,
+            "cell": 100,
+            "values": [4, 3, 2, 1],
+            "pointers": [
+              {
+                "id": "i",
+                "label": "i",
+                "index": 0
+              }
+            ]
+          },
+          {
+            "id": "stack",
+            "kind": "store",
+            "x": 240,
+            "y": 300,
+            "w": 230,
+            "h": 160,
+            "label": "Unresolved indices",
+            "rows": []
+          },
+          {
+            "id": "answer",
+            "kind": "store",
+            "x": 720,
+            "y": 300,
+            "w": 230,
+            "h": 160,
+            "label": "Next greater values",
+            "rows": []
+          }
+        ],
+        "links": [
+          {
+            "id": "push",
+            "from": "input",
+            "to": "stack",
+            "tone": "hidden"
+          },
+          {
+            "id": "resolve",
+            "from": "stack",
+            "to": "answer",
+            "tone": "hidden"
+          }
+        ],
+        "tokens": [
+          {
+            "id": "message",
+            "label": ""
+          }
+        ],
+        "beats": [
+          {
+            "title": "Keep unresolved positions",
+            "text": "A decreasing stack stores indices whose next greater value has not appeared. Equal values do not resolve one another.",
+            "actions": [],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 0",
+            "text": "The current value is 4. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 0
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 0",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "0: 4"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["0: 4"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 1",
+            "text": "The current value is 3. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 1
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 1",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "1: 3"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["0: 4", "1: 3"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 2",
+            "text": "The current value is 2. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 2
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 2",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "2: 2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["0: 4", "1: 3", "2: 2"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 3",
+            "text": "The current value is 1. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 3
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 3",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "3: 1"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["0: 4", "1: 3", "2: 2", "3: 1"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Finish unresolved positions",
+            "text": "Any index still on the stack has no greater value to its right; its answer stays \u22121.",
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "answer",
+                "value": ["0 \u2192 -1", "1 \u2192 -1", "2 \u2192 -1", "3 \u2192 -1"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          }
+        ]
+      }
+    },
+    {
+      "label": "Equal values wait",
+      "scene": {
+        "actors": [
+          {
+            "id": "input",
+            "kind": "cells",
+            "x": 180,
+            "y": 140,
+            "cell": 100,
+            "values": [2, 2, 3],
+            "pointers": [
+              {
+                "id": "i",
+                "label": "i",
+                "index": 0
+              }
+            ]
+          },
+          {
+            "id": "stack",
+            "kind": "store",
+            "x": 240,
+            "y": 300,
+            "w": 230,
+            "h": 160,
+            "label": "Unresolved indices",
+            "rows": []
+          },
+          {
+            "id": "answer",
+            "kind": "store",
+            "x": 720,
+            "y": 300,
+            "w": 230,
+            "h": 160,
+            "label": "Next greater values",
+            "rows": []
+          }
+        ],
+        "links": [
+          {
+            "id": "push",
+            "from": "input",
+            "to": "stack",
+            "tone": "hidden"
+          },
+          {
+            "id": "resolve",
+            "from": "stack",
+            "to": "answer",
+            "tone": "hidden"
+          }
+        ],
+        "tokens": [
+          {
+            "id": "message",
+            "label": ""
+          }
+        ],
+        "beats": [
+          {
+            "title": "Keep unresolved positions",
+            "text": "A decreasing stack stores indices whose next greater value has not appeared. Equal values do not resolve one another.",
+            "actions": [],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 0",
+            "text": "The current value is 2. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 0
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 0",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "0: 2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["0: 2"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 1",
+            "text": "The current value is 2. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 1
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 1",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "1: 2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["0: 2", "1: 2"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read index 2",
+            "text": "The current value is 3. Resolve smaller values from the top before pushing this index.",
+            "actions": [
+              {
+                "do": "pointer",
+                "actor": "input",
+                "pointer": "i",
+                "index": 2
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Resolve index 1",
+            "text": "3 is the first later value greater than 2. Remove index 1 from the unresolved stack.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "[1] \u2192 3"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "resolve",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["0: 2"],
+                "at": [0.82, 0.82]
+              },
+              {
+                "do": "rows",
+                "actor": "answer",
+                "value": ["0 \u2192 -1", "1 \u2192 3", "2 \u2192 -1"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Resolve index 0",
+            "text": "3 is the first later value greater than 2. Remove index 0 from the unresolved stack.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "[0] \u2192 3"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "resolve",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": [],
+                "at": [0.82, 0.82]
+              },
+              {
+                "do": "rows",
+                "actor": "answer",
+                "value": ["0 \u2192 3", "1 \u2192 3", "2 \u2192 -1"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Push index 2",
+            "text": "Keep this index unresolved until a strictly greater value arrives.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "2: 3"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "push",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "stack",
+                "value": ["2: 3"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Finish unresolved positions",
+            "text": "Any index still on the stack has no greater value to its right; its answer stays \u22121.",
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "answer",
+                "value": ["0 \u2192 3", "1 \u2192 3", "2 \u2192 -1"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "No later greater value",
+      "why": "Check decreasing and duplicate values.",
+      "variant": 1
+    },
+    {
+      "label": "Equal values wait",
+      "why": "Check decreasing and duplicate values.",
+      "variant": 2
+    }
+  ],
+  "code": {
+    "title": "Illustrative pseudocode",
+    "language": "ts",
+    "lines": [
+      "const answer = Array(values.length).fill(-1);",
+      "const stack = [];",
+      "for (let i = 0; i < values.length; i++) {",
+      "  while (stack.length &&",
+      "  values[stack.at(-1)] < values[i]) {",
+      "    answer[stack.pop()] = values[i];",
+      "  }",
+      "  stack.push(i);",
+      "}",
+      "return answer;"
+    ]
+  },
+  "complexity": {
+    "time": "O(n)",
+    "space": "O(n)",
+    "derivation": [
+      "n is the number of input values. Each index is pushed once and popped at most once, so all while-loop iterations total at most n.",
+      "The stack and output each hold at most n entries."
+    ]
+  }
+}

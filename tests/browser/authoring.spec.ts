@@ -35,3 +35,21 @@ for (const file of await readdir(fixtureDir)) {
         }
       });
 }
+
+test('authoring QA rejects a store row wider than its background', async ({ page }) => {
+  const spec = specSchema.parse(
+    JSON.parse(await readFile(path.join(fixtureDir, 'transactional-outbox.json'), 'utf8')),
+  );
+  const scene = required(spec.variants?.[0]?.scene);
+  const store = required(scene.actors.find((actor) => actor.id === 'db'));
+  if (store.kind !== 'store') throw Error('Expected the database store');
+  store.rows = ['A synthetic row that is deliberately wider than the database row'];
+  const html = path.join(out, 'overflow-regression.html');
+  await writeFile(html, await render(spec));
+  await page.goto(pathToFileURL(html).href + '?motion-qa=1&theme=light');
+  await page.waitForSelector('#motion-qa-report', { state: 'attached' });
+  const report = qaReportSchema.parse(
+    JSON.parse(required(await page.locator('#motion-qa-report').textContent())),
+  );
+  expect(report.issues.some((issue) => issue.includes('row text overflows db'))).toBe(true);
+});

@@ -69,3 +69,23 @@ Build locally, run the verifier, then inspect the rendered states. A schema pass
 The interval sweep template composes a `cells` timeline, interval boxes and active/peak counters. For a new API or storage protocol, write fresh participants and message traces. Keep these authored traces explicitly illustrative. If the user needs arbitrary editable inputs, add and test a bounded deterministic generator instead of presenting a fixed trace as a simulator.
 
 Inputs are deliberately small enough to inspect. The public numeric controls accept finite values between -999 and 999, with at most six displayed characters. Each lesson sets its own item limit. Coin values must be positive integers; grid rows use 0 and 1. Invalid edits preserve the last valid scene.
+
+## Show what travels
+
+A connection shows where information _can_ go; a labelled token shows what is moving _now_. Name the actual request, key, value, coordinate, return value or control event. Use `label`, then `move`, then update the receiver after the movement ends and `hide` the consumed token. Use `drop` for a lost message and show the consequence, not a fabricated reply.
+
+For example, send `key 60` from C to D before changing its owner in the table. Send `d=2` along a BFS edge before adding the newly discovered node to the frontier. In a trie, the marker carries the query character; in a heap swap, the two values travel in opposite directions. Explain when a token represents control state rather than a network message.
+
+For a cell-level dependency, place an empty `text` actor at that cell's centre with `inspect: false`, then connect these anchors with a hidden link. The token remains visible during the transfer without adding permanent visual clutter. Check that its full label fits along the path. Do not animate static C4 ownership lines as if services themselves moved. Pointer reassignment changes references; it does not copy list nodes.
+
+Verify before, during and after arrival, then scrub backwards and replay. The receiver must not display the result before the payload arrives. Keep related values in the inspector and captions so the meaning remains available when paused.
+
+Additional tested starting points:
+
+| Question                             | Template             | Contrasts                                           |
+| ------------------------------------ | -------------------- | --------------------------------------------------- |
+| Can a database write lose its event? | transactional-outbox | Commit, rollback, repeated delivery                 |
+| Why did a read miss my write?        | replica-read         | Lagging replica, primary routing, caught-up replica |
+| Why does a stack avoid rescanning?   | next-greater         | Mixed, decreasing and equal values                  |
+
+These are authored explanations with reviewed synthetic traces. The outbox example assumes one transactional database and atomic consumer deduplication with its database effect; it does not promise exactly-once external side effects.

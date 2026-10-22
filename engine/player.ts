@@ -810,7 +810,7 @@ class Stage {
     }
     // Packets: a pill that carries its value, with a short fading trail behind it.
     for (const t of this.scene.tokens || []) {
-      const g = el('g', { class: 's-packet' }, gt);
+      const g = el('g', { class: 's-packet', 'data-token': t.id }, gt);
       const trail: SVGCircleElement[] = []; // Decorative rings removed; packets carry the motion.
       const rect = el('rect', { rx: 11, height: 22, y: -11 }, g);
       const lbl = el('text', { x: 0, y: 5, 'text-anchor': 'middle' }, g);
@@ -1110,7 +1110,7 @@ function load(): void {
     richText(btn, `${i + 1}. ${b.title}${b.predict ? ' ?' : ''}`);
     btn.addEventListener('click', () => {
       pause();
-      seek(required(activeStage().starts[i]) + 1);
+      seek(i === 0 ? 0 : required(activeStage().starts[i]) + b.dur - 1);
       emit('chapter');
     });
     ch.appendChild(btn);
@@ -1835,7 +1835,7 @@ function buildControls(): void {
   );
   const themeBtn = element('mp-theme', HTMLButtonElement);
   const order = ['system', 'light', 'dark'];
-  const curTheme = (): string => (pref('motionlab.theme') ?? '') || 'system';
+  const curTheme = (): string => document.documentElement.dataset.theme ?? 'system';
   const showTheme = (mode: string): void => {
     themeBtn.innerHTML = THEME_ICONS[mode] ?? required(THEME_ICONS.system);
     themeBtn.setAttribute('aria-label', `${THEME_NAMES[mode]}. Click to change.`);
@@ -1875,7 +1875,7 @@ function buildControls(): void {
     } else if (e.key === 'End') {
       e.preventDefault();
       pause();
-      seek(required(activeStage().starts[activeStage().scene.beats.length - 1]) + 1);
+      seek(total());
     } else if (
       (e.key === 'c' || e.key === 'C') &&
       element('mp-compare', HTMLButtonElement).hidden === false
@@ -2130,6 +2130,8 @@ function qa(): void {
         once(`${run.tag}cam`, `${run.tag}: camera leaves the stage at ${ms}ms`);
       for (const [id, rec] of Object.entries(stage.els.tokens)) {
         const s = required(st.tokens[id]);
+        if (s.moving && !s.label.trim())
+          once(`${run.tag}empty${id}`, `${run.tag}: moving packet ${id} needs a payload label`);
         if (s.visible && /[A-Za-z0-9]/.test(s.label) && rec.lbl.textContent !== s.label)
           once(
             `${run.tag}lbl${id}`,
@@ -2188,6 +2190,11 @@ function qa(): void {
           const bb = rec.rows.getBBox();
           if (bb.height && bb.y + bb.height > a.y + a.h / 2 + 1)
             once(`${run.tag}ro${id}`, `${run.tag}: rows overflow ${id} (${ms}ms)`);
+          for (const row of rec.rows.querySelectorAll<SVGTextElement>('.s-row')) {
+            const bounds = row.getBBox();
+            if (bounds.width > a.w - 36)
+              once(`${run.tag}rw${id}`, `${run.tag}: row text overflows ${id} (${ms}ms)`);
+          }
         }
       }
     }
@@ -2257,7 +2264,7 @@ function qa(): void {
         break;
       }
       const txt = required(activeStage().scene.beats[i]).text || '';
-      if (/\d|"/.test(txt) && !$('mp-cap-text').querySelector('[class^="tok-"]')) {
+      if (/\b\d+\b|"/.test(txt) && !$('mp-cap-text').querySelector('[class^="tok-"]')) {
         issues.push(
           `variant ${cv}: chapter ${i + 1} caption has numbers or quotes but no highlighting`,
         );

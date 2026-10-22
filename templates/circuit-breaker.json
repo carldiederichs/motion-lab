@@ -69,6 +69,20 @@
             "to": "half",
             "label": "cooldown",
             "bend": -30
+          },
+          {
+            "id": "recover",
+            "from": "half",
+            "to": "closed",
+            "bend": -210,
+            "tone": "hidden"
+          },
+          {
+            "id": "reopen",
+            "from": "half",
+            "to": "open",
+            "bend": 65,
+            "tone": "hidden"
           }
         ],
         "beats": [
@@ -122,59 +136,120 @@
           },
           {
             "title": "Open the circuit",
-            "text": "Reject new calls while the dependency recovers.",
-            "dur": 1600,
+            "text": "Reject new calls while the dependency recovers. The moving label is the event that changes the circuit state.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "3 failures"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "trip",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "closed",
-                "tone": "muted"
+                "tone": "muted",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "actor": "open",
-                "tone": "failure"
+                "tone": "failure",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Allow one probe",
-            "text": "After cooldown, allow one request in half-open state.",
-            "dur": 1600,
+            "text": "After cooldown, allow one request in half-open state. The moving label is the event that changes the circuit state.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "timer expires"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "probe",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "open",
-                "tone": "muted"
+                "tone": "muted",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "actor": "half",
-                "tone": "warning"
+                "tone": "warning",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Close after success",
-            "text": "A successful probe resets the counter.",
-            "dur": 1600,
+            "text": "A successful probe resets the counter. The moving label is the event that changes the circuit state.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "probe: OK"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "recover",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "half",
-                "tone": "muted"
+                "tone": "muted",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "actor": "closed",
-                "tone": "success"
+                "tone": "success",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "set",
                 "actor": "count",
-                "value": 0
+                "value": 0,
+                "at": [0.84, 0.84]
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "payload",
+            "label": "event"
           }
         ]
       }
@@ -233,6 +308,20 @@
             "to": "half",
             "label": "cooldown",
             "bend": -30
+          },
+          {
+            "id": "recover",
+            "from": "half",
+            "to": "closed",
+            "bend": -210,
+            "tone": "hidden"
+          },
+          {
+            "id": "reopen",
+            "from": "half",
+            "to": "open",
+            "bend": 65,
+            "tone": "hidden"
           }
         ],
         "beats": [
@@ -286,59 +375,120 @@
           },
           {
             "title": "Open the circuit",
-            "text": "Reject new calls while the dependency recovers.",
-            "dur": 1600,
+            "text": "Reject new calls while the dependency recovers. The moving label is the event that changes the circuit state.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "3 failures"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "trip",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "closed",
-                "tone": "muted"
+                "tone": "muted",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "actor": "open",
-                "tone": "failure"
+                "tone": "failure",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Allow one probe",
-            "text": "After cooldown, allow one request in half-open state.",
-            "dur": 1600,
+            "text": "After cooldown, allow one request in half-open state. The moving label is the event that changes the circuit state.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "timer expires"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "probe",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "open",
-                "tone": "muted"
+                "tone": "muted",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "actor": "half",
-                "tone": "warning"
+                "tone": "warning",
+                "at": [0.84, 0.84]
               }
             ]
           },
           {
             "title": "Reopen after failure",
-            "text": "A failed probe restarts the cooldown.",
-            "dur": 1600,
+            "text": "A failed probe restarts the cooldown. The moving label is the event that changes the circuit state.",
+            "dur": 2400,
             "actions": [
+              {
+                "do": "label",
+                "token": "payload",
+                "text": "probe: failed"
+              },
+              {
+                "do": "move",
+                "token": "payload",
+                "link": "reopen",
+                "at": [0.08, 0.75]
+              },
+              {
+                "do": "hide",
+                "token": "payload",
+                "at": [0.82, 0.82]
+              },
               {
                 "do": "tone",
                 "actor": "half",
-                "tone": "muted"
+                "tone": "muted",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "tone",
                 "actor": "open",
-                "tone": "failure"
+                "tone": "failure",
+                "at": [0.84, 0.84]
               },
               {
                 "do": "set",
                 "actor": "count",
-                "value": 3
+                "value": 3,
+                "at": [0.84, 0.84]
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "payload",
+            "label": "event"
           }
         ]
       }
@@ -397,6 +547,20 @@
             "to": "half",
             "label": "cooldown",
             "bend": -30
+          },
+          {
+            "id": "recover",
+            "from": "half",
+            "to": "closed",
+            "bend": -210,
+            "tone": "hidden"
+          },
+          {
+            "id": "reopen",
+            "from": "half",
+            "to": "open",
+            "bend": 65,
+            "tone": "hidden"
           }
         ],
         "beats": [
@@ -435,6 +599,12 @@
                 "value": 2
               }
             ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "payload",
+            "label": "event"
           }
         ]
       }

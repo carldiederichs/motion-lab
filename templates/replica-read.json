@@ -1,0 +1,649 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "replica-read",
+  "title": "Why did my read miss a successful write?",
+  "subtitle": "An authored trace. Step through a concrete case and compare its alternatives.",
+  "component": "Engineering",
+  "date": "2026-10-22",
+  "aliases": ["Why did my read miss a successful write?"],
+  "family": "Architecture + consistency",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "Read from a lagging replica",
+      "scene": {
+        "actors": [
+          {
+            "id": "boundary",
+            "kind": "lane",
+            "x": 310,
+            "y": 35,
+            "w": 610,
+            "h": 470,
+            "label": "Data service boundary"
+          },
+          {
+            "id": "client",
+            "kind": "box",
+            "x": 150,
+            "y": 250,
+            "w": 230,
+            "h": 85,
+            "label": "Client",
+            "value": "version 1",
+            "valueSmall": true
+          },
+          {
+            "id": "primary",
+            "kind": "box",
+            "x": 495,
+            "y": 145,
+            "w": 230,
+            "h": 85,
+            "label": "Primary",
+            "value": "version 1",
+            "valueSmall": true
+          },
+          {
+            "id": "replica",
+            "kind": "box",
+            "x": 755,
+            "y": 365,
+            "w": 230,
+            "h": 85,
+            "label": "Read replica",
+            "value": "version 1",
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "write",
+            "from": "client",
+            "to": "primary"
+          },
+          {
+            "id": "copy",
+            "from": "primary",
+            "to": "replica",
+            "bend": -25
+          },
+          {
+            "id": "read",
+            "from": "client",
+            "to": "replica",
+            "bend": 35
+          }
+        ],
+        "tokens": [
+          {
+            "id": "message",
+            "label": ""
+          }
+        ],
+        "beats": [
+          {
+            "title": "Two copies, one write owner",
+            "text": "The primary accepts writes; a replica serves reads. The boundary shows ownership, while packets show one illustrative request trace.",
+            "actions": [],
+            "dur": 2200
+          },
+          {
+            "title": "Write version 2",
+            "text": "The primary commits version 2. This does not imply the replica has received it.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "write v2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "primary",
+                "value": "version 2",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Acknowledge the write",
+            "text": "The primary acknowledges its own commit, not replica catch-up.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "committed v2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": true,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "client",
+                "value": "expects v2",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read the record",
+            "text": "The read goes to the replica. Its current version determines the result.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "GET record"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "read",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Observe version 1",
+            "text": "A successful write followed by a replica read can observe stale data.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "version 1"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "read",
+                "reverse": true,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "client",
+                "value": "version 1",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          }
+        ]
+      }
+    },
+    {
+      "label": "Read your write from primary",
+      "scene": {
+        "actors": [
+          {
+            "id": "boundary",
+            "kind": "lane",
+            "x": 310,
+            "y": 35,
+            "w": 610,
+            "h": 470,
+            "label": "Data service boundary"
+          },
+          {
+            "id": "client",
+            "kind": "box",
+            "x": 150,
+            "y": 250,
+            "w": 230,
+            "h": 85,
+            "label": "Client",
+            "value": "version 1",
+            "valueSmall": true
+          },
+          {
+            "id": "primary",
+            "kind": "box",
+            "x": 495,
+            "y": 145,
+            "w": 230,
+            "h": 85,
+            "label": "Primary",
+            "value": "version 1",
+            "valueSmall": true
+          },
+          {
+            "id": "replica",
+            "kind": "box",
+            "x": 755,
+            "y": 365,
+            "w": 230,
+            "h": 85,
+            "label": "Read replica",
+            "value": "version 1",
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "write",
+            "from": "client",
+            "to": "primary"
+          },
+          {
+            "id": "copy",
+            "from": "primary",
+            "to": "replica",
+            "bend": -25
+          },
+          {
+            "id": "read",
+            "from": "client",
+            "to": "replica",
+            "bend": 35
+          }
+        ],
+        "tokens": [
+          {
+            "id": "message",
+            "label": ""
+          }
+        ],
+        "beats": [
+          {
+            "title": "Two copies, one write owner",
+            "text": "The primary accepts writes; a replica serves reads. The boundary shows ownership, while packets show one illustrative request trace.",
+            "actions": [],
+            "dur": 2200
+          },
+          {
+            "title": "Write version 2",
+            "text": "The primary commits version 2. This does not imply the replica has received it.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "write v2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "primary",
+                "value": "version 2",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Acknowledge the write",
+            "text": "The primary acknowledges its own commit, not replica catch-up.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "committed v2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": true,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "client",
+                "value": "expects v2",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read the record",
+            "text": "Read from the primary for this session.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "GET record"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Observe version 2",
+            "text": "This read observes version 2. Routing to a primary trades some read scaling for this session guarantee.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "version 2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": true,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "client",
+                "value": "version 2",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          }
+        ]
+      }
+    },
+    {
+      "label": "Replica has caught up",
+      "scene": {
+        "actors": [
+          {
+            "id": "boundary",
+            "kind": "lane",
+            "x": 310,
+            "y": 35,
+            "w": 610,
+            "h": 470,
+            "label": "Data service boundary"
+          },
+          {
+            "id": "client",
+            "kind": "box",
+            "x": 150,
+            "y": 250,
+            "w": 230,
+            "h": 85,
+            "label": "Client",
+            "value": "version 1",
+            "valueSmall": true
+          },
+          {
+            "id": "primary",
+            "kind": "box",
+            "x": 495,
+            "y": 145,
+            "w": 230,
+            "h": 85,
+            "label": "Primary",
+            "value": "version 1",
+            "valueSmall": true
+          },
+          {
+            "id": "replica",
+            "kind": "box",
+            "x": 755,
+            "y": 365,
+            "w": 230,
+            "h": 85,
+            "label": "Read replica",
+            "value": "version 1",
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "write",
+            "from": "client",
+            "to": "primary"
+          },
+          {
+            "id": "copy",
+            "from": "primary",
+            "to": "replica",
+            "bend": -25
+          },
+          {
+            "id": "read",
+            "from": "client",
+            "to": "replica",
+            "bend": 35
+          }
+        ],
+        "tokens": [
+          {
+            "id": "message",
+            "label": ""
+          }
+        ],
+        "beats": [
+          {
+            "title": "Two copies, one write owner",
+            "text": "The primary accepts writes; a replica serves reads. The boundary shows ownership, while packets show one illustrative request trace.",
+            "actions": [],
+            "dur": 2200
+          },
+          {
+            "title": "Write version 2",
+            "text": "The primary commits version 2. This does not imply the replica has received it.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "write v2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "primary",
+                "value": "version 2",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Acknowledge the write",
+            "text": "The primary acknowledges its own commit, not replica catch-up.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "committed v2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": true,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "client",
+                "value": "expects v2",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Apply the replication record",
+            "text": "The replica applies the committed record before the read.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "record v2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "copy",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "replica",
+                "value": "version 2",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Read the record",
+            "text": "The read goes to the replica. Its current version determines the result.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "GET record"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "read",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Observe version 2",
+            "text": "This read observes version 2. Routing to a primary trades some read scaling for this session guarantee.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "version 2"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "read",
+                "reverse": true,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "client",
+                "value": "version 2",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Read your write from primary",
+      "why": "Compare routing and replication timing.",
+      "variant": 1
+    },
+    {
+      "label": "Replica has caught up",
+      "why": "Compare routing and replication timing.",
+      "variant": 2
+    }
+  ]
+}

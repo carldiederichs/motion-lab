@@ -1,0 +1,718 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "transactional-outbox",
+  "title": "Can an order commit without its event?",
+  "subtitle": "An authored trace. Step through a concrete case and compare its alternatives.",
+  "component": "Engineering",
+  "date": "2026-10-22",
+  "aliases": ["Can an order commit without its event?"],
+  "family": "Transaction + delivery",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "Commit and deliver",
+      "scene": {
+        "actors": [
+          {
+            "id": "app",
+            "kind": "box",
+            "x": 150,
+            "y": 140,
+            "w": 230,
+            "h": 85,
+            "label": "API",
+            "value": "\u2014",
+            "valueSmall": true
+          },
+          {
+            "id": "db",
+            "kind": "store",
+            "x": 480,
+            "y": 140,
+            "w": 230,
+            "h": 160,
+            "label": "One database transaction",
+            "rows": []
+          },
+          {
+            "id": "consumer",
+            "kind": "box",
+            "x": 810,
+            "y": 140,
+            "w": 230,
+            "h": 85,
+            "label": "Consumer",
+            "value": "\u2014",
+            "valueSmall": true
+          },
+          {
+            "id": "effect",
+            "kind": "box",
+            "x": 810,
+            "y": 390,
+            "w": 230,
+            "h": 85,
+            "label": "Applied effects",
+            "value": 0,
+            "valueSmall": true
+          },
+          {
+            "id": "relay",
+            "kind": "box",
+            "x": 480,
+            "y": 390,
+            "w": 230,
+            "h": 85,
+            "label": "Outbox relay",
+            "value": "\u2014",
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "write",
+            "from": "app",
+            "to": "db"
+          },
+          {
+            "id": "poll",
+            "from": "db",
+            "to": "relay"
+          },
+          {
+            "id": "deliver",
+            "from": "relay",
+            "to": "consumer",
+            "bend": 25
+          }
+        ],
+        "tokens": [
+          {
+            "id": "message",
+            "label": ""
+          }
+        ],
+        "beats": [
+          {
+            "title": "Keep intent with the write",
+            "text": "The order row and its event are written in one transaction. The relay reads only committed outbox rows.",
+            "actions": [],
+            "dur": 2200
+          },
+          {
+            "title": "Attempt one transaction",
+            "text": "Order 42 and event e42 share the same commit boundary.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "order 42 + e42"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "db",
+                "value": ["order 42: pending", "event e42: pending"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Commit both rows",
+            "text": "The commit makes the order and outbox event visible together. A process crash after this point does not erase the event.",
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "db",
+                "value": ["order 42: committed", "event e42: pending"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Relay reads committed event",
+            "text": "A separate relay polls the outbox. Delivery can repeat; this is not an exactly-once transport.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "event e42"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "poll",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "relay",
+                "value": "send e42",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Apply event once",
+            "text": "The consumer atomically records event e42 and applies its database effect. An external side effect would need its own idempotency contract.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "e42: order 42"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "deliver",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "consumer",
+                "value": "e42 recorded",
+                "at": [0.82, 0.82]
+              },
+              {
+                "do": "set",
+                "actor": "effect",
+                "value": 1,
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Acknowledge delivery",
+            "text": "The acknowledgement lets the relay mark e42 delivered. Acknowledgement and the original business transaction are separate.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "ack e42"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "deliver",
+                "reverse": true,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "relay",
+                "value": "e42 delivered",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          }
+        ]
+      }
+    },
+    {
+      "label": "Transaction rolls back",
+      "scene": {
+        "actors": [
+          {
+            "id": "app",
+            "kind": "box",
+            "x": 150,
+            "y": 140,
+            "w": 230,
+            "h": 85,
+            "label": "API",
+            "value": "\u2014",
+            "valueSmall": true
+          },
+          {
+            "id": "db",
+            "kind": "store",
+            "x": 480,
+            "y": 140,
+            "w": 230,
+            "h": 160,
+            "label": "One database transaction",
+            "rows": []
+          },
+          {
+            "id": "consumer",
+            "kind": "box",
+            "x": 810,
+            "y": 140,
+            "w": 230,
+            "h": 85,
+            "label": "Consumer",
+            "value": "\u2014",
+            "valueSmall": true
+          },
+          {
+            "id": "effect",
+            "kind": "box",
+            "x": 810,
+            "y": 390,
+            "w": 230,
+            "h": 85,
+            "label": "Applied effects",
+            "value": 0,
+            "valueSmall": true
+          },
+          {
+            "id": "relay",
+            "kind": "box",
+            "x": 480,
+            "y": 390,
+            "w": 230,
+            "h": 85,
+            "label": "Outbox relay",
+            "value": "\u2014",
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "write",
+            "from": "app",
+            "to": "db"
+          },
+          {
+            "id": "poll",
+            "from": "db",
+            "to": "relay"
+          },
+          {
+            "id": "deliver",
+            "from": "relay",
+            "to": "consumer",
+            "bend": 25
+          }
+        ],
+        "tokens": [
+          {
+            "id": "message",
+            "label": ""
+          }
+        ],
+        "beats": [
+          {
+            "title": "Keep intent with the write",
+            "text": "The order row and its event are written in one transaction. The relay reads only committed outbox rows.",
+            "actions": [],
+            "dur": 2200
+          },
+          {
+            "title": "Attempt one transaction",
+            "text": "Order 42 and event e42 share the same commit boundary.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "order 42 + e42"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "db",
+                "value": ["order 42: pending", "event e42: pending"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Roll back both rows",
+            "text": "The transaction fails. Neither the order nor its event becomes visible to the relay.",
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "db",
+                "value": [],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Nothing is published",
+            "text": "No committed event means no downstream effect. This trace assumes transactional writes in one database.",
+            "actions": [
+              {
+                "do": "set",
+                "actor": "effect",
+                "value": 0,
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          }
+        ]
+      }
+    },
+    {
+      "label": "Delivery repeats",
+      "scene": {
+        "actors": [
+          {
+            "id": "app",
+            "kind": "box",
+            "x": 150,
+            "y": 140,
+            "w": 230,
+            "h": 85,
+            "label": "API",
+            "value": "\u2014",
+            "valueSmall": true
+          },
+          {
+            "id": "db",
+            "kind": "store",
+            "x": 480,
+            "y": 140,
+            "w": 230,
+            "h": 160,
+            "label": "One database transaction",
+            "rows": []
+          },
+          {
+            "id": "consumer",
+            "kind": "box",
+            "x": 810,
+            "y": 140,
+            "w": 230,
+            "h": 85,
+            "label": "Consumer",
+            "value": "\u2014",
+            "valueSmall": true
+          },
+          {
+            "id": "effect",
+            "kind": "box",
+            "x": 810,
+            "y": 390,
+            "w": 230,
+            "h": 85,
+            "label": "Applied effects",
+            "value": 0,
+            "valueSmall": true
+          },
+          {
+            "id": "relay",
+            "kind": "box",
+            "x": 480,
+            "y": 390,
+            "w": 230,
+            "h": 85,
+            "label": "Outbox relay",
+            "value": "\u2014",
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "write",
+            "from": "app",
+            "to": "db"
+          },
+          {
+            "id": "poll",
+            "from": "db",
+            "to": "relay"
+          },
+          {
+            "id": "deliver",
+            "from": "relay",
+            "to": "consumer",
+            "bend": 25
+          }
+        ],
+        "tokens": [
+          {
+            "id": "message",
+            "label": ""
+          }
+        ],
+        "beats": [
+          {
+            "title": "Keep intent with the write",
+            "text": "The order row and its event are written in one transaction. The relay reads only committed outbox rows.",
+            "actions": [],
+            "dur": 2200
+          },
+          {
+            "title": "Attempt one transaction",
+            "text": "Order 42 and event e42 share the same commit boundary.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "order 42 + e42"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "write",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "rows",
+                "actor": "db",
+                "value": ["order 42: pending", "event e42: pending"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Commit both rows",
+            "text": "The commit makes the order and outbox event visible together. A process crash after this point does not erase the event.",
+            "actions": [
+              {
+                "do": "rows",
+                "actor": "db",
+                "value": ["order 42: committed", "event e42: pending"],
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Relay reads committed event",
+            "text": "A separate relay polls the outbox. Delivery can repeat; this is not an exactly-once transport.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "event e42"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "poll",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "relay",
+                "value": "send e42",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Apply event once",
+            "text": "The consumer atomically records event e42 and applies its database effect. An external side effect would need its own idempotency contract.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "e42: order 42"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "deliver",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "consumer",
+                "value": "e42 recorded",
+                "at": [0.82, 0.82]
+              },
+              {
+                "do": "set",
+                "actor": "effect",
+                "value": 1,
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Acknowledgement is lost",
+            "text": "The effect committed, but the relay cannot observe that success.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "ack e42"
+              },
+              {
+                "do": "drop",
+                "token": "message",
+                "link": "deliver",
+                "reverse": true,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Retry the same event",
+            "text": "The consumer sees e42 again. Its unique event record prevents a second effect.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "e42: order 42"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "deliver",
+                "reverse": false,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "consumer",
+                "value": "duplicate e42",
+                "at": [0.82, 0.82]
+              },
+              {
+                "do": "set",
+                "actor": "effect",
+                "value": 1,
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          },
+          {
+            "title": "Acknowledge delivery",
+            "text": "The acknowledgement lets the relay mark e42 delivered. Acknowledgement and the original business transaction are separate.",
+            "actions": [
+              {
+                "do": "label",
+                "token": "message",
+                "text": "ack e42"
+              },
+              {
+                "do": "move",
+                "token": "message",
+                "link": "deliver",
+                "reverse": true,
+                "at": [0.05, 0.72]
+              },
+              {
+                "do": "hide",
+                "token": "message",
+                "at": [0.78, 0.78]
+              },
+              {
+                "do": "set",
+                "actor": "relay",
+                "value": "e42 delivered",
+                "at": [0.82, 0.82]
+              }
+            ],
+            "dur": 2200
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Transaction rolls back",
+      "why": "Compare commit boundaries and repeated delivery.",
+      "variant": 1
+    },
+    {
+      "label": "Delivery repeats",
+      "why": "Compare commit boundaries and repeated delivery.",
+      "variant": 2
+    }
+  ],
+  "code": {
+    "title": "Illustrative pseudocode",
+    "language": "ts",
+    "lines": [
+      "transaction(() => {",
+      "  insertOrder(42);",
+      "  insertOutbox(\"e42\", { orderId: 42 });",
+      "});",
+      "// Relay retries until acknowledged.",
+      "publish(committedOutboxEvent);",
+      "// Consumer transaction: deduplicate + apply.",
+      "if (insertEventIdIfAbsent(\"e42\")) applyEffect();"
+    ]
+  }
+}

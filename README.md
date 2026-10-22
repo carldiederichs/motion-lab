@@ -17,11 +17,23 @@ npm run dev
 
 Open **http://127.0.0.1:4173**. Desktop browsers are the supported target; use a window at least 1024 pixels wide.
 
-Open your coding assistant in this folder and ask:
+Open your file-capable coding assistant in this folder. Describe your own code, system or engineering question; the examples are starting points, not the limits of the tool.
 
-> Read .agents/skills/motion-lab/SKILL.md. Explain why retries can create duplicate records. Show the broken and safe versions, and let me step through both.
+In Codex, select Motion Lab from the `/` skill menu, or type:
 
-Codex discovers the repository skill under `.agents/skills/`. For an assistant with different discovery conventions, the explicit file-reading prompt above is sufficient. You can use any model capable of reading files and running the builder. Local operation does not imply an offline model: your chosen assistant may send context to its provider under its own settings.
+```text
+$motion-lab Explain [my code, system or engineering question] visually. Show what moves, what changes and why. Include a contrasting case.
+```
+
+Replace the bracketed text with your question. For example: “Why can a retry create duplicate records, and how would an idempotency key prevent that?”
+
+If your assistant does not discover repository skills, ask it to read the file explicitly:
+
+```text
+Read .agents/skills/motion-lab/SKILL.md and use it to create a visual explanation of [my engineering question]. Build it, verify it and show me the local result.
+```
+
+Use your own assistant and model with file access and the ability to run the builder. The website does not connect to a model. Local operation does not imply an offline model: your assistant may send context to its provider under its own settings.
 
 ## Make an explanation
 

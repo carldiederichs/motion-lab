@@ -426,13 +426,15 @@ setup.addEventListener('click', (e) => {
       setup.close();
   }
 });
-for (const b of document.querySelectorAll<HTMLElement>('[data-copy]'))
+for (const b of document.querySelectorAll<HTMLElement>('.command .copy'))
   b.addEventListener('click', () => {
     void copyCommand(b);
   });
 async function copyCommand(b: HTMLElement): Promise<void> {
   try {
-    await navigator.clipboard.writeText(required(b.dataset.copy));
+    await navigator.clipboard.writeText(
+      required(b.closest('.command')?.querySelector('code')?.textContent),
+    );
     $('copy-status').textContent = 'Copied. Paste it into your terminal or assistant.';
     b.textContent = 'Copied ✓';
   } catch {
@@ -459,7 +461,7 @@ const steps = [
   {
     target: 'local-toolkit',
     title: 'Make the next one locally',
-    text: 'Download the toolkit when you are ready. It includes the same player and a skill your assistant can read. Nothing is downloaded automatically.',
+    text: 'Use your own coding assistant and model to explain your next engineering question. The download includes this player and the Motion Lab skill. Downloading starts only when you click.',
   },
 ];
 function tourTargetRect():

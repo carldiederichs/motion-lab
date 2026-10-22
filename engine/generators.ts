@@ -1617,24 +1617,14 @@ export const coreGenerators: Record<string, Generator> = {
           'webapis>macro': 't2q',
           'pending>micro': 'w2m',
         };
-        const short = (t: Task): string =>
-          t.kind === 'script'
-            ? 'script'
-            : t.kind === 'timer'
-              ? 'timer'
-              : t.kind === 'then'
-                ? '.then'
-                : 'micro';
+        const short = (t: Task): string => t.id;
         const cut = (x: string, n: number): string => (x.length > n ? x.slice(0, n - 1) + '…' : x);
         const rowOf = (t: Task, key: Region): string =>
-          cut(
-            key === 'webapis'
-              ? `${t.label} · ${t.sub} · at ${t.due}ms`
-              : key === 'pending'
-                ? `${t.label} · ${t.sub} · waits`
-                : `${t.label} · ${t.sub}`,
-            key === 'stack' ? 26 : 38,
-          );
+          t.kind === 'script'
+            ? 'main script'
+            : key === 'webapis'
+              ? `${t.id} · at ${t.due}ms`
+              : `${t.id} · line ${t.line}`;
         const rowsFor = (snap: Model, key: Region): string[] => {
           const list = key === 'stack' ? snap.stack.slice().reverse() : snap[key];
           const cap = key === 'stack' ? 6 : 3;

@@ -11,7 +11,7 @@ The public gallery and all authoring templates use the same player. Payload labe
 | Balanced Tree                       | Recursive calls and returned heights travel along tree edges.                                                                                             |
 | Consistent Hashing                  | Each affected key travels from C to D before the ownership table changes. Boundary/wrap cases preserve unaffected ownership.                              |
 | Key-value Store                     | The key/value operation enters the store; the concrete return value travels back.                                                                         |
-| Event Loop                          | Callback identities move through queues and into the call stack.                                                                                          |
+| Event Loop                          | Stable callback IDs move through queues and into the call stack; rows identify their source line or timer deadline.                                       |
 | Lost Update                         | Reads, local values, writes and compare-and-set outcomes travel between workers and the store.                                                            |
 | Request Sequence / Idempotent Retry | Requests, replies and lost responses carry their message labels; retries preserve their identity.                                                         |
 | C4 Architecture                     | A concrete interaction carries request/data/status labels across boundaries. Static boundaries represent ownership. Failed queries produce no data reply. |

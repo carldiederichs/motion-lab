@@ -142,7 +142,7 @@
               {
                 "do": "rows",
                 "actor": "db",
-                "value": ["order 42: committed", "event e42: pending delivery"],
+                "value": ["order 42: committed", "event e42: pending"],
                 "at": [0.82, 0.82]
               }
             ],
@@ -523,7 +523,7 @@
               {
                 "do": "rows",
                 "actor": "db",
-                "value": ["order 42: committed", "event e42: pending delivery"],
+                "value": ["order 42: committed", "event e42: pending"],
                 "at": [0.82, 0.82]
               }
             ],

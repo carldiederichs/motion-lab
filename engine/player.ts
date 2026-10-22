@@ -2190,6 +2190,11 @@ function qa(): void {
           const bb = rec.rows.getBBox();
           if (bb.height && bb.y + bb.height > a.y + a.h / 2 + 1)
             once(`${run.tag}ro${id}`, `${run.tag}: rows overflow ${id} (${ms}ms)`);
+          for (const row of rec.rows.querySelectorAll<SVGTextElement>('.s-row')) {
+            const bounds = row.getBBox();
+            if (bounds.width > a.w - 36)
+              once(`${run.tag}rw${id}`, `${run.tag}: row text overflows ${id} (${ms}ms)`);
+          }
         }
       }
     }

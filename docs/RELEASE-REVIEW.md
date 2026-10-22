@@ -15,7 +15,7 @@ The application is live at [motion-lab-alpha-three.vercel.app](https://motion-la
 | Check                  | Result                                                                                                      |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------- |
 | Node tests             | 92 passed                                                                                                   |
-| Browser tests          | 155 passed, including arrival timing, reverse scrubbing, code contrast, exact clipboard text and navigation |
+| Browser tests          | 156 passed, including arrival timing, reverse scrubbing, code contrast, exact clipboard text and navigation |
 | Transfer timing        | Payload labels, receiving state and reverse scrubbing covered by browser and semantic checks                |
 | Desktop layouts        | 1024, 1440 and 1920px; light and dark                                                                       |
 | Visual review          | Inspected rendered screenshots of all 15 public examples; interacted with the landing page and tour         |

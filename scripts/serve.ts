@@ -20,6 +20,7 @@ const types: Record<string, string> = {
   '.svg': 'image/svg+xml',
   '.zip': 'application/zip',
   '.md': 'text/plain; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8',
 };
 export function createServer({
   directory = path.join(ROOT, 'dist'),

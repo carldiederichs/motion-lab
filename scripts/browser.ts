@@ -2,6 +2,7 @@ import path from 'node:path';
 
 import { build } from 'esbuild';
 
+import { assertLicensedDependencies, licenseBanner } from './licenses.ts';
 import { ROOT } from './paths.ts';
 import { required } from '../engine/assert.ts';
 
@@ -14,8 +15,11 @@ export async function compileBrowser(entry: string): Promise<string> {
     format: 'iife',
     platform: 'browser',
     target: 'es2023',
-    legalComments: 'none',
+    legalComments: 'inline',
+    metafile: true,
+    banner: { js: await licenseBanner() },
   });
+  assertLicensedDependencies(Object.keys(result.metafile.inputs));
   return required(result.outputFiles[0], 'Missing browser bundle').text.replaceAll(
     '</script',
     '<\\/script',

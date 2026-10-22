@@ -1,4 +1,4 @@
-/* Diagram Design adaptation. Cathryn Lavery, MIT — see references/diagram-design-LICENSE.txt.
+/* Diagram Design adaptation. Cathryn Lavery, MIT — see ../docs/THIRD-PARTY-LICENSE.txt.
    Dashboard colours and local fonts are intentional; this file makes no network requests. */
 :root {
   --dd-paper: var(--surface, #181c22);

@@ -20,6 +20,8 @@ for (const route of [
   '/app.js',
   '/style.css',
   '/icon.svg',
+  '/LICENSE.txt',
+  '/THIRD-PARTY-NOTICES.txt',
   '/downloads/motion-lab-toolkit.zip',
   ...catalogue.map((x) => `/lessons/${x.slug}.html`),
 ]) {

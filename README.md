@@ -78,4 +78,4 @@ The public page presents a prepared example of a question and its visualization.
 
 ## License
 
-[MIT](LICENSE). You can use, modify and distribute the toolkit under this license. The diagram design adaptation retains its notice in `docs/THIRD-PARTY-LICENSE.txt`; the GitHub mark from Primer Octicons retains its notice in `docs/OCTICONS-LICENSE.txt`. The LeetCode mark comes from Simple Icons under CC0; see `docs/SIMPLE-ICONS-LICENSE.txt`.
+[MIT](LICENSE) for Motion Lab's original code. Keep the copyright and license notices when redistributing it. Third-party components retain their own notices, which are included in the source, hosted bundles, standalone lessons and downloadable toolkit. See [licensing and third-party sources](docs/LICENSING.md) for scope, upstream licenses and trademark information.

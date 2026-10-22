@@ -201,6 +201,26 @@
       .mp-params label.wide {
         flex: 1 1 100%;
       }
+      .mp-select {
+        position: relative;
+        display: grid;
+      }
+      .mp-select select {
+        appearance: none;
+        padding-inline-end: 36px;
+      }
+      .mp-select::after {
+        content: '';
+        position: absolute;
+        inset-inline-end: 14px;
+        top: 50%;
+        width: 7px;
+        height: 7px;
+        border-right: 1.5px solid var(--text);
+        border-bottom: 1.5px solid var(--text);
+        transform: translateY(-70%) rotate(45deg);
+        pointer-events: none;
+      }
       .mp-params textarea {
         font: 13px/19px var(--mono);
         color: var(--text);

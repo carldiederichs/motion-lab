@@ -1648,7 +1648,12 @@ function buildControls(): void {
             commit();
           }
         });
-      label.appendChild(input);
+      if (input instanceof HTMLSelectElement) {
+        const wrapper = document.createElement('span');
+        wrapper.className = 'mp-select';
+        wrapper.appendChild(input);
+        label.appendChild(wrapper);
+      } else label.appendChild(input);
       if (prm.type === 'code') {
         const run = document.createElement('button');
         run.type = 'button';

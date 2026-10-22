@@ -1,34 +1,39 @@
-import { readFile, readdir, lstat } from "node:fs/promises";
-import path from "node:path";
-import { ROOT } from "./renderer.mjs";
+import { readFile, readdir, lstat } from 'node:fs/promises';
+import path from 'node:path';
+
+import { ROOT } from './renderer.ts';
+import { required, hasCode } from '../engine/assert.ts';
 // Deliberate allowlist. Never package working directories or Git history.
 export const releaseRoots = [
-  "engine",
-  "site",
-  "examples",
-  "templates",
-  "scripts",
-  "tests",
-  "docs",
-  ".agents",
-  "AGENTS.md",
-  "README.md",
-  "LICENSE",
-  "package.json",
-  "package-lock.json",
-  "vercel.json",
-  "railway.json",
-  "Dockerfile",
-  ".dockerignore",
-  ".gitignore",
-  "playwright.config.mjs",
+  'engine',
+  'site',
+  'examples',
+  'templates',
+  'scripts',
+  'tests',
+  'docs',
+  '.agents',
+  'AGENTS.md',
+  'README.md',
+  'LICENSE',
+  'package.json',
+  'package-lock.json',
+  'vercel.json',
+  'railway.json',
+  'Dockerfile',
+  '.dockerignore',
+  '.gitignore',
+  'playwright.config.mjs',
+  'tsconfig.json',
+  'eslint.config.mjs',
+  '.prettierrc.json',
+  '.prettierignore',
 ];
-export async function releaseFiles(root = ROOT) {
-  const files = [];
-  async function visit(rel) {
+export async function releaseFiles(root = ROOT): Promise<string[]> {
+  const files: string[] = [];
+  async function visit(rel: string): Promise<void> {
     const info = await lstat(path.join(root, rel));
-    if (info.isSymbolicLink())
-      throw Error(`Release cannot contain symlinks: ${rel}`);
+    if (info.isSymbolicLink()) throw Error(`Release cannot contain symlinks: ${rel}`);
     if (info.isDirectory())
       for (const entry of (await readdir(path.join(root, rel))).sort())
         await visit(`${rel}/${entry}`);
@@ -39,7 +44,7 @@ export async function releaseFiles(root = ROOT) {
     try {
       await visit(item);
     } catch (e) {
-      if (e.code !== "ENOENT") throw e;
+      if (!hasCode(e, 'ENOENT')) throw e;
     }
   }
   return files;
@@ -48,12 +53,12 @@ const crcTable = Array.from({ length: 256 }, (_, i) => {
   for (let n = 0; n < 8; n++) i = i & 1 ? 0xedb88320 ^ (i >>> 1) : i >>> 1;
   return i >>> 0;
 });
-function crc32(b) {
+function crc32(b: Uint8Array): number {
   let c = 0xffffffff;
-  for (const byte of b) c = crcTable[(c ^ byte) & 255] ^ (c >>> 8);
+  for (const byte of b) c = required(crcTable[(c ^ byte) & 255]) ^ (c >>> 8);
   return (c ^ 0xffffffff) >>> 0;
 }
-export async function toolkitZip() {
+export async function toolkitZip(): Promise<Buffer<ArrayBuffer>> {
   const records = [],
     central = [];
   let offset = 0;

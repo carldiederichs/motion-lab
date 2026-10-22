@@ -6,10 +6,7 @@
   "subtitle": "Save the next node before reversing a pointer. Watch the prefix and suffix change.",
   "component": "Algorithms",
   "date": "2026-10-22",
-  "aliases": [
-    "Reverse a Linked List",
-    "Linked list + pointers"
-  ],
+  "aliases": ["Reverse a Linked List", "Linked list + pointers"],
   "family": "Linked list + pointers",
   "stage": {
     "width": 960,
@@ -24,12 +21,7 @@
         "id": "values",
         "label": "Node values",
         "type": "numbers",
-        "default": [
-          1,
-          2,
-          3,
-          4
-        ],
+        "default": [1, 2, 3, 4],
         "max": 6,
         "allowEmpty": true
       }
@@ -47,9 +39,7 @@
       "label": "Single node",
       "why": "Its next pointer is already null.",
       "params": {
-        "values": [
-          7
-        ]
+        "values": [7]
       }
     }
   ],
@@ -71,8 +61,6 @@
   "complexity": {
     "time": "O(n)",
     "space": "O(1)",
-    "derivation": [
-      "Each node is visited once. Only three references are kept."
-    ]
+    "derivation": ["Each node is visited once. Only three references are kept."]
   }
 }

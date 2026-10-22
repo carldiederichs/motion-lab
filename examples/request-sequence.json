@@ -6,10 +6,7 @@
   "subtitle": "Follow a cache hit and a cache miss across browser, API, cache and database.",
   "component": "Architecture",
   "date": "2026-10-22",
-  "aliases": [
-    "Request Sequence",
-    "Sequence diagram"
-  ],
+  "aliases": ["Request Sequence", "Sequence diagram"],
   "stage": {
     "width": 960,
     "height": 510

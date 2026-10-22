@@ -6,10 +6,7 @@
   "subtitle": "An authored trace built from reusable Motion Lab primitives.",
   "component": "Systems",
   "date": "2026-10-22",
-  "aliases": [
-    "Matrix + dependencies",
-    "How does a grid DP reuse smaller answers?"
-  ],
+  "aliases": ["Matrix + dependencies", "How does a grid DP reuse smaller answers?"],
   "family": "Matrix + dependencies",
   "stage": {
     "width": 960,
@@ -28,11 +25,7 @@
             "x": 220,
             "y": 130,
             "cell": 100,
-            "values": [
-              "?",
-              "?",
-              "?"
-            ]
+            "values": ["?", "?", "?"]
           },
           {
             "id": "row-1",
@@ -40,11 +33,7 @@
             "x": 220,
             "y": 230,
             "cell": 100,
-            "values": [
-              "?",
-              "?",
-              "?"
-            ]
+            "values": ["?", "?", "?"]
           },
           {
             "id": "row-2",
@@ -52,11 +41,7 @@
             "x": 220,
             "y": 330,
             "cell": 100,
-            "values": [
-              "?",
-              "?",
-              "?"
-            ]
+            "values": ["?", "?", "?"]
           },
           {
             "id": "answer",
@@ -92,10 +77,7 @@
               {
                 "do": "cells",
                 "actor": "row-0",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "success"
               }
             ]
@@ -114,10 +96,7 @@
               {
                 "do": "cells",
                 "actor": "row-0",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "success"
               }
             ]
@@ -136,10 +115,7 @@
               {
                 "do": "cells",
                 "actor": "row-0",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "success"
               }
             ]
@@ -158,10 +134,7 @@
               {
                 "do": "cells",
                 "actor": "row-1",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "success"
               }
             ]
@@ -180,10 +153,7 @@
               {
                 "do": "cells",
                 "actor": "row-1",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "success"
               }
             ]
@@ -202,10 +172,7 @@
               {
                 "do": "cells",
                 "actor": "row-1",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "success"
               }
             ]
@@ -224,10 +191,7 @@
               {
                 "do": "cells",
                 "actor": "row-2",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "success"
               }
             ]
@@ -246,10 +210,7 @@
               {
                 "do": "cells",
                 "actor": "row-2",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "success"
               }
             ]
@@ -268,10 +229,7 @@
               {
                 "do": "cells",
                 "actor": "row-2",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "success"
               }
             ]
@@ -301,11 +259,7 @@
             "x": 220,
             "y": 130,
             "cell": 100,
-            "values": [
-              "?",
-              "?",
-              "?"
-            ]
+            "values": ["?", "?", "?"]
           },
           {
             "id": "row-1",
@@ -313,11 +267,7 @@
             "x": 220,
             "y": 230,
             "cell": 100,
-            "values": [
-              "?",
-              "?",
-              "?"
-            ]
+            "values": ["?", "?", "?"]
           },
           {
             "id": "row-2",
@@ -325,11 +275,7 @@
             "x": 220,
             "y": 330,
             "cell": 100,
-            "values": [
-              "?",
-              "?",
-              "?"
-            ]
+            "values": ["?", "?", "?"]
           },
           {
             "id": "answer",
@@ -365,10 +311,7 @@
               {
                 "do": "cells",
                 "actor": "row-0",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "success"
               }
             ]
@@ -387,10 +330,7 @@
               {
                 "do": "cells",
                 "actor": "row-0",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "success"
               }
             ]
@@ -409,10 +349,7 @@
               {
                 "do": "cells",
                 "actor": "row-0",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "success"
               }
             ]
@@ -431,10 +368,7 @@
               {
                 "do": "cells",
                 "actor": "row-1",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "success"
               }
             ]
@@ -453,10 +387,7 @@
               {
                 "do": "cells",
                 "actor": "row-1",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "failure"
               }
             ]
@@ -475,10 +406,7 @@
               {
                 "do": "cells",
                 "actor": "row-1",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "success"
               }
             ]
@@ -497,10 +425,7 @@
               {
                 "do": "cells",
                 "actor": "row-2",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "success"
               }
             ]
@@ -519,10 +444,7 @@
               {
                 "do": "cells",
                 "actor": "row-2",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "success"
               }
             ]
@@ -541,10 +463,7 @@
               {
                 "do": "cells",
                 "actor": "row-2",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "success"
               }
             ]
@@ -574,11 +493,7 @@
             "x": 220,
             "y": 130,
             "cell": 100,
-            "values": [
-              "?",
-              "?",
-              "?"
-            ]
+            "values": ["?", "?", "?"]
           },
           {
             "id": "row-1",
@@ -586,11 +501,7 @@
             "x": 220,
             "y": 230,
             "cell": 100,
-            "values": [
-              "?",
-              "?",
-              "?"
-            ]
+            "values": ["?", "?", "?"]
           },
           {
             "id": "row-2",
@@ -598,11 +509,7 @@
             "x": 220,
             "y": 330,
             "cell": 100,
-            "values": [
-              "?",
-              "?",
-              "?"
-            ]
+            "values": ["?", "?", "?"]
           },
           {
             "id": "answer",
@@ -638,10 +545,7 @@
               {
                 "do": "cells",
                 "actor": "row-0",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "failure"
               }
             ]
@@ -660,10 +564,7 @@
               {
                 "do": "cells",
                 "actor": "row-0",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "success"
               }
             ]
@@ -682,10 +583,7 @@
               {
                 "do": "cells",
                 "actor": "row-0",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "success"
               }
             ]
@@ -704,10 +602,7 @@
               {
                 "do": "cells",
                 "actor": "row-1",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "success"
               }
             ]
@@ -726,10 +621,7 @@
               {
                 "do": "cells",
                 "actor": "row-1",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "success"
               }
             ]
@@ -748,10 +640,7 @@
               {
                 "do": "cells",
                 "actor": "row-1",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "success"
               }
             ]
@@ -770,10 +659,7 @@
               {
                 "do": "cells",
                 "actor": "row-2",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "success"
               }
             ]
@@ -792,10 +678,7 @@
               {
                 "do": "cells",
                 "actor": "row-2",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "success"
               }
             ]
@@ -814,10 +697,7 @@
               {
                 "do": "cells",
                 "actor": "row-2",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "success"
               }
             ]

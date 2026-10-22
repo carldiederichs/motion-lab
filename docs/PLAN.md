@@ -39,7 +39,7 @@ Authoring and deployment work landed through [PR 1](https://github.com/carldiede
 - [x] Connect the GitHub repository to Vercel with the owner's approval and deploy `main`.
 - [x] Run the live smoke check on the public URL and inspect the deployed site in Chrome.
 - [ ] Owner reviews the live site before using its link.
-- [ ] Optional: enable the prepared GitHub Actions workflow and verify its first run. The current OAuth login cannot upload workflow files; hosting does not depend on this step.
+- [x] Enable the GitHub Actions workflow and verify its first hosted run.
 
 No application form is part of this workflow.
 
@@ -50,3 +50,12 @@ No application form is part of this workflow.
 - [x] Give each gallery preview a distinct, relevant representation of its topic.
 - [x] Verify geometry, both themes and desktop widths; inspect the rendered changes.
 - [x] Commit, publish and merge the verified update through [PR 3](https://github.com/carldiederichs/motion-lab/pull/3).
+
+## Strict source and authoring follow-up
+
+- [x] Apply strict TypeScript, type-aware lint and formatting to runtime, tools and tests.
+- [x] Validate external scene data and reject unsupported generator inputs without truncation.
+- [x] Add prefix-range, interval, trie and bitmask templates and correctness checks.
+- [x] Document visual families and distinguish editable simulations from composed traces.
+- [x] Verify installation from the toolkit and a fresh checkout, plus read-only container serving.
+- [x] Enable hosted verification and check its first full run.

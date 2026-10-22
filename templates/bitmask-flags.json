@@ -1,0 +1,611 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "bitmask-flags",
+  "title": "Are all required feature flags enabled?",
+  "subtitle": "A concrete trace you can adapt to your own engineering question.",
+  "component": "Algorithms",
+  "date": "2026-10-22",
+  "aliases": ["Bit flags", "Are all required feature flags enabled?"],
+  "family": "Bit flags",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "One required flag",
+      "scene": {
+        "actors": [
+          {
+            "id": "positions",
+            "kind": "text",
+            "x": 420,
+            "y": 75,
+            "text": "Bit values: 8, 4, 2, 1"
+          },
+          {
+            "id": "enabledLabel",
+            "kind": "text",
+            "x": 190,
+            "y": 155,
+            "text": "Enabled: 5"
+          },
+          {
+            "id": "enabled",
+            "kind": "cells",
+            "x": 360,
+            "y": 155,
+            "values": [0, 1, 0, 1],
+            "cell": 85
+          },
+          {
+            "id": "requiredLabel",
+            "kind": "text",
+            "x": 190,
+            "y": 275,
+            "text": "Required: 1"
+          },
+          {
+            "id": "required",
+            "kind": "cells",
+            "x": 360,
+            "y": 275,
+            "values": [0, 0, 0, 1],
+            "cell": 85
+          },
+          {
+            "id": "intersectionLabel",
+            "kind": "text",
+            "x": 190,
+            "y": 395,
+            "text": "Enabled AND required"
+          },
+          {
+            "id": "intersection",
+            "kind": "cells",
+            "x": 360,
+            "y": 395,
+            "values": ["?", "?", "?", "?"],
+            "cell": 85
+          },
+          {
+            "id": "result",
+            "kind": "box",
+            "x": 790,
+            "y": 275,
+            "w": 210,
+            "h": 76,
+            "label": "All required flags?",
+            "value": "?",
+            "valueSmall": true
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Keep each feature in its own bit",
+            "text": "Compare corresponding bits. A bitwise AND keeps a bit only when both inputs have it set.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "enabled",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "actor": "required",
+                "tone": "warning"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 3",
+            "text": "0 AND 0 = 0.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 0,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [0, 0],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 2",
+            "text": "1 AND 0 = 0.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 1,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [1, 1],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 1",
+            "text": "0 AND 0 = 0.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 2,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [2, 2],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 0",
+            "text": "1 AND 1 = 1.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 3,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [3, 3],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Compare against the entire required mask",
+            "text": "1 equals 1: true. Checking for a nonzero intersection alone would only establish that some required flag is set.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "result",
+                "value": "true"
+              },
+              {
+                "do": "tone",
+                "actor": "result",
+                "tone": "success"
+              }
+            ],
+            "lines": [2]
+          }
+        ]
+      }
+    },
+    {
+      "label": "One flag missing",
+      "scene": {
+        "actors": [
+          {
+            "id": "positions",
+            "kind": "text",
+            "x": 420,
+            "y": 75,
+            "text": "Bit values: 8, 4, 2, 1"
+          },
+          {
+            "id": "enabledLabel",
+            "kind": "text",
+            "x": 190,
+            "y": 155,
+            "text": "Enabled: 5"
+          },
+          {
+            "id": "enabled",
+            "kind": "cells",
+            "x": 360,
+            "y": 155,
+            "values": [0, 1, 0, 1],
+            "cell": 85
+          },
+          {
+            "id": "requiredLabel",
+            "kind": "text",
+            "x": 190,
+            "y": 275,
+            "text": "Required: 3"
+          },
+          {
+            "id": "required",
+            "kind": "cells",
+            "x": 360,
+            "y": 275,
+            "values": [0, 0, 1, 1],
+            "cell": 85
+          },
+          {
+            "id": "intersectionLabel",
+            "kind": "text",
+            "x": 190,
+            "y": 395,
+            "text": "Enabled AND required"
+          },
+          {
+            "id": "intersection",
+            "kind": "cells",
+            "x": 360,
+            "y": 395,
+            "values": ["?", "?", "?", "?"],
+            "cell": 85
+          },
+          {
+            "id": "result",
+            "kind": "box",
+            "x": 790,
+            "y": 275,
+            "w": 210,
+            "h": 76,
+            "label": "All required flags?",
+            "value": "?",
+            "valueSmall": true
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Keep each feature in its own bit",
+            "text": "Compare corresponding bits. A bitwise AND keeps a bit only when both inputs have it set.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "enabled",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "actor": "required",
+                "tone": "warning"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 3",
+            "text": "0 AND 0 = 0.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 0,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [0, 0],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 2",
+            "text": "1 AND 0 = 0.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 1,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [1, 1],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 1",
+            "text": "0 AND 1 = 0.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 2,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [2, 2],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 0",
+            "text": "1 AND 1 = 1.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 3,
+                "value": 1
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [3, 3],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Compare against the entire required mask",
+            "text": "1 equals 3: false. Checking for a nonzero intersection alone would only establish that some required flag is set.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "result",
+                "value": "false"
+              },
+              {
+                "do": "tone",
+                "actor": "result",
+                "tone": "failure"
+              }
+            ],
+            "lines": [2]
+          }
+        ]
+      }
+    },
+    {
+      "label": "No flags required",
+      "scene": {
+        "actors": [
+          {
+            "id": "positions",
+            "kind": "text",
+            "x": 420,
+            "y": 75,
+            "text": "Bit values: 8, 4, 2, 1"
+          },
+          {
+            "id": "enabledLabel",
+            "kind": "text",
+            "x": 190,
+            "y": 155,
+            "text": "Enabled: 5"
+          },
+          {
+            "id": "enabled",
+            "kind": "cells",
+            "x": 360,
+            "y": 155,
+            "values": [0, 1, 0, 1],
+            "cell": 85
+          },
+          {
+            "id": "requiredLabel",
+            "kind": "text",
+            "x": 190,
+            "y": 275,
+            "text": "Required: 0"
+          },
+          {
+            "id": "required",
+            "kind": "cells",
+            "x": 360,
+            "y": 275,
+            "values": [0, 0, 0, 0],
+            "cell": 85
+          },
+          {
+            "id": "intersectionLabel",
+            "kind": "text",
+            "x": 190,
+            "y": 395,
+            "text": "Enabled AND required"
+          },
+          {
+            "id": "intersection",
+            "kind": "cells",
+            "x": 360,
+            "y": 395,
+            "values": ["?", "?", "?", "?"],
+            "cell": 85
+          },
+          {
+            "id": "result",
+            "kind": "box",
+            "x": 790,
+            "y": 275,
+            "w": 210,
+            "h": 76,
+            "label": "All required flags?",
+            "value": "?",
+            "valueSmall": true
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Keep each feature in its own bit",
+            "text": "Compare corresponding bits. A bitwise AND keeps a bit only when both inputs have it set.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "enabled",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "actor": "required",
+                "tone": "warning"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 3",
+            "text": "0 AND 0 = 0.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 0,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [0, 0],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 2",
+            "text": "1 AND 0 = 0.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 1,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [1, 1],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 1",
+            "text": "0 AND 0 = 0.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 2,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [2, 2],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Check bit 0",
+            "text": "1 AND 0 = 0.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "intersection",
+                "index": 3,
+                "value": 0
+              },
+              {
+                "do": "cells",
+                "actor": "intersection",
+                "range": [3, 3],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [1]
+          },
+          {
+            "title": "Compare against the entire required mask",
+            "text": "0 equals 0: true. Requiring no flags is satisfied by every enabled mask.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "result",
+                "value": "true"
+              },
+              {
+                "do": "tone",
+                "actor": "result",
+                "tone": "success"
+              }
+            ],
+            "lines": [2]
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "One flag missing",
+      "why": "Any overlap is weaker than all required bits.",
+      "variant": 1
+    },
+    {
+      "label": "No flags required",
+      "why": "A zero requirement is always satisfied.",
+      "variant": 2
+    }
+  ],
+  "code": {
+    "language": "ts",
+    "lines": ["const present = enabled & required;", "return present === required;"]
+  },
+  "complexity": {
+    "time": "O(1) for a fixed-width mask",
+    "space": "O(1)",
+    "example": "Four visible bits; JavaScript bitwise operators use 32 bits.",
+    "derivation": [
+      "This model uses nonnegative masks from 0 to 15.",
+      "Larger arbitrary-width masks need a different representation."
+    ]
+  }
+}

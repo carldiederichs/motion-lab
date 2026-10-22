@@ -1,19 +1,19 @@
 # Authoring an explanation
 
-Use `examples/catalogue.json` to choose a working starting point. Ask what the user needs to see, then choose the picture that exposes it.
+Use `examples/catalogue.json` to choose a working starting point. Ask what the user needs to see, then choose the picture that exposes it. See [visual recipes](VISUAL-RECIPES.md) for the full family map and the distinction between editable simulations and composed traces.
 
-| Question | Representation | Starting point |
-| --- | --- | --- |
-| What does each iteration keep or discard? | Array, indices, pointers | binary-search, sliding-window |
-| What value has already been seen? | Array and map | two-sum |
-| What returns from a recursive call? | Tree and call stack | balanced-tree |
-| Which cells or vertices have been visited? | Matrix or graph frontier | number-of-islands |
-| Which request precedes another? | Sequence with request/reply paths | request-sequence |
-| Who owns this code or data? | C4 system/container boundaries | c4-architecture |
-| Where does a key go? | Hash ring and ownership table | consistent-hashing |
-| What is stored after an operation? | Store with explicit rows | key-value-store |
-| How can two correct-looking operations interfere? | Interleaving | lost-update |
-| Where is work queued? | Queue, stack and moving token | event-loop |
+| Question                                          | Representation                    | Starting point                |
+| ------------------------------------------------- | --------------------------------- | ----------------------------- |
+| What does each iteration keep or discard?         | Array, indices, pointers          | binary-search, sliding-window |
+| What value has already been seen?                 | Array and map                     | two-sum                       |
+| What returns from a recursive call?               | Tree and call stack               | balanced-tree                 |
+| Which cells or vertices have been visited?        | Matrix or graph frontier          | number-of-islands             |
+| Which request precedes another?                   | Sequence with request/reply paths | request-sequence              |
+| Who owns this code or data?                       | C4 system/container boundaries    | c4-architecture               |
+| Where does a key go?                              | Hash ring and ownership table     | consistent-hashing            |
+| What is stored after an operation?                | Store with explicit rows          | key-value-store               |
+| How can two correct-looking operations interfere? | Interleaving                      | lost-update                   |
+| Where is work queued?                             | Queue, stack and moving token     | event-loop                    |
 
 Further patterns compose the same primitives: linked lists use circles and directed links; dynamic programming uses rows of cells with a highlighted dependency; intervals use aligned cells or boxes on a shared axis; heaps and tries use trees; backtracking uses a choice tree plus a stack; bit operations use a row of bit cells; state machines use boxes and labelled links. A generic renderer does not prove correctness for every possible prompt. Validate the mechanism, not just the JSON.
 
@@ -43,25 +43,29 @@ Build locally, run the verifier, then inspect the rendered states. A schema pass
 
 ## More starting points
 
-`node scripts/cli.mjs new my-explanation --template <name>` accepts both gallery examples and the reusable scenes in `templates/`.
+`npx tsx scripts/cli.ts new my-explanation --template <name>` accepts both gallery examples and the reusable scenes in `templates/`.
 
-| Question to explain | Starting point | Make visible |
-| --- | --- | --- |
-| Which keys move when a server joins? | consistent-hashing | Clockwise ownership and the changed interval |
-| Why does a retry create a duplicate? | idempotent-retry | Commit, lost response and deduplication |
-| Why did this cache evict a useful item? | lru-cache | Recency order and capacity |
-| When do we retry a failed dependency? | circuit-breaker | Closed, open and half-open states |
-| How do grid subproblems depend on each other? | grid-paths | Above/left dependencies and blocked cells |
-| Why must this recursive branch undo its state? | subsets-backtracking | Current path, completed results and restoration |
-| How does a queue maintain priority? | heap-insertion | Parent/child order and the array representation |
-| Which service owns this responsibility? | c4-architecture | Person, system and container boundaries |
-| Which request waits on which service? | request-sequence | Messages, replies and failure paths |
-| Why is a stock update lost? | lost-update | Two local copies and one shared store |
-| Why does a callback run first? | event-loop | Stack, microtask queue and timer queue |
-| Which nodes are reachable? | graph-bfs | Frontier order, visits, cycles and distance |
-| How does a list reverse without losing its tail? | reverse-linked-list | Saved next pointer and reversed prefix |
-| Why does dynamic programming avoid repeated work? | coin-change | Smaller solved amounts and unreachable states |
+| Question to explain                               | Starting point       | Make visible                                      |
+| ------------------------------------------------- | -------------------- | ------------------------------------------------- |
+| Which keys move when a server joins?              | consistent-hashing   | Clockwise ownership and the changed interval      |
+| Why does a retry create a duplicate?              | idempotent-retry     | Commit, lost response and deduplication           |
+| Why did this cache evict a useful item?           | lru-cache            | Recency order and capacity                        |
+| When do we retry a failed dependency?             | circuit-breaker      | Closed, open and half-open states                 |
+| How do grid subproblems depend on each other?     | grid-paths           | Above/left dependencies and blocked cells         |
+| Why must this recursive branch undo its state?    | subsets-backtracking | Current path, completed results and restoration   |
+| How does a queue maintain priority?               | heap-insertion       | Parent/child order and the array representation   |
+| Which service owns this responsibility?           | c4-architecture      | Person, system and container boundaries           |
+| Which request waits on which service?             | request-sequence     | Messages, replies and failure paths               |
+| Why is a stock update lost?                       | lost-update          | Two local copies and one shared store             |
+| Why does a callback run first?                    | event-loop           | Stack, microtask queue and timer queue            |
+| Which nodes are reachable?                        | graph-bfs            | Frontier order, visits, cycles and distance       |
+| How does a list reverse without losing its tail?  | reverse-linked-list  | Saved next pointer and reversed prefix            |
+| Why does dynamic programming avoid repeated work? | coin-change          | Smaller solved amounts and unreachable states     |
+| How can a range total avoid rescanning?           | prefix-range         | Leading zero, two boundaries and subtraction      |
+| How many tasks overlap at once?                   | interval-sweep       | Half-open intervals and end-before-start ordering |
+| Why is a prefix not always a complete word?       | trie-prefix          | Shared path, missing child and terminal marker    |
+| Are all required feature flags present?           | bitmask-flags        | Per-bit intersection and the whole required mask  |
 
-For an interval sweep, compose a `cells` timeline, an event `store`, and a counter `box`. For a new API or storage protocol, write fresh participants and message traces. Keep these authored traces explicitly illustrative. If the user needs arbitrary editable inputs, add and test a bounded deterministic generator instead of presenting a fixed trace as a simulator.
+The interval sweep template composes a `cells` timeline, interval boxes and active/peak counters. For a new API or storage protocol, write fresh participants and message traces. Keep these authored traces explicitly illustrative. If the user needs arbitrary editable inputs, add and test a bounded deterministic generator instead of presenting a fixed trace as a simulator.
 
 Inputs are deliberately small enough to inspect. The public numeric controls accept finite values between -999 and 999, with at most six displayed characters. Each lesson sets its own item limit. Coin values must be positive integers; grid rows use 0 and 1. Invalid edits preserve the last valid scene.

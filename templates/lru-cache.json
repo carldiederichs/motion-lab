@@ -6,10 +6,7 @@
   "subtitle": "An authored trace built from reusable Motion Lab primitives.",
   "component": "Systems",
   "date": "2026-10-22",
-  "aliases": [
-    "Store + recency",
-    "Why did the cache evict a recently used key?"
-  ],
+  "aliases": ["Store + recency", "Why did the cache evict a recently used key?"],
   "family": "Store + recency",
   "stage": {
     "width": 960,
@@ -30,10 +27,7 @@
             "w": 320,
             "h": 220,
             "label": "Most recent first",
-            "rows": [
-              "B",
-              "A"
-            ]
+            "rows": ["B", "A"]
           },
           {
             "id": "operation",
@@ -74,10 +68,7 @@
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": [
-                  "A",
-                  "B"
-                ]
+                "value": ["A", "B"]
               }
             ]
           },
@@ -89,10 +80,7 @@
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": [
-                  "C",
-                  "A"
-                ]
+                "value": ["C", "A"]
               },
               {
                 "do": "set",
@@ -121,10 +109,7 @@
             "w": 320,
             "h": 220,
             "label": "Most recent first",
-            "rows": [
-              "B",
-              "A"
-            ]
+            "rows": ["B", "A"]
           },
           {
             "id": "operation",
@@ -165,10 +150,7 @@
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": [
-                  "B",
-                  "A"
-                ]
+                "value": ["B", "A"]
               }
             ]
           },
@@ -180,10 +162,7 @@
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": [
-                  "C",
-                  "B"
-                ]
+                "value": ["C", "B"]
               },
               {
                 "do": "set",
@@ -212,9 +191,7 @@
             "w": 320,
             "h": 220,
             "label": "Most recent first",
-            "rows": [
-              "A"
-            ]
+            "rows": ["A"]
           },
           {
             "id": "operation",
@@ -255,9 +232,7 @@
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": [
-                  "A"
-                ]
+                "value": ["A"]
               }
             ]
           },
@@ -269,9 +244,7 @@
               {
                 "do": "rows",
                 "actor": "cache",
-                "value": [
-                  "C"
-                ]
+                "value": ["C"]
               },
               {
                 "do": "set",

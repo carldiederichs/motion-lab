@@ -6,10 +6,7 @@
   "subtitle": "An authored trace built from reusable Motion Lab primitives.",
   "component": "Systems",
   "date": "2026-10-22",
-  "aliases": [
-    "State machine",
-    "When should a failed dependency receive another request?"
-  ],
+  "aliases": ["State machine", "When should a failed dependency receive another request?"],
   "family": "State machine",
   "stage": {
     "width": 960,

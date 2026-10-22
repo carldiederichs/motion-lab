@@ -6,10 +6,7 @@
   "subtitle": "Write, read and delete values, then derive a sorted view from the same stored entries.",
   "component": "Systems",
   "date": "2026-10-22",
-  "aliases": [
-    "Key-Value Store",
-    "Store + operations"
-  ],
+  "aliases": ["Key-Value Store", "Store + operations"],
   "stage": {
     "width": 960,
     "height": 500
@@ -24,13 +21,7 @@
         "id": "ops",
         "label": "Operations",
         "type": "list",
-        "default": [
-          "set:oak:green",
-          "set:elm:green",
-          "get:oak",
-          "delete:oak",
-          "sort"
-        ],
+        "default": ["set:oak:green", "set:elm:green", "get:oak", "delete:oak", "sort"],
         "max": 7
       }
     ]
@@ -75,22 +66,14 @@
       "label": "Overwrite a key",
       "why": "A second write replaces the value, not the key.",
       "params": {
-        "ops": [
-          "set:oak:green",
-          "set:oak:gold",
-          "get:oak"
-        ]
+        "ops": ["set:oak:green", "set:oak:gold", "get:oak"]
       }
     },
     {
       "label": "Missing key",
       "why": "A deleted key has no stored value.",
       "params": {
-        "ops": [
-          "set:elm:green",
-          "delete:elm",
-          "get:elm"
-        ]
+        "ops": ["set:elm:green", "delete:elm", "get:elm"]
       }
     }
   ]

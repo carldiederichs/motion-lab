@@ -10,6 +10,10 @@
 !vercel.json
 !railway.json
 !playwright.config.mjs
+!tsconfig.json
+!eslint.config.mjs
+!.prettierrc.json
+!.prettierignore
 !engine/**
 !site/**
 !examples/**

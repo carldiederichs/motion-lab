@@ -6,10 +6,7 @@
   "subtitle": "Interleave two stock updates and watch a correct-looking read-modify-write lose an update.",
   "component": "Concurrency",
   "date": "2026-10-22",
-  "aliases": [
-    "Lost Update",
-    "Interleaving"
-  ],
+  "aliases": ["Lost Update", "Interleaving"],
   "stage": {
     "width": 960,
     "height": 480

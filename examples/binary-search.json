@@ -6,10 +6,7 @@
   "subtitle": "Keep the possible interval visible while each comparison removes half the candidates.",
   "component": "Algorithms",
   "date": "2026-10-22",
-  "aliases": [
-    "Binary Search",
-    "Search interval"
-  ],
+  "aliases": ["Binary Search", "Search interval"],
   "stage": {
     "width": 960,
     "height": 480
@@ -24,15 +21,7 @@
         "id": "values",
         "label": "Sorted numbers",
         "type": "numbers",
-        "default": [
-          1,
-          3,
-          5,
-          7,
-          9,
-          11,
-          13
-        ],
+        "default": [1, 3, 5, 7, 9, 11, 13],
         "max": 10,
         "allowEmpty": true
       },
@@ -72,12 +61,7 @@
       "label": "Missing target",
       "why": "The interval becomes empty.",
       "params": {
-        "values": [
-          1,
-          3,
-          5,
-          7
-        ],
+        "values": [1, 3, 5, 7],
         "target": 6
       }
     },

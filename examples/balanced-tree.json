@@ -6,10 +6,7 @@
   "subtitle": "See heights return from children to parents. Compare a repeated height scan with one postorder pass.",
   "component": "Algorithms",
   "date": "2026-10-22",
-  "aliases": [
-    "Balanced Binary Tree",
-    "Tree + call stack"
-  ],
+  "aliases": ["Balanced Binary Tree", "Tree + call stack"],
   "stage": {
     "width": 960,
     "height": 620
@@ -24,15 +21,7 @@
         "id": "values",
         "label": "Tree (level order)",
         "type": "tree",
-        "default": [
-          3,
-          9,
-          20,
-          null,
-          null,
-          15,
-          7
-        ],
+        "default": [3, 9, 20, null, null, 15, 7],
         "max": 9
       }
     ]
@@ -61,9 +50,7 @@
       "complexity": {
         "time": "O(n)",
         "space": "O(h)",
-        "derivation": [
-          "Each node returns its height once. h is the tree height."
-        ]
+        "derivation": ["Each node returns its height once. h is the tree height."]
       }
     },
     {
@@ -103,23 +90,14 @@
       "label": "Skewed tree",
       "why": "A long single branch can become unbalanced.",
       "params": {
-        "values": [
-          1,
-          2,
-          null,
-          3,
-          null,
-          4
-        ]
+        "values": [1, 2, null, 3, null, 4]
       }
     },
     {
       "label": "Single node",
       "why": "A leaf has two empty child subtrees.",
       "params": {
-        "values": [
-          1
-        ]
+        "values": [1]
       }
     }
   ]

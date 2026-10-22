@@ -6,10 +6,7 @@
   "subtitle": "Find a pair by tracking what you have already seen. Change the input and watch the map fill up.",
   "component": "Algorithms",
   "date": "2026-10-22",
-  "aliases": [
-    "Two Sum",
-    "Array + map"
-  ],
+  "aliases": ["Two Sum", "Array + map"],
   "stage": {
     "width": 960,
     "height": 480
@@ -24,12 +21,7 @@
         "id": "values",
         "label": "Numbers",
         "type": "numbers",
-        "default": [
-          2,
-          7,
-          11,
-          15
-        ],
+        "default": [2, 7, 11, 15],
         "max": 8,
         "allowEmpty": true
       },
@@ -66,9 +58,7 @@
       "complexity": {
         "time": "O(n) expected",
         "space": "O(n)",
-        "derivation": [
-          "Each value needs one expected constant-time map lookup."
-        ]
+        "derivation": ["Each value needs one expected constant-time map lookup."]
       }
     },
     {
@@ -92,9 +82,7 @@
       "complexity": {
         "time": "O(n\u00b2)",
         "space": "O(1)",
-        "derivation": [
-          "The worst case checks n(n-1)/2 pairs."
-        ]
+        "derivation": ["The worst case checks n(n-1)/2 pairs."]
       }
     }
   ],
@@ -103,10 +91,7 @@
       "label": "Duplicate values",
       "why": "Two different indices may hold the same value.",
       "params": {
-        "values": [
-          3,
-          3
-        ],
+        "values": [3, 3],
         "target": 6
       }
     },
@@ -114,11 +99,7 @@
       "label": "No pair",
       "why": "A complete scan may return no result.",
       "params": {
-        "values": [
-          1,
-          4,
-          8
-        ],
+        "values": [1, 4, 8],
         "target": 20
       }
     }

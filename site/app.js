@@ -67,164 +67,122 @@ $("demo-replay").addEventListener("click", () => {
     }
   }, 28);
 });
-function art(family) {
-  const ns = "http://www.w3.org/2000/svg",
-    svg = document.createElementNS(ns, "svg");
+function art(slug) {
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
   svg.setAttribute("viewBox", "0 0 280 100");
   svg.setAttribute("aria-hidden", "true");
   const add = (tag, attrs, text) => {
     const e = document.createElementNS(ns, tag);
     for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
-    if (text) e.textContent = text;
+    if (text !== undefined) e.textContent = text;
     svg.appendChild(e);
     return e;
   };
-  const line = (x, y, a, b) =>
-    add("path", {
-      d: `M${x} ${y} L${a} ${b}`,
-      stroke: "var(--context)",
-      fill: "none",
-      "stroke-width": 1.5,
-    });
-  const node = (x, y, label, active = false) => {
-    add("rect", {
-      x: x - 24,
-      y: y - 15,
-      width: 48,
-      height: 30,
-      rx: 5,
-      fill: "var(--surface-2)",
-      stroke: active ? "var(--blue)" : "var(--border)",
-    });
-    add(
-      "text",
-      {
-        x,
-        y: y + 4,
-        "text-anchor": "middle",
-        fill: active ? "var(--blue)" : "var(--muted)",
-        "font-size": 11,
-        "font-family": "var(--mono)",
-      },
-      label,
-    );
+  const label = (x, y, text, tone = "muted", size = 11) =>
+    add("text", { x, y, "text-anchor": "middle", fill: `var(--${tone})`,
+      "font-size": size, "font-family": "var(--mono)" }, text);
+  const path = (d, tone = "context", dashed = false) =>
+    add("path", { d, stroke: `var(--${tone})`, fill: "none",
+      "stroke-width": 1.5, "stroke-linecap": "round",
+      ...(dashed ? { "stroke-dasharray": "3 4" } : {}) });
+  const arrow = (x, y, a, b, tone = "blue") => {
+    const angle = Math.atan2(b - y, a - x),
+      dx = 5 * Math.cos(angle), dy = 5 * Math.sin(angle);
+    path(`M${x} ${y}L${a} ${b}M${a-dx+dy*.6} ${b-dy-dx*.6}L${a} ${b}L${a-dx-dy*.6} ${b-dy+dx*.6}`, tone);
   };
-  if (family.includes("ring")) {
-    add("circle", {
-      cx: 140,
-      cy: 50,
-      r: 38,
-      fill: "none",
-      stroke: "var(--border)",
-      "stroke-dasharray": "3 4",
-    });
-    for (const [a, t] of [
-      [0, "A"],
-      [2.1, "B"],
-      [4.2, "C"],
-    ]) {
-      const x = 140 + 38 * Math.sin(a),
-        y = 50 - 38 * Math.cos(a);
-      add("circle", {
-        cx: x,
-        cy: y,
-        r: 12,
-        fill: "var(--surface)",
-        stroke: t === "B" ? "var(--blue)" : "var(--context)",
-      });
-      add(
-        "text",
-        {
-          x,
-          y: y + 4,
-          "text-anchor": "middle",
-          fill: "var(--text)",
-          "font-size": 11,
-        },
-        t,
-      );
-    }
-  } else if (family.includes("Tree")) {
-    for (const [x, y, a, b] of [
-      [140, 20, 80, 75],
-      [140, 20, 200, 75],
-    ])
-      line(x, y, a, b);
-    node(140, 20, "3", true);
-    node(80, 75, "9");
-    node(200, 75, "20");
-  } else if (family.includes("Graph")) {
-    for (const [x, y, a, b] of [
-      [45, 50, 125, 20],
-      [45, 50, 125, 80],
-      [125, 20, 225, 50],
-      [125, 80, 225, 50],
-    ])
-      line(x, y, a, b);
-    node(45, 50, "0", true);
-    node(125, 20, "1");
-    node(125, 80, "2");
-    node(225, 50, "3");
-  } else if (family.includes("Linked")) {
-    line(50, 50, 230, 50);
-    node(50, 50, "1");
-    node(140, 50, "2", true);
-    node(230, 50, "3");
-    add("path", {
-      d: "M120 72l-16 0m0 0l6 -5m-6 5l6 5",
-      stroke: "var(--blue)",
-      fill: "none",
-    });
-  } else if (family.includes("Matrix") || family.includes("DP")) {
-    for (let r = 0; r < 3; r++)
-      for (let c = 0; c < 5; c++) {
-        const active = (r + c) % 3 === 0;
-        add("rect", {
-          x: 65 + c * 31,
-          y: 5 + r * 31,
-          width: 26,
-          height: 26,
-          rx: 4,
-          fill: active ? "var(--blue)" : "var(--surface-2)",
-          stroke: "var(--border)",
-        });
-      }
-  } else if (family.includes("Sequence")) {
-    for (const x of [60, 140, 220]) line(x, 10, x, 90);
-    line(60, 30, 140, 30);
-    line(140, 55, 220, 55);
-    line(220, 80, 60, 80);
-    add("circle", { cx: 165, cy: 55, r: 5, fill: "var(--blue)" });
-  } else if (family.includes("C4")) {
-    add("rect", {
-      x: 95,
-      y: 8,
-      width: 178,
-      height: 82,
-      rx: 6,
-      stroke: "var(--border)",
-      fill: "none",
-      "stroke-dasharray": "4 4",
-    });
-    line(35, 50, 130, 50);
-    line(145, 50, 230, 50);
-    node(35, 50, "User");
-    node(130, 50, "API", true);
-    node(230, 50, "DB");
-  } else if (
-    family.includes("Store") ||
-    family.includes("Queues") ||
-    family.includes("Interleaving")
-  ) {
-    node(45, 28, "A");
-    node(45, 75, "B");
-    line(70, 28, 160, 50);
-    line(70, 75, 160, 50);
-    node(190, 50, "state", true);
+  const box = (x, y, w, h, tone = "border", dashed = false) =>
+    add("rect", { x, y, width: w, height: h, rx: 4,
+      fill: dashed ? "none" : "var(--surface-2)", stroke: `var(--${tone})`,
+      ...(dashed ? { "stroke-dasharray": "4 4" } : {}) });
+  const node = (x, y, text, tone = "border", w = 48) => {
+    box(x-w/2, y-14, w, 28, tone);
+    label(x, y+4, text, tone === "border" ? "muted" : tone);
+  };
+  const circle = (x, y, text, tone = "context") => {
+    add("circle", { cx: x, cy: y, r: 12, fill: "var(--surface)", stroke: `var(--${tone})` });
+    label(x, y+4, text, tone === "context" ? "text" : tone);
+  };
+  if (slug === "two-sum") {
+    label(58, 15, "seen"); label(146, 15, "current"); label(234, 15, "target");
+    node(58, 38, "2", "blue"); label(102, 42, "+");
+    node(146, 38, "7", "blue"); label(190, 42, "="); node(234, 38, "9", "green");
+    box(56, 65, 168, 25); label(140, 82, "map: 2 → index 0");
+  } else if (slug === "sliding-window") {
+    box(72, 20, 104, 42, "blue", true);
+    [2, 1, 5, 1, 3, 2].forEach((v, i) => node(56+i*34, 41, v, i>=1 && i<=3 ? "blue" : "border", 28));
+    arrow(56, 64, 56, 83, "amber"); arrow(158, 85, 158, 66);
+    label(226, 79, "sum 7", "blue"); label(104, 96, "−2  +1");
+  } else if (slug === "binary-search") {
+    [1, 3, 5, 7, 9, 11, 13].forEach((v, i) => node(38+i*34, 40, v, i===3 ? "blue" : "border", 28));
+    path("M20 65v8h102v-8", "context");
+    path("M158 65v8h102v-8", "context");
+    arrow(140, 82, 140, 59); label(140, 96, "mid = target", "blue");
+    label(71, 89, "discard"); label(209, 89, "discard");
+  } else if (slug === "number-of-islands") {
+    const grid = [[1,1,0,0,1],[0,1,0,1,1],[0,0,0,0,0]];
+    grid.forEach((row,r) => row.forEach((v,c) => {
+      const tone = v ? c<2 ? "blue" : "green" : "border";
+      box(36+c*29, 6+r*29, 24, 24, tone);
+      label(48+c*29, 23+r*29, v, v ? tone : "muted");
+    }));
+    label(230, 43, "2", "text", 22); label(230, 65, "islands");
+  } else if (slug === "balanced-tree") {
+    path("M140 20L80 57M140 20L200 57M200 57L169 87M200 57L239 87");
+    circle(140, 17, "3", "blue"); circle(80, 52, "9"); circle(200, 52, "20");
+    circle(169, 86, "15"); circle(239, 86, "7");
+    label(62, 85, "h = 1"); label(233, 28, "h = 2");
+  } else if (slug === "consistent-hashing") {
+    add("circle", { cx:140, cy:50, r:36, fill:"none", stroke:"var(--border)", "stroke-dasharray":"3 4" });
+    circle(140, 14, "A"); circle(171, 68, "B", "blue"); circle(109, 68, "C");
+    add("circle", {cx:175,cy:38,r:4,fill:"var(--blue)"});
+    arrow(184, 41, 184, 61); label(225, 45, "key"); label(225, 63, "→ B", "blue");
+  } else if (slug === "key-value-store") {
+    label(57, 32, "PUT"); node(57, 57, "x: 9", "blue", 64);
+    arrow(96, 57, 129, 57);
+    box(139, 13, 105, 76); path("M139 38h105M139 63h105M191 13v76");
+    label(165, 30, "key"); label(217, 30, "value");
+    label(165, 55, "x"); label(217, 55, "9", "blue");
+    label(165, 80, "y"); label(217, 80, "4");
+  } else if (slug === "lost-update") {
+    label(30, 30, "A"); label(30, 70, "B");
+    node(88, 26, "10", "border", 42); node(88, 66, "10", "border", 42);
+    arrow(116, 26, 177, 42); arrow(116, 66, 177, 50);
+    node(215, 46, "11", "red", 50); label(150, 94, "2 writes · 1 increment", "red");
+  } else if (slug === "event-loop") {
+    label(50, 17, "stack"); label(140, 17, "microtask"); label(230, 17, "timer");
+    node(50, 44, "main", "blue", 62); node(140, 44, "then", "border", 62); node(230, 44, "task", "border", 62);
+    arrow(50, 67, 50, 84); path("M50 84h180"); arrow(140, 84, 140, 67); arrow(230, 84, 230, 67);
+    label(96, 77, "1"); label(185, 77, "2");
+  } else if (slug === "request-sequence") {
+    [55,140,225].forEach(x => path(`M${x} 23v71`, "context", true));
+    label(55, 14, "Web"); label(140, 14, "API"); label(225, 14, "DB");
+    arrow(55, 34, 140, 34); arrow(140, 57, 225, 57); arrow(225, 84, 55, 84, "green");
+    label(98, 29, "GET"); label(184, 51, "read"); label(140, 78, "response");
+  } else if (slug === "c4-architecture") {
+    box(93, 6, 180, 88, "context", true); label(182, 23, "system boundary");
+    arrow(62, 60, 105, 60); arrow(167, 60, 208, 60);
+    node(35, 60, "User"); node(136, 60, "API", "blue"); node(239, 60, "DB");
+  } else if (slug === "reverse-linked-list") {
+    arrow(111, 48, 73, 48); arrow(201, 48, 163, 48);
+    node(47, 48, "1"); node(137, 48, "2", "blue"); node(227, 48, "3");
+    label(47, 86, "prev"); label(137, 86, "current"); label(227, 86, "next");
+  } else if (slug === "coin-change") {
+    label(39, 15, "amount"); label(39, 43, "dp");
+    [0,1,2,3,4].forEach((v,i) => { label(92+i*35,15,v); node(92+i*35,39,[0,1,2,1,2][i],i===4?"blue":"border",29); });
+    path("M127 58v16h105v-16", "blue");
+    label(168, 94, "dp[4] = dp[1] + 1", "blue");
+  } else if (slug === "graph-bfs") {
+    path("M42 35L108 16L174 35L108 67L42 35");
+    circle(42,35,"0","blue"); circle(108,16,"1","blue"); circle(174,35,"3"); circle(108,67,"2");
+    box(208,16,55,66); label(235,32,"queue"); label(235,52,"1", "blue"); label(235,71,"2");
+    label(98,96,"visit by distance");
+  } else if (slug === "idempotent-retry") {
+    node(46,26,"key 42","border",72); node(46,70,"key 42","border",72);
+    arrow(89,26,153,43); arrow(89,70,153,53);
+    node(207,48,"1 order","green",90); label(146,95,"same key → same result", "green");
   } else {
-    for (let i = 0; i < 5; i++)
-      node(32 + i * 54, 45, String([2, 7, 11, 15, 9][i]), i === 1 || i === 2);
-    add("path", { d: "M66 78h66", stroke: "var(--blue)", "stroke-width": 2 });
+    throw Error(`Missing gallery preview: ${slug}`);
   }
   return svg;
 }
@@ -247,7 +205,7 @@ function renderCards() {
     a.href = `/lessons/${item.slug}.html`;
     const visual = document.createElement("div");
     visual.className = "card-art";
-    visual.appendChild(art(item.family));
+    visual.appendChild(art(item.slug));
     a.appendChild(visual);
     const copy = document.createElement("div");
     copy.className = "card-copy";
@@ -468,9 +426,9 @@ function renderHero() {
     if (text) e.textContent = text;
     svg.appendChild(e);
   };
-  const point = (slot) => [
-    200 + 91 * Math.sin((slot / 100) * Math.PI * 2),
-    125 - 91 * Math.cos((slot / 100) * Math.PI * 2),
+  const point = (slot, radius = 91) => [
+    200 + radius * Math.sin((slot / 100) * Math.PI * 2),
+    125 - radius * Math.cos((slot / 100) * Math.PI * 2),
   ];
   add("circle", {
     cx: 200,
@@ -489,6 +447,7 @@ function renderHero() {
   ]) {
     const [x, y] = point(slot);
     add("circle", {
+      "data-server": label,
       cx: x,
       cy: y,
       r: 19,
@@ -509,10 +468,17 @@ function renderHero() {
       label,
     );
   }
-  const [kx, ky] = point(60),
+  const [kx, ky] = point(60, 130),
     [ox, oy] = point(heroAdded ? 64 : 80);
+  // Keep a visible gap at the server border, including the nearby D state.
+  const cx = heroAdded ? kx : 200,
+    cy = heroAdded ? ky : 125,
+    distance = Math.hypot(cx - ox, cy - oy),
+    ex = ox + ((cx - ox) / distance) * 24,
+    ey = oy + ((cy - oy) / distance) * 24;
   add("path", {
-    d: `M${kx} ${ky} Q200 125 ${ox} ${oy}`,
+    "data-owner-connector": "",
+    d: `M${kx} ${ky} Q${cx} ${cy} ${ex} ${ey}`,
     fill: "none",
     stroke: "var(--blue)",
     "stroke-width": 2,

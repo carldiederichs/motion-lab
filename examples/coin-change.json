@@ -133,10 +133,30 @@
     ]
   },
   "complexity": {
-    "time": "O(amount \u00b7 coins)",
+    "time": "O(amount · coins)",
     "space": "O(amount)",
     "derivation": [
       "amount is the target value; coins is the number of positive denominations. Each amount tries every denomination. The table contains amount + 1 entries, including zero."
     ]
+  },
+  "problem": {
+    "statement": "Given distinct coin denominations and an amount, return the fewest coins needed to make that exact amount. Each denomination can be used any number of times. Return −1 when no combination works.",
+    "example": {
+      "input": "coins = [1, 3, 4], amount = 6",
+      "output": "2",
+      "explanation": "Two coins of value 3 make 6. Taking a 4 first would require two additional coins of value 1."
+    },
+    "constraints": [
+      "There are 1 to 12 denominations.",
+      "Each denomination is a positive integer no greater than 2,147,483,647.",
+      "0 ≤ amount ≤ 10,000"
+    ],
+    "source": {
+      "number": 322,
+      "title": "Coin Change",
+      "slug": "coin-change",
+      "relationship": "exact",
+      "note": "Problem restated here; open LeetCode for the original prompt and to submit your solution."
+    }
   }
 }

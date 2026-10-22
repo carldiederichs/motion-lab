@@ -266,12 +266,33 @@ export const variantSchema = z.strictObject({
   hidden: z.boolean().optional(),
 });
 export type Variant = z.infer<typeof variantSchema>;
+export const problemSchema = z.strictObject({
+  statement: z.string().min(1).max(1200),
+  example: z.strictObject({
+    input: z.string().min(1).max(300),
+    output: z.string().min(1).max(300),
+    explanation: z.string().min(1).max(600),
+  }),
+  constraints: z.array(z.string().min(1).max(200)).min(1).max(8),
+  source: z.strictObject({
+    number: z.int().positive(),
+    title: z.string().min(1).max(160),
+    slug: z
+      .string()
+      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+      .max(120),
+    relationship: z.enum(['exact', 'related']),
+    note: z.string().min(1).max(600),
+  }),
+});
+export type Problem = z.infer<typeof problemSchema>;
 export const specSchema = z.strictObject({
   kind: z.literal('motion'),
   version: z.literal(3),
   slug: z.string().regex(slugPattern).max(80),
   title: z.string().min(1).max(160),
   subtitle: text.optional(),
+  problem: problemSchema.optional(),
   component: text,
   date: text.optional(),
   aliases: z.array(text),

@@ -3,7 +3,7 @@
   "version": 3,
   "slug": "balanced-tree",
   "title": "Balanced Binary Tree",
-  "subtitle": "See heights return from children to parents. Compare a repeated height scan with one postorder pass.",
+  "subtitle": "Check whether a tree is balanced by returning heights from children to parents, with a comparison of two approaches.",
   "component": "Algorithms",
   "date": "2026-10-22",
   "aliases": ["Balanced Binary Tree", "Tree + call stack"],
@@ -245,7 +245,7 @@
         ]
       },
       "complexity": {
-        "time": "O(n\u00b2) upper bound",
+        "time": "O(n²) upper bound",
         "space": "O(h)",
         "derivation": [
           "n is the number of nodes and h the tree height. Recursion uses at most h stack frames.",
@@ -269,5 +269,24 @@
         "values": [1]
       }
     }
-  ]
+  ],
+  "problem": {
+    "statement": "Given the root of a binary tree, return whether it is height-balanced. At every node, the heights of the left and right subtrees must differ by at most one.",
+    "example": {
+      "input": "root = [4, 2, 6, 1] (level order)",
+      "output": "true",
+      "explanation": "At the root the subtree heights are 2 and 1. No other node has a height difference greater than one."
+    },
+    "constraints": [
+      "The tree contains 0 to 5,000 nodes.",
+      "Node values are between −10,000 and 10,000."
+    ],
+    "source": {
+      "number": 110,
+      "title": "Balanced Binary Tree",
+      "slug": "balanced-binary-tree",
+      "relationship": "exact",
+      "note": "Problem restated here; open LeetCode for the original prompt and to submit your solution."
+    }
+  }
 }

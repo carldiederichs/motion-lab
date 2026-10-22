@@ -3,7 +3,7 @@
   "version": 3,
   "slug": "idempotent-retry",
   "title": "Retries without Duplicate Orders",
-  "subtitle": "A lost response triggers a retry. Compare creating twice with reusing an idempotency key.",
+  "subtitle": "Compare how a retry after a lost response creates a second order, and how an idempotency key prevents it.",
   "component": "Systems",
   "date": "2026-10-22",
   "aliases": ["idempotency", "retry", "duplicate order"],

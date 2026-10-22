@@ -2,14 +2,14 @@
   {
     "slug": "two-sum",
     "title": "Two Sum",
-    "description": "Find a pair by tracking what you have already seen. Change the input and watch the map fill up.",
+    "description": "Find two array entries that add up to a target by storing previously seen values in a map.",
     "category": "Algorithms",
     "family": "Array + map"
   },
   {
     "slug": "sliding-window",
     "title": "Sliding Window",
-    "description": "Move a fixed-size window without adding the same values again. Compare with a fresh sum each time.",
+    "description": "Find the largest total in a fixed-size window by updating the sum as the window moves.",
     "category": "Algorithms",
     "family": "Window + pointers"
   },
@@ -30,7 +30,7 @@
   {
     "slug": "balanced-tree",
     "title": "Balanced Binary Tree",
-    "description": "See heights return from children to parents. Compare a repeated height scan with one postorder pass.",
+    "description": "Check whether a tree is balanced by returning heights from children to parents, with a comparison of two approaches.",
     "category": "Algorithms",
     "family": "Tree + call stack"
   },
@@ -79,7 +79,7 @@
   {
     "slug": "reverse-linked-list",
     "title": "Reverse a Linked List",
-    "description": "Save the next node before reversing a pointer. Watch the prefix and suffix change.",
+    "description": "Reverse a list one pointer at a time while preserving the link to the nodes still to visit.",
     "category": "Algorithms",
     "family": "Linked list + pointers"
   },
@@ -93,14 +93,14 @@
   {
     "slug": "graph-bfs",
     "title": "Shortest Path with BFS",
-    "description": "Follow a queue through a graph. Try a cycle or a destination that cannot be reached.",
+    "description": "Use a queue to find shortest distances in an unweighted graph, including cycles and disconnected nodes.",
     "category": "Algorithms",
     "family": "Graph + queue"
   },
   {
     "slug": "idempotent-retry",
     "title": "Retries without Duplicate Orders",
-    "description": "A lost response triggers a retry. Compare creating twice with reusing an idempotency key.",
+    "description": "Compare how a retry after a lost response creates a second order, and how an idempotency key prevents it.",
     "category": "Systems",
     "family": "Sequence + failure recovery"
   }

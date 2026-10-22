@@ -3,7 +3,7 @@
   "version": 3,
   "slug": "graph-bfs",
   "title": "Shortest Path with BFS",
-  "subtitle": "Follow a queue through a graph. Try a cycle or a destination that cannot be reached.",
+  "subtitle": "Use a queue to find shortest distances in an unweighted graph, including cycles and disconnected nodes.",
   "component": "Algorithms",
   "date": "2026-10-22",
   "aliases": ["Shortest Path with BFS", "Graph + queue"],
@@ -194,5 +194,25 @@
       "With adjacency lists, each reachable node is enqueued once and each outgoing edge is checked once. Advancing the queue head costs O(1); no array shifting is needed.",
       "Map lookups take expected O(1). The queue and distances store at most V entries. These bounds describe the shown algorithm, excluding the input graph and visualization snapshots."
     ]
+  },
+  "problem": {
+    "statement": "Given n vertices numbered 0 through n − 1 and the edges of an undirected graph, determine whether any path connects source to destination.",
+    "example": {
+      "input": "n = 4, edges = [[0, 1], [1, 2]], source = 0, destination = 3",
+      "output": "false",
+      "explanation": "Vertices 0, 1 and 2 are connected, but vertex 3 is isolated."
+    },
+    "constraints": [
+      "1 ≤ n ≤ 200,000; there are at most 200,000 edges.",
+      "Edges connect distinct vertices; no edge is repeated.",
+      "Source and destination are valid vertex numbers."
+    ],
+    "source": {
+      "number": 1971,
+      "title": "Find if Path Exists in Graph",
+      "slug": "find-if-path-exists-in-graph",
+      "relationship": "related",
+      "note": "This walkthrough uses letter-labelled example graphs and computes shortest distances with BFS. LeetCode only asks whether a path exists: check whether the destination was reached."
+    }
   }
 }

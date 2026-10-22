@@ -117,6 +117,6 @@ test('standalone HTML offers a working public gallery instead of a missing local
   await page.goto(pathToFileURL(path.join(ROOT, 'dist/lessons/graph-bfs.html')).href);
   await expect(page.locator('#mp-home')).toHaveAttribute(
     'href',
-    'https://motion-lab-alpha-three.vercel.app/#examples',
+    'https://motion-lab-dev.vercel.app/#examples',
   );
 });

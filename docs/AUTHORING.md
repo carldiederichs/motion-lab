@@ -97,3 +97,9 @@ A `code` block can include up to four `alternatives`. Each alternative contains 
 The player remembers a visitor's language choice and maps chapter highlights to that language. If a lesson has no matching alternative, it shows its original source and says so. Changing language never changes the timeline or simulation. These are teaching excerpts: imports, surrounding application types and service implementations may be omitted. Match the selected scenario and state the assumptions. Do not translate language-specific scheduling rules as if other runtimes behaved identically.
 
 The public algorithm and portable-system code panels offer TypeScript, JavaScript, Python, Java and C++. JavaScript event-loop source stays in its original runtime. Sequence and C4 lessons teach requests and boundaries without inventing a code implementation. `npm run test:languages` compiles and executes the published Python, Java and C++ algorithm implementations against boundary and counterexample cases; it requires Python 3, a JDK and a C++17 compiler.
+
+## Problem context
+
+Algorithm lessons can include `problem: {statement, example, constraints, source}`. The `example` has `input`, `output` and `explanation` strings. The `source` has the LeetCode `number`, `title`, `slug`, a `relationship` of `exact` or `related`, and a `note` explaining any difference. Keep the task visible before the controls, and place the worked example and original constraints in the expandable section. Use an accurate restatement and link to the original prompt; avoid copying long source passages.
+
+The renderer constructs LeetCode links from validated slugs and inserts every supplied string as text. It never accepts arbitrary source URLs or HTML. Original problem constraints may be much larger than the bounded interactive inputs; keep that distinction visible. A related technique must not be presented as a complete solution to a different problem.

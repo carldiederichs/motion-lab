@@ -28,6 +28,7 @@ import type {
   State,
   InspectorRow,
 } from './player-types.ts';
+import { renderProblem } from './problem.ts';
 const GENERATORS = { ...coreGenerators, ...extraGenerators };
 
 const SPEC = specSchema.parse(JSON.parse(element('motion-spec', HTMLScriptElement).textContent));
@@ -1690,12 +1691,11 @@ function setSide(panel: string | null, remember: boolean): void {
 function buildControls(): void {
   $('mp-title').textContent = SPEC.title;
   $('mp-subtitle').textContent = (SPEC.subtitle ?? '') || '';
+  renderProblem($('mp-problem'), SPEC.problem);
   document.title = SPEC.title;
   const home = element('mp-home', HTMLAnchorElement);
   home.href =
-    location.protocol === 'file:'
-      ? 'https://motion-lab-alpha-three.vercel.app/#examples'
-      : '/#examples';
+    location.protocol === 'file:' ? 'https://motion-lab-dev.vercel.app/#examples' : '/#examples';
   const from = params.get('from');
   if (from !== null && location.protocol !== 'file:') {
     try {

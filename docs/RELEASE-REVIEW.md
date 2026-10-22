@@ -14,8 +14,8 @@ The application is live at [motion-lab-alpha-three.vercel.app](https://motion-la
 
 | Check                      | Result                                                                                                                  |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Node tests                 | 82 passed                                                                                                               |
-| Browser tests              | 114 full-suite checks plus 2 focused scenario-recovery checks passed                                                    |
+| Node tests                 | 83 passed                                                                                                               |
+| Browser tests              | 116 passed, including scenario-recovery checks                                                                          |
 | Final connector adjustment | All 6 gallery geometry/theme tests passed again                                                                         |
 | Desktop layouts            | 1024, 1440 and 1920px; light and dark                                                                                   |
 | Visual review              | Inspected rendered screenshots of all 15 public examples; interacted with the landing page and tour                     |
@@ -41,4 +41,4 @@ The examples use synthetic inputs. Generated local work is excluded from the pub
 
 ## Strict source contracts
 
-All runtime source, scripts and tests use strict TypeScript with checked indexed access and exact optional properties. Type-aware lint rejects unsafe types, non-null assertions, ignored promises and suppression comments. [Code standards](CODE-QUALITY.md) explain the boundaries. The source audit found no generated-by comments or assistant coauthor trailers. Third-party license notices remain intact.
+All runtime source, scripts and tests use strict TypeScript with checked indexed access and exact optional properties. Type-aware lint rejects unsafe types, non-null assertions, ignored promises and suppression comments. [Code standards](CODE-QUALITY.md) explain the boundaries.

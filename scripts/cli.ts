@@ -1,6 +1,7 @@
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import { writeLocal } from './local-files.ts';
 import { printLine } from './output.ts';
 import { ROOT, render, slugPattern, validate } from './renderer.ts';
 import { hasCode, errorMessage, required } from '../engine/assert.ts';
@@ -12,7 +13,7 @@ try {
       flag !== '--template' ||
       !slugPattern.test((template ?? '') || '')
     )
-      throw Error('Usage: node scripts/cli.ts new my-explanation --template request-sequence');
+      throw Error('Usage: npx tsx scripts/cli.ts new my-explanation --template request-sequence');
     let templateText;
     try {
       templateText = await readFile(path.join(ROOT, 'examples', `${template}.json`), 'utf8');
@@ -24,14 +25,9 @@ try {
     spec.slug = required(input);
     spec.title = 'My explanation';
     spec.date = new Date().toISOString().slice(0, 10);
-    await mkdir(path.join(ROOT, 'local'), { recursive: true });
-    await writeFile(
-      path.join(ROOT, 'local', `${input}.json`),
-      JSON.stringify(spec, null, 2) + '\n',
-      { flag: 'wx' },
-    );
+    await writeLocal(`${input}.json`, JSON.stringify(spec, null, 2) + '\n', false);
     printLine(
-      `Created local/${input}.json. Edit the scene, then run: node scripts/cli.ts build local/${input}.json`,
+      `Created local/${input}.json. Edit the scene, then run: npx tsx scripts/cli.ts build local/${input}.json`,
     );
   } else if (command === 'build' || command === 'validate') {
     if (input === undefined || input.length === 0) throw Error('Provide a JSON spec path');
@@ -41,10 +37,9 @@ try {
     if (command === 'validate') printLine(`Valid: ${spec.slug}`);
     else {
       const html = await render(spec);
-      await mkdir(path.join(ROOT, 'local'), { recursive: true });
-      await writeFile(path.join(ROOT, 'local', `${spec.slug}.html`), html);
+      await writeLocal(`${spec.slug}.html`, html, true);
       printLine(
-        `Built local/${spec.slug}.html. Open it directly, or npm run dev and visit /local/${spec.slug}.html. Run node scripts/verify.ts local/${spec.slug}.html before sharing.`,
+        `Built local/${spec.slug}.html. Open it directly, or npm run dev and visit /local/${spec.slug}.html. Run npx tsx scripts/verify.ts local/${spec.slug}.html before sharing.`,
       );
     }
   } else

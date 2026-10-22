@@ -68,3 +68,35 @@ await test('code input preserves every character and rejects overflow instead of
     /16 lines/,
   );
 });
+
+await test('local authoring refuses directory and output symlinks without changing their targets', async (context) => {
+  const {
+    mkdtemp,
+    mkdir,
+    readFile: read,
+    rm,
+    symlink,
+    writeFile,
+  } = await import('node:fs/promises');
+  const { tmpdir } = await import('node:os');
+  const { writeLocal } = await import('../scripts/local-files.ts');
+  const root = await mkdtemp(path.join(tmpdir(), 'motion-authoring-'));
+  context.after(async () => rm(root, { recursive: true, force: true }));
+  const outside = path.join(root, 'outside');
+  await mkdir(outside);
+  await symlink(outside, path.join(root, 'local'));
+  await assert.rejects(writeLocal('example.html', 'new', true, root), /real directory/);
+  const other = await mkdtemp(path.join(tmpdir(), 'motion-authoring-'));
+  context.after(async () => rm(other, { recursive: true, force: true }));
+  await mkdir(path.join(other, 'local'));
+  const target = path.join(outside, 'original.html');
+  await writeFile(target, 'preserved');
+  await symlink(target, path.join(other, 'local/example.html'));
+  await assert.rejects(writeLocal('example.html', 'new', true, other), /symlink/);
+  assert.equal(await read(target, 'utf8'), 'preserved');
+  await writeLocal('valid.json', 'first', false, other);
+  await assert.rejects(writeLocal('valid.json', 'second', false, other), /EEXIST/);
+  await writeLocal('valid.html', 'first', true, other);
+  await writeLocal('valid.html', 'second', true, other);
+  assert.equal(await read(path.join(other, 'local/valid.html'), 'utf8'), 'second');
+});

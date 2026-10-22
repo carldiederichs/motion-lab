@@ -13,6 +13,7 @@ const run = (cwd: string, args: string[]): string =>
   execFileSync(process.execPath, ['--import', 'tsx', ...args], { cwd, stdio: 'pipe' }).toString();
 async function exercise(root: string, label: string): Promise<void> {
   execFileSync('npm', ['ci', '--ignore-scripts'], { cwd: root, stdio: 'pipe' });
+  execFileSync('npm', ['run', 'check'], { cwd: root, stdio: 'pipe' });
   run(root, ['scripts/build.ts']);
   run(root, ['scripts/privacy.ts']);
   run(root, ['scripts/cli.ts', 'new', 'retry-example', '--template', 'idempotent-retry']);
@@ -57,7 +58,7 @@ async function exercise(root: string, label: string): Promise<void> {
     await new Promise((r) => server.close(r));
   }
   printLine(
-    `${label}: clean install and build, local authoring, production routes and isolation passed`,
+    `${label}: clean install, strict checks, build, local authoring, production routes and isolation passed`,
   );
 }
 const zip = path.join(ROOT, 'dist/downloads/motion-lab-toolkit.zip');

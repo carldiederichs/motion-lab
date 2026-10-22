@@ -11,7 +11,7 @@ Production: **https://motion-lab-alpha-three.vercel.app/**. Vercel is connected 
 1. Sign in to Vercel and choose **Add New → Project**.
 2. Connect GitHub and import `carldiederichs/motion-lab`. Grant access only to this repository when possible.
 3. Keep the root directory at the repository root. The included `vercel.json` selects **Other**, builds with `npm run typecheck && npm run lint && npm test && npm run build && npm run check:privacy`, and publishes only `dist`.
-4. Use Node.js 22 or newer. Leave environment variables empty. Deploy.
+4. Use Node.js 22.13 or newer. Leave environment variables empty. Deploy.
 5. Open the production URL in a signed-out browser. Check that deployment protection does not require visitors to sign in before sharing the link.
 6. Run the smoke check below, then review the tour, a lesson and the toolkit download on the live URL.
 
@@ -42,6 +42,7 @@ Open the URL yourself at desktop width. Try the ring button, one tour, category/
 
 ```sh
 npm ci --ignore-scripts
+npm run check
 npm test
 npm run build
 npm run check:privacy
@@ -52,10 +53,10 @@ npx tsx scripts/test-release.ts --checkout
 
 A successful local build is not evidence that a hosting account or public URL exists. Record the deployed URL and smoke result after connecting the selected provider.
 
-## Optional GitHub Actions setup
+## Continuous verification
 
-The complete workflow is prepared in `docs/verify.github-actions.yml`. It is not active: the current GitHub OAuth login lacks permission to upload Actions workflows. This does not prevent Vercel or Railway from deploying the repository.
+GitHub Actions is active in `.github/workflows/verify.yml`. Pull requests and pushes to `main` run strict types, lint, formatting, unit tests, browser checks, privacy checks, clean installations and container smoke tests. The first full hosted run passed. Check the current revision's run before treating its hosted checks as complete.
 
-To enable continuous checks, use GitHub's web editor to create `.github/workflows/verify.yml` with the contents of that file and commit it. Alternatively, authorize the GitHub CLI's `workflow` scope, copy the file to that path and push it. The workflow runs the unit, browser, privacy, archive, fresh-checkout and container smoke checks. Its first GitHub run still needs verification.
+The download includes a copy in `docs/verify.github-actions.yml` for new repositories. Copy it to `.github/workflows/verify.yml` to enable the same checks there.
 
-Vercel rewrites its configuration file during a build. Formatting is checked against the source checkout in GitHub Actions; Vercel still runs the compiler, lint, unit tests, build and privacy audit.
+Vercel rewrites its configuration file during a build. Formatting is checked against the source checkout in GitHub Actions; Vercel still runs the compiler, lint, unit tests, build and privacy audit. The archive builder formats the downloadable configuration without changing the host's working file, so a clean toolkit installation can pass the same strict checks.

@@ -14,7 +14,7 @@ The application is live at [motion-lab-alpha-three.vercel.app](https://motion-la
 
 | Check                      | Result                                                                                                                  |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Node tests                 | 83 passed                                                                                                               |
+| Node tests                 | 84 passed                                                                                                               |
 | Browser tests              | 116 passed, including scenario-recovery checks                                                                          |
 | Final connector adjustment | All 6 gallery geometry/theme tests passed again                                                                         |
 | Desktop layouts            | 1024, 1440 and 1920px; light and dark                                                                                   |

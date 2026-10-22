@@ -1,6 +1,6 @@
 # Authoring an explanation
 
-Use `examples/catalogue.json` to choose a working starting point. Ask what the user needs to see, then choose the picture that exposes it.
+Use `examples/catalogue.json` to choose a working starting point. Ask what the user needs to see, then choose the picture that exposes it. See [visual recipes](VISUAL-RECIPES.md) for the full family map and the distinction between editable simulations and composed traces.
 
 | Question                                          | Representation                    | Starting point                |
 | ------------------------------------------------- | --------------------------------- | ----------------------------- |

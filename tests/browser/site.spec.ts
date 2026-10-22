@@ -188,3 +188,22 @@ test('paused chapter stepping shows the completed state', async ({ page }) => {
   await page.locator('#mp-prev').click();
   await expect(page.locator('#mp-cap-title')).toContainText('i=0');
 });
+
+for (const theme of ['dark', 'light'] as const)
+  test(`invalid generator input preserves the selected scenario in ${theme}`, async ({ page }) => {
+    await page.goto(`/lessons/number-of-islands.html?theme=${theme}`);
+    const preset = page.getByRole('button', { name: 'All water', exact: true });
+    await preset.click();
+    const before = await page.locator('#mp-stage-a').innerHTML();
+    const input = page.locator('#mp-param-grid');
+    await input.fill('10, 1');
+    await input.press('Tab');
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(preset).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('#mp-badge-a')).toContainText('All water');
+    expect(await page.locator('#mp-stage-a').innerHTML()).toEqual(before);
+    await input.fill('11, 11');
+    await input.press('Tab');
+    await expect(input).not.toHaveAttribute('aria-invalid', 'true');
+    await expect(preset).toHaveAttribute('aria-pressed', 'false');
+  });

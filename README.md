@@ -54,7 +54,7 @@ npm run test:browser
 npm run check:privacy
 ```
 
-Browser tests use installed Google Chrome on macOS and Playwright Chromium elsewhere. Set `PLAYWRIGHT_CHANNEL=chromium` to use the downloaded browser explicitly. See [testing](docs/TESTING.md), [deployment](docs/DEPLOYMENT.md) and [the delivery checklist](docs/PLAN.md).
+Browser tests use installed Google Chrome on macOS and Playwright Chromium elsewhere. Set `PLAYWRIGHT_CHANNEL=chromium` to use the downloaded browser explicitly. See [code standards](docs/CODE-QUALITY.md), [testing](docs/TESTING.md), [deployment](docs/DEPLOYMENT.md) and [the delivery checklist](docs/PLAN.md).
 
 `local/`, credentials, build artifacts and Git history never enter the toolkit archive. The public build reads only the explicit example catalogue, player and site assets. The local server binds to loopback; production serving disables local routes.
 

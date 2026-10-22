@@ -1616,6 +1616,7 @@ function buildControls(): void {
         input.maxLength = prm.type === 'code' ? 4000 : 512;
       const commit = (): void => {
         const previous = clone(paramValues);
+        const previousEdge = activeEdge;
         try {
           const val = parseInput(prm, input.value);
           paramValues[prm.id] = val;
@@ -1629,6 +1630,8 @@ function buildControls(): void {
           emit('input');
         } catch (e) {
           paramValues = previous;
+          activeEdge = previousEdge;
+          syncEdges();
           pause();
           load();
           error.textContent = errorMessage(e);

@@ -165,6 +165,7 @@ await test('server blocks writes, traversal, dotfiles and symlink escapes', asyn
   const outside = path.join(dir, '../outside-' + path.basename(dir) + '.html');
   await writeFile(outside, 'outside');
   await symlink(outside, path.join(dir, 'escape.html'));
+  await symlink(outside, path.join(dir, '404.html'));
   const server = createServer({ directory: dir });
   await new Promise<void>((r) => server.listen(0, '127.0.0.1', r));
   try {
@@ -172,8 +173,12 @@ await test('server blocks writes, traversal, dotfiles and symlink escapes', asyn
     assert(address !== null && typeof address !== 'string');
     const base = `http://127.0.0.1:${address.port}`;
     assert.equal(await (await fetch(base)).text(), 'hello');
-    for (const p of ['/.env', '/escape.html', '/%2eenv', '/local/private.html', '/%5c..%5cfile'])
-      assert.equal((await fetch(base + p)).status, 404);
+    for (const p of ['/.env', '/escape.html', '/%2eenv', '/local/private.html', '/%5c..%5cfile']) {
+      const response = await fetch(base + p);
+      assert.equal(response.status, 404);
+      assert.equal(await response.text(), 'Not found');
+    }
+    assert.equal(await (await fetch(base + '/missing', { method: 'HEAD' })).text(), '');
     assert.equal((await fetch(base, { method: 'POST', body: 'x' })).status, 405);
     assert.match(
       (await fetch(base)).headers.get('content-security-policy') ?? '',

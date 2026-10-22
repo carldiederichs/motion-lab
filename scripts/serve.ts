@@ -62,8 +62,19 @@ export function createServer({
       res.writeHead(200);
       res.end(req.method === 'HEAD' ? undefined : await readFile(file));
     } catch {
+      try {
+        const root = await realpath(directory);
+        const fallback = await realpath(path.join(root, '404.html'));
+        if (!fallback.startsWith(root + path.sep)) throw Error('invalid fallback');
+        const html = await readFile(fallback);
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(req.method === 'HEAD' ? undefined : html);
+        return;
+      } catch {
+        // A custom directory may not contain the optional recovery page.
+      }
       res.writeHead(404, { 'Content-Type': 'text/plain' });
-      res.end('Not found');
+      res.end(req.method === 'HEAD' ? undefined : 'Not found');
     }
   }
 }

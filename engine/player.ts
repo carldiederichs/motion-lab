@@ -1515,6 +1515,18 @@ function pref(key: string, value?: string): string | null {
   return null;
 }
 function setSide(panel: string | null, remember: boolean): void {
+  if (
+    (panel !== null && !['inspector', 'code', 'complexity', 'reference'].includes(panel)) ||
+    (panel === 'code' && !anyCode()) ||
+    (panel === 'complexity' && !anyComplexity()) ||
+    (panel === 'reference' && !SPEC.reference)
+  )
+    panel = 'inspector';
+  if (
+    panel === null &&
+    ($('mp-side').contains(document.activeElement) || document.activeElement === $('mp-divider'))
+  )
+    $('mp-side-toggle').focus();
   sidePanel = panel;
   $('mp-side').hidden = !(panel ?? '');
   $('mp-divider').hidden = !(panel ?? '');
@@ -1525,14 +1537,19 @@ function setSide(panel: string | null, remember: boolean): void {
   );
   element('mp-side-toggle', HTMLButtonElement).textContent =
     (panel ?? '') ? 'Panel ▾' : 'Inspector ▸';
-  document
-    .querySelectorAll<HTMLButtonElement>('.mp-side-tabs [data-panel]')
-    .forEach((b) => b.setAttribute('aria-selected', String(b.dataset.panel === panel)));
+  document.querySelectorAll<HTMLButtonElement>('.mp-side-tabs [data-panel]').forEach((b) => {
+    const selected = b.dataset.panel === panel;
+    b.setAttribute('aria-selected', String(selected));
+    b.tabIndex = selected ? 0 : -1;
+  });
   $('mp-panel-inspector').hidden = panel !== 'inspector';
   $('mp-panel-code').hidden = panel !== 'code';
   $('mp-panel-complexity').hidden = panel !== 'complexity';
   $('mp-panel-reference').hidden = panel !== 'reference';
-  if (remember) pref('motionlab.panel', (panel ?? '') || 'none');
+  if (remember) {
+    pref('motionlab.panel', (panel ?? '') || 'none');
+    if (panel !== null && panel !== '') pref('motionlab.lastPanel', panel);
+  }
   currentBeat = -1;
   if (A) draw();
 }
@@ -1542,13 +1559,21 @@ function buildControls(): void {
   $('mp-title').textContent = SPEC.title;
   $('mp-subtitle').textContent = (SPEC.subtitle ?? '') || '';
   document.title = SPEC.title;
-  const from = params.get('from');
-  element('mp-home', HTMLAnchorElement).href =
+  const home = element('mp-home', HTMLAnchorElement);
+  home.href =
     location.protocol === 'file:'
-      ? './index.html'
-      : from !== null && from.startsWith('/') && !from.startsWith('//')
-        ? from
-        : '/';
+      ? 'https://motion-lab-alpha-three.vercel.app/#examples'
+      : '/#examples';
+  const from = params.get('from');
+  if (from !== null && location.protocol !== 'file:') {
+    try {
+      const destination = new URL(from, location.origin);
+      if (destination.origin === location.origin)
+        home.href = destination.pathname + destination.search + destination.hash;
+    } catch {
+      // Invalid return links fall back to the gallery.
+    }
+  }
   const vt = $('mp-variants');
   vt.textContent = '';
   const visible = visibleVariants();
@@ -1700,9 +1725,27 @@ function buildControls(): void {
   required(
     document.querySelector<HTMLButtonElement>('.mp-side-tabs [data-panel="reference"]'),
   ).hidden = !SPEC.reference;
-  document
-    .querySelectorAll<HTMLButtonElement>('.mp-side-tabs [data-panel]')
-    .forEach((b) => b.addEventListener('click', () => setSide(b.dataset.panel ?? null, true)));
+  document.querySelectorAll<HTMLButtonElement>('.mp-side-tabs [data-panel]').forEach((b) => {
+    b.addEventListener('click', () => setSide(b.dataset.panel ?? null, true));
+    b.addEventListener('keydown', (e) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const tabs = [
+        ...document.querySelectorAll<HTMLButtonElement>('.mp-side-tabs [data-panel]'),
+      ].filter((tab) => tab.hidden === false);
+      const index = tabs.indexOf(b);
+      const next =
+        e.key === 'Home'
+          ? 0
+          : e.key === 'End'
+            ? tabs.length - 1
+            : (index + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+      const tab = required(tabs[next]);
+      setSide(tab.dataset.panel ?? null, true);
+      tab.focus();
+    });
+  });
   element('mp-side-close', HTMLButtonElement).addEventListener('click', () => setSide(null, true));
   element('mp-side-toggle', HTMLButtonElement).addEventListener('click', () =>
     setSide((sidePanel ?? '') ? null : (pref('motionlab.lastPanel') ?? '') || 'inspector', true),

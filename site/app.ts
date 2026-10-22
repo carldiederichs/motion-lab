@@ -312,6 +312,30 @@ function art(slug: string): SVGSVGElement {
   }
   return svg;
 }
+function restoreFilters(): void {
+  const filters = new URLSearchParams(location.search);
+  element('search', HTMLInputElement).value = filters.get('q') ?? '';
+  const requested = filters.get('category') ?? '';
+  const buttons = [...document.querySelectorAll<HTMLElement>('[data-category]')];
+  category = buttons.some((button) => button.dataset.category === requested) ? requested : '';
+  for (const button of buttons)
+    button.setAttribute('aria-pressed', String(button.dataset.category === category));
+}
+function updateFilters(): void {
+  const url = new URL(location.href);
+  const query = element('search', HTMLInputElement).value.trim();
+  if (query) url.searchParams.set('q', query);
+  else url.searchParams.delete('q');
+  if (category) url.searchParams.set('category', category);
+  else url.searchParams.delete('category');
+  history.replaceState(null, '', url);
+  renderCards();
+}
+restoreFilters();
+window.addEventListener('popstate', () => {
+  restoreFilters();
+  renderCards();
+});
 function renderCards(): void {
   const query = element('search', HTMLInputElement).value.trim().toLowerCase();
   let count = 0;
@@ -328,7 +352,11 @@ function renderCards(): void {
     count++;
     const a = document.createElement('a');
     a.className = 'card';
-    a.href = `/lessons/${item.slug}.html`;
+    const returnTo = new URL(location.href);
+    returnTo.hash = 'examples';
+    const lesson = new URL(`/lessons/${item.slug}.html`, location.origin);
+    lesson.searchParams.set('from', returnTo.pathname + returnTo.search + returnTo.hash);
+    a.href = lesson.pathname + lesson.search;
     const visual = document.createElement('div');
     visual.className = 'card-art';
     visual.appendChild(art(item.slug));
@@ -359,14 +387,21 @@ function renderCards(): void {
   $('count').textContent = `${count} ${count === 1 ? 'example' : 'examples'}`;
   $('empty').hidden = count !== 0;
 }
-element('search', HTMLInputElement).addEventListener('input', renderCards);
+element('search', HTMLInputElement).addEventListener('input', updateFilters);
 for (const b of document.querySelectorAll<HTMLElement>('[data-category]'))
   b.addEventListener('click', () => {
     category = b.dataset.category ?? '';
     for (const x of document.querySelectorAll<HTMLElement>('[data-category]'))
       x.setAttribute('aria-pressed', String(x === b));
-    renderCards();
+    updateFilters();
   });
+element('clear-filters', HTMLButtonElement).addEventListener('click', () => {
+  category = '';
+  element('search', HTMLInputElement).value = '';
+  updateFilters();
+  restoreFilters();
+  element('search', HTMLInputElement).focus();
+});
 fetch('/catalogue.json')
   .then((r) => {
     if (!r.ok) throw Error();

@@ -1,6 +1,6 @@
 # Delivery checklist
 
-Target: a public responsive showcase and a downloadable local toolkit. Live on [Vercel](https://motion-lab-alpha-three.vercel.app/).
+Target: a public responsive showcase and a downloadable local toolkit. Live on [Vercel](https://motion-lab-dev.vercel.app/).
 
 - [x] Inspect the existing renderer and catalogue to identify reusable visual families.
 - [x] Establish a new repository with no inherited Git history or personal catalogue data.
@@ -86,3 +86,14 @@ See [the transport audit](TRANSPORT-AUDIT.md) for per-family behavior and verifi
 - [x] Run the full browser suite and test a clean downloaded toolkit.
 
 Release details and verification boundaries are in [the release review](RELEASE-REVIEW.md).
+
+## First-visit and problem context follow-up
+
+- [x] Explain the product before introducing the animated server example.
+- [x] Replace promotional fragments with concrete descriptions.
+- [x] Make GitHub, cloning and the MIT license visible; retain an optional ZIP.
+- [x] Add sourced problem statements, examples and constraints to all algorithm pages.
+- [x] Distinguish related LeetCode exercises from exact problem walkthroughs.
+- [x] Center hero controls and keep the step count beside them.
+- [x] Configure the shorter production address and update public references.
+- [x] Cover safe problem rendering, setup links, themes, mobile and toolbar alignment with regression checks.

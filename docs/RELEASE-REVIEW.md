@@ -1,6 +1,6 @@
 # Release review
 
-The application is live at [motion-lab-alpha-three.vercel.app](https://motion-lab-alpha-three.vercel.app/). Vercel builds the connected GitHub repository's `main` branch. The initial production release included commit `4546bb9`.
+The application is live at [motion-lab-dev.vercel.app](https://motion-lab-dev.vercel.app/). Vercel builds the connected GitHub repository's `main` branch. The initial production release included commit `4546bb9`.
 
 ## Delivered
 
@@ -16,7 +16,7 @@ The landing page now has an animated hashing example, a typewritten prompt, a co
 
 Portable examples offer TypeScript, JavaScript, Python, Java and C++ with matching chapter highlights. Runtime-specific examples retain their original language. Thirty Python, Java and C++ algorithm implementations are compiled and executed against boundary and counterexample cases. The strict compiler and lint configuration is unchanged.
 
-## Verified for this release
+## Responsive release verification
 
 | Check                  | Result                                                                                              |
 | ---------------------- | --------------------------------------------------------------------------------------------------- |
@@ -40,9 +40,17 @@ The transport and complexity review is recorded in [the catalogue audit](TRANSPO
 
 Review fixes included incorrect comparison code, invalid-input recovery, long code lines, overlapping graph edges, lingering sequence packets, off-screen tour targets and chapter buttons showing an earlier state than their captions described.
 
+## Onboarding and problem context update
+
+The introduction explains the tool before presenting consistent hashing as an example. GitHub and cloning are the primary setup path, with a separate ZIP option and a visible MIT license link. The hero uses one centered playback toolbar with the step count beside its buttons.
+
+All eight algorithm pages include a task statement, example, original constraints and an official LeetCode link. Statements are restated in the toolkit. Sliding Window and BFS identify the linked problems as related exercises and explain the difference from the displayed algorithm. Expanded problem details do not change playback state. Source slugs are validated and imported problem text is rendered as text, never HTML.
+
+The production address is now `motion-lab-dev.vercel.app`; the previous address remains available. The repository homepage and standalone player links use the new address. Browser regressions cover problem context, safe text rendering, GitHub and license links, toolbar alignment, themes and phone layouts, alongside the existing full suite.
+
 ## Remaining owner steps
 
-1. Review the [live site](https://motion-lab-alpha-three.vercel.app/) before using its link.
+1. Review the [live site](https://motion-lab-dev.vercel.app/) before using its link.
    GitHub Actions is enabled in `.github/workflows/verify.yml`. The first full hosted verification passed; each pull request now runs type checks, lint, formatting, unit tests, browser tests, clean-install checks and Docker smoke tests.
 
 The examples use synthetic inputs. Generated local work is excluded from the public build and download. The demo makes no model request. New explanations depend on the visitor's chosen assistant and still require semantic and visual review. Phone authoring and arbitrary JavaScript execution are outside the supported scope.

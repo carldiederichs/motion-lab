@@ -133,6 +133,22 @@ button {
   font-size: 13px;
   color: var(--muted);
 }
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.github-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  background: currentColor;
+  mask: url('/github.svg') center / contain no-repeat;
+}
+.desktop-note {
+  max-width: 510px;
+}
 .button,
 .icon,
 .quiet {
@@ -838,11 +854,9 @@ dialog > p {
 }
 .hero-rule {
   margin: 0;
-  max-width: 350px;
 }
 .hero-explanation {
   min-height: 4.8em;
-  max-width: 380px;
   margin-bottom: 4px;
 }
 .hero-link {
@@ -876,19 +890,36 @@ dialog > p {
 }
 
 .hero-controls {
-  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 4px;
+  gap: 4px;
   flex-wrap: nowrap;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
 }
 .hero-controls .button {
-  padding: 9px 12px;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
   font-size: 12px;
   white-space: nowrap;
 }
+.hero-controls .button:hover {
+  background: var(--surface-2);
+}
 #hero-play {
-  min-width: 75px;
+  min-width: 68px;
 }
 #hero-step {
-  margin-left: auto;
+  min-width: 48px;
+  padding-inline: 8px;
+  text-align: center;
+  border-left: 1px solid var(--border);
   white-space: nowrap;
 }
 .hero-explanation {
@@ -946,6 +977,12 @@ dialog > p {
   }
   .topbar nav > a {
     display: inline-block;
+  }
+  .topbar nav > a[href='#examples'] {
+    display: none;
+  }
+  .topbar nav > .github-link {
+    display: inline-flex;
   }
   .topbar .button {
     padding: 9px 12px;

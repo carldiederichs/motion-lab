@@ -83,7 +83,7 @@ reduced.addEventListener('change', () => {
 function showExample(): void {
   finishPrompt();
   $('demo-status').textContent =
-    'Example ready. In your local workflow, your assistant writes and checks this visualization.';
+    'You can now explore the example. When you run Motion Lab locally, your assistant creates the visualization from your question.';
   $('demo-result').hidden = false;
   element('demo-run', HTMLButtonElement).textContent = 'Example ready ✓';
   if (!(element('demo-frame', HTMLIFrameElement).getAttribute('src') ?? ''))
@@ -480,7 +480,7 @@ const steps = [
   {
     target: 'prompt-panel',
     title: 'Start with your question',
-    text: 'Ask about a mechanism or the code you are working on. This preview is scripted; real creation happens in your local assistant.',
+    text: 'Motion Lab helps you understand code through interactive diagrams. This prepared prompt shows how you would ask your coding assistant to create one locally.',
   },
   {
     target: 'demo-result',
@@ -490,12 +490,12 @@ const steps = [
   {
     target: 'filters',
     title: 'Choose a useful starting point',
-    text: 'Filter by the question you have. The library includes algorithms, architecture, data structures and concurrency.',
+    text: 'Browse algorithms, architecture, data structures and concurrency. Algorithm pages explain the task and link to the corresponding or related LeetCode problem.',
   },
   {
     target: 'local-toolkit',
     title: 'Make the next one locally',
-    text: 'Use your own coding assistant and model to explain your next engineering question. The download includes this player and the Motion Lab skill. Downloading starts only when you click.',
+    text: 'Clone the open-source repository from GitHub, or download the ZIP. It includes the player, examples and a skill that your own coding assistant can use to create new explanations.',
   },
 ];
 function tourTargetRect():

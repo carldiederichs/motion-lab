@@ -98,8 +98,31 @@ await test('empty hash input is truthful and extreme inputs cannot create oversi
     assert.throws(() => generate('consistent-hash', { keys: [key] }));
   const wrapped = generate('consistent-hash', { keys: [-999, 999, 100] });
   assert.deepEqual(
-    required(wrapped.beats[1]).actions.find((action) => action.do === 'rows')?.value,
+    required(wrapped.beats[1])
+      .actions.filter((action) => action.do === 'rows')
+      .at(-1)?.value,
     ['1 → A', '99 → A', '0 → A'],
   );
   assert.equal(empty.actors.find((actor) => actor.id === 'node-d')?.tone, 'hidden');
+});
+
+await test('hash routing records each owner only after the key arrives', () => {
+  const scene = generate('consistent-hash', { keys: [16, 17, 80, 99, 60, 60] });
+  const routing = required(scene.beats[1]);
+  const moves = routing.actions.filter((action) => action.do === 'move');
+  const updates = routing.actions.filter((action) => action.do === 'rows');
+  assert.equal(moves.length, 6);
+  moves.forEach((move, index) => {
+    const update = required(updates[index]);
+    assert.equal(update.value.length, index + 1);
+    assert(required(update.at)[0] >= required(move.at)[1]);
+  });
+  assert.deepEqual(required(updates.at(-1)).value, [
+    '16 → A',
+    '17 → B',
+    '80 → C',
+    '99 → A',
+    '60 → C',
+    '60 → C',
+  ]);
 });

@@ -368,6 +368,7 @@ h2 {
   margin-top: 20px;
 }
 .result {
+  position: relative;
   margin-top: 14px;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -396,6 +397,17 @@ h2 {
 .result-foot {
   padding: 0 20px 12px;
   margin: 0;
+}
+.preview-loading {
+  position: absolute;
+  inset: 80px 12px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 24px;
+  background: var(--bg);
+  text-align: center;
 }
 .library {
   padding: 40px 0 54px;

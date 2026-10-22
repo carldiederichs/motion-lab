@@ -149,10 +149,28 @@
         margin: 0;
         font-size: 15px;
       }
-      .mp-problem a {
-        color: var(--blue);
+      .mp-problem-source {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        max-width: 100%;
+        padding: 7px 10px;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        background: var(--surface-2);
+        color: var(--text);
         font-size: 13px;
-        text-underline-offset: 3px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .mp-problem-source:hover {
+        border-color: var(--amber);
+      }
+      .mp-problem-source svg {
+        width: 19px;
+        height: 19px;
+        flex-shrink: 0;
+        fill: var(--amber);
       }
       .mp-problem p {
         margin: 8px 0;
@@ -1198,6 +1216,11 @@
       .preview .mp-btn {
         min-height: 36px;
       }
+      @media (max-width: 620px) {
+        .mp-step-label {
+          display: none;
+        }
+      }
 
       .mobile-diagram-zoom {
         display: none;
@@ -1491,8 +1514,14 @@
           </div>
           <div class="mp-transport">
             <div class="mp-group">
-              <button class="mp-btn" id="mp-prev" type="button" title="Previous chapter (←)">
-                ⏮
+              <button
+                class="mp-btn"
+                id="mp-prev"
+                type="button"
+                title="Previous step (←)"
+                aria-label="Previous step"
+              >
+                <span aria-hidden="true">←</span><span class="mp-step-label"> Previous</span>
               </button>
               <button
                 class="mp-btn"
@@ -1503,7 +1532,15 @@
               >
                 ▶ Play
               </button>
-              <button class="mp-btn" id="mp-next" type="button" title="Next chapter (→)">⏭</button>
+              <button
+                class="mp-btn"
+                id="mp-next"
+                type="button"
+                title="Next step (→)"
+                aria-label="Next step"
+              >
+                <span class="mp-step-label">Next </span><span aria-hidden="true">→</span>
+              </button>
             </div>
             <div class="mp-scrub">
               <div class="mp-ticks" id="mp-ticks"></div>

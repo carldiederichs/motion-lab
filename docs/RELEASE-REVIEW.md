@@ -6,7 +6,7 @@ The application is live at [motion-lab-dev.vercel.app](https://motion-lab-dev.ve
 
 - Fifteen interactive examples across algorithms, data structures, architecture, requests, storage and concurrency.
 - Twelve authoring templates: LRU caching, circuit breakers, grid paths, subsets, heap insertion, prefix ranges, interval sweeps, tries, bit flags, transactional outbox delivery, replica reads and next-greater stacks.
-- Search and category filters, a guided tour, light/dark themes and a labelled scripted generation demo.
+- Search and category filters, a guided tour, light/dark themes and a prepared question-to-visualization example.
 - An explicitly triggered toolkit download and a portable skill for the visitor's own coding assistant.
 - Static Vercel configuration and a Railway-compatible, non-root Docker server.
 
@@ -47,6 +47,18 @@ The introduction explains the tool before presenting consistent hashing as an ex
 All eight algorithm pages include a task statement, example, original constraints and an official LeetCode link. Statements are restated in the toolkit. Sliding Window and BFS identify the linked problems as related exercises and explain the difference from the displayed algorithm. Expanded problem details do not change playback state. Source slugs are validated and imported problem text is rendered as text, never HTML.
 
 The production address is now `motion-lab-dev.vercel.app`; the previous address remains available. The repository homepage and standalone player links use the new address. Browser regressions cover problem context, safe text rendering, GitHub and license links, toolbar alignment, themes and phone layouts, alongside the existing full suite.
+
+The preview now checks that its player has initialized before reporting it ready. Failed or stalled loads show a retry action and retain access to the full workspace. The explanatory text stays in place during loading, preventing a vertical jump on short phones.
+
+Routing arrows remain visible at the end of a step. Each key travels with a label, and the ownership table updates on arrival. The controls use explicit previous/next arrows. Geometry checks account for when objects are visible, with a regression that rejects an arrow crossing a visible node.
+
+The default branch requires a pull request, an up-to-date passing verification check and resolved conversations. Force pushes and branch deletion are disabled, including for administrators. Fork workflows from external contributors require approval, and workflow tokens have read-only default permissions.
+
+### Verification for this update
+
+Strict TypeScript, lint and formatting passed. The local suite passed 109 unit/security tests and 222 browser tests. Thirty published Python, Java and C++ implementations ran against boundary and counterexample cases. The actual toolkit passed clean installation, build, synthetic authoring, serving and isolation checks. The public-file privacy scan reported zero findings.
+
+The browser suite includes all 100 hash positions, repeated positions, hidden/visible collision detection, preview failures and retry, and first-visit navigation. Desktop Chrome and rendered phone screenshots were inspected in both themes.
 
 ## Remaining owner steps
 

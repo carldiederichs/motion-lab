@@ -65,7 +65,7 @@ test('demo is labelled, waits for a click and makes no model request', async ({ 
   const requests: string[] = [];
   page.on('request', (r) => requests.push(r.url()));
   await page.goto('/');
-  await expect(page.getByText('Scripted demo · no AI request')).toBeVisible();
+  await expect(page.locator('#demo-status')).toContainText('after installing Motion Lab');
   await expect(page.locator('#demo-result')).toBeHidden();
   await page.getByRole('button', { name: 'Show the example' }).click();
   await expect(page.locator('#demo-result')).toBeVisible();

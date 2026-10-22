@@ -6,7 +6,7 @@ Target: a public responsive showcase and a downloadable local toolkit. Live on [
 - [x] Establish a new repository with no inherited Git history or personal catalogue data.
 - [x] Extract and audit the reusable renderer and selected general-purpose simulations.
 - [x] Add a static showcase, searchable category filters and a theme switch.
-- [x] Add a dismissible guided tour and labelled scripted prompt-to-visualization demo.
+- [x] Add a dismissible guided tour and prepared prompt-to-visualization example.
 - [x] Add explicit toolkit download and local setup instructions, with desktop authoring instructions.
 - [x] Package a model-independent skill, templates, validator and local builder.
 - [x] Seed algorithm, sequence, architecture, ring, grid, tree, storage and concurrency examples.
@@ -22,7 +22,7 @@ Target: a public responsive showcase and a downloadable local toolkit. Live on [
 
 ## Release gates
 
-The site must work without an API key or model request. Unknown lessons and files return 404. The download contains only an explicit allowlist. No generated local work enters a build or archive. Diagrams have manual playback, reversible scrubbing, scenarios, readable labels and relevant code/complexity. The scripted generation example is visibly labelled. Local AI generation remains subject to the user's chosen assistant and source permissions.
+The site must work without an API key or model request. Unknown lessons and files return 404. The download contains only an explicit allowlist. No generated local work enters a build or archive. Diagrams have manual playback, reversible scrubbing, scenarios, readable labels and relevant code/complexity. The generation preview is identified as a prepared example. Local AI generation remains subject to the user's chosen assistant and source permissions.
 
 ## Commit boundaries
 
@@ -97,3 +97,13 @@ Release details and verification boundaries are in [the release review](RELEASE-
 - [x] Center hero controls and keep the step count beside them.
 - [x] Configure the shorter production address and update public references.
 - [x] Cover safe problem rendering, setup links, themes, mobile and toolbar alignment with regression checks.
+
+## Playback and loading repairs
+
+- [x] Keep explicit previous/next arrows and persistent routing arrows when a step is paused.
+- [x] Route keys one at a time, showing their payload and updating the table after arrival.
+- [x] Check geometry only while objects are visible together; still reject real collisions.
+- [x] Anchor the hero payload before its first animation frame and keep server positions within their nodes.
+- [x] Show a loading state and retry option for failed or stalled preview loads.
+- [x] Keep explanatory copy at a stable height while loading and remove the redundant demo badge.
+- [x] Add a LeetCode icon to the official problem links.

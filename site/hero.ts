@@ -53,16 +53,16 @@ export function startHero(reduced: MediaQueryList): void {
     'stroke-width': 2,
     'stroke-dasharray': '4 5',
   });
-  label(200, 18, '0 · clockwise ↻', 'muted', 11);
+  label(200, 18, 'Positions 0–99 · follow clockwise', 'muted', 11);
   const [kx, ky] = point(60, 130);
-  const ownerPath = (slot: number): string => {
+  const ownerPath = (slot: number, originX = 0, originY = 0): string => {
     const [ox, oy] = point(slot);
     const cx = slot === 64 ? kx : 83;
     const cy = slot === 64 ? ky : 170;
     const distance = Math.hypot(cx - ox, cy - oy);
-    const ex = ox + ((cx - ox) / distance) * 24;
-    const ey = oy + ((cy - oy) / distance) * 24;
-    return `M${kx} ${ky} Q${cx} ${cy} ${ex} ${ey}`;
+    const ex = ox + ((cx - ox) / distance) * 28;
+    const ey = oy + ((cy - oy) / distance) * 28;
+    return `M${kx - originX} ${ky - originY} Q${cx - originX} ${cy - originY} ${ex - originX} ${ey - originY}`;
   };
   const connector = add('path', {
     'data-owner-connector': '',
@@ -86,7 +86,7 @@ export function startHero(reduced: MediaQueryList): void {
         'data-server': name,
         cx: x,
         cy: y,
-        r: 19,
+        r: 24,
         fill: 'var(--surface)',
         stroke: name === 'D' ? 'var(--blue)' : 'var(--context)',
         'stroke-width': 2,
@@ -94,19 +94,19 @@ export function startHero(reduced: MediaQueryList): void {
       undefined,
       parent,
     );
-    label(x, y + 5, name, name === 'D' ? 'blue' : 'text', 14, parent);
-    const [lx, ly] = point(slot, 120);
-    label(lx, ly + 4, String(slot), 'muted', 11, parent);
+    label(x, y - 2, name, name === 'D' ? 'blue' : 'text', 14, parent);
+    label(x, y + 13, String(slot), 'muted', 10, parent);
   }
   add('circle', { cx: kx, cy: ky, r: 4, fill: 'var(--blue)' });
   label(kx, ky + 21, 'key 60', 'blue', 11);
   const heading = label(200, 120, 'KEY 60 OWNER', 'muted', 10);
   const owner = label(200, 148, 'C', 'text', 23);
-  const packet = add('g', { 'data-hero-packet': '', 'aria-hidden': 'true', opacity: 0 });
+  const packetAnchor = add('g', { 'data-hero-packet': '', 'aria-hidden': 'true', opacity: 0 });
+  const packet = add('g', {}, undefined, packetAnchor);
   add('circle', { r: 5, fill: 'var(--blue)' }, undefined, packet);
   const packetLabel = add(
     'text',
-    { x: -10, y: -10, 'text-anchor': 'end', fill: 'var(--blue)', 'font-size': 11 },
+    { x: -14, y: -10, 'text-anchor': 'end', fill: 'var(--blue)', 'font-size': 11 },
     '',
     packet,
   );
@@ -176,15 +176,26 @@ export function startHero(reduced: MediaQueryList): void {
       phase === 2 ? 'MOVING RECORD' : phase === 1 ? 'RECORD STILL ON' : 'KEY 60 OWNER';
     owner.textContent = phase === 2 ? 'C → D' : phase === 3 ? 'D' : 'C';
     packet.querySelector('animateMotion')?.remove();
-    packet.setAttribute('opacity', !reduced.matches && (phase === 0 || phase === 2) ? '1' : '0');
+    packetAnchor.setAttribute(
+      'opacity',
+      !reduced.matches && (phase === 0 || phase === 2) ? '1' : '0',
+    );
     if (!reduced.matches && (phase === 0 || phase === 2)) {
       const [sx, sy] = point(80, 117);
       const [tx, ty] = point(64, 117);
+      // The outer group always has a valid position, even before SMIL starts or while paused.
+      packetAnchor.setAttribute(
+        'transform',
+        `translate(${phase === 2 ? sx : kx} ${phase === 2 ? sy : ky})`,
+      );
       packetLabel.textContent = phase === 2 ? 'key 60' : 'lookup';
       const motion = add(
         'animateMotion',
         {
-          path: phase === 2 ? `M${sx} ${sy} Q40 170 ${tx} ${ty}` : ownerPath(80),
+          path:
+            phase === 2
+              ? `M0 0 Q${40 - sx} ${170 - sy} ${tx - sx} ${ty - sy}`
+              : ownerPath(80, kx, ky),
           dur: '2.4s',
           fill: 'freeze',
           calcMode: 'spline',

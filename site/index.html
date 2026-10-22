@@ -61,7 +61,8 @@
           <h2 class="hero-title">What happens when a server joins?</h2>
           <p class="small hero-rule">
             A database spreads records across servers A, B and C. This animation shows where record
-            60 goes when server D joins, using a rule called consistent hashing.
+            60 goes when server D joins, using a rule called consistent hashing. Each server’s
+            number is its position on the ring.
           </p>
           <div id="hero-ring" class="hero-ring" aria-label="Hash ring preview"></div>
           <div class="hero-controls" role="group" aria-label="Preview playback">
@@ -82,7 +83,6 @@
             <p class="eyebrow">Creating an explanation</p>
             <h2 id="demo-heading">What changes when a server joins?</h2>
           </div>
-          <span class="badge">Scripted demo · no AI request</span>
         </div>
         <div class="prompt-panel" id="prompt-panel">
           <div class="prompt-head">
@@ -120,6 +120,10 @@
           loading="eager"
           sandbox="allow-scripts allow-same-origin allow-downloads"
         ></iframe>
+        <div class="preview-loading" id="preview-loading" hidden>
+          <p id="preview-message" role="status">Loading the interactive example…</p>
+          <button class="button" id="preview-retry" type="button" hidden>Retry example</button>
+        </div>
         <p class="small result-foot">Edit the keys, choose a step, or press Play.</p>
       </section>
       <section id="examples" class="library" aria-labelledby="examples-heading">

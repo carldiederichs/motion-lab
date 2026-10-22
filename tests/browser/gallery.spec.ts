@@ -30,7 +30,9 @@ for (const theme of ['dark', 'light'] as const)
         const collisions = await page.locator('#hero-ring svg').evaluate((svg) => {
           const line = svg.querySelector('[data-owner-connector]');
           if (!(line instanceof SVGPathElement)) throw new Error('Missing connector');
-          const servers = [...svg.querySelectorAll('[data-server]')];
+          const servers = [...svg.querySelectorAll('[data-server]')].filter(
+            (node) => node.parentElement?.getAttribute('opacity') !== '0',
+          );
           const hits = [];
           for (let n = 0; n <= 100; n++) {
             const p = line.getPointAtLength((line.getTotalLength() * n) / 100);

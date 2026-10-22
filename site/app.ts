@@ -1,3 +1,4 @@
+import { startHero } from './hero.ts';
 import { required } from '../engine/assert.ts';
 import { element } from '../engine/dom.ts';
 import { catalogueSchema } from '../engine/model.ts';
@@ -6,10 +7,12 @@ const $ = (id: string): HTMLElement => element(id, HTMLElement);
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 let category = '',
   examples: CatalogueItem[] = [],
-  typing: ReturnType<typeof setInterval> | undefined,
+  typing: ReturnType<typeof setTimeout> | undefined,
   tourIndex = 0,
   lastFocus: HTMLElement | null = null;
-const prompt = 'Show me consistent hashing. Add a server and show which keys move.';
+const prompt = $('prompt-full').textContent.trim();
+const typedPrompt = $('typed-prompt');
+let promptStarted = false;
 const themeModes = ['system', 'light', 'dark'];
 let theme = 'system';
 try {
@@ -26,22 +29,66 @@ function setTheme(value: string): void {
     { system: '◐', light: '☀', dark: '☾' }[theme] ?? '◐';
   element('theme', HTMLButtonElement).setAttribute('aria-label', `Theme: ${theme}. Change theme`);
   const frame = element('demo-frame', HTMLIFrameElement);
-  if (frame.src) frame.src = `/lessons/consistent-hashing.html?embed=1&panel=none&theme=${theme}`;
+  if (frame.src)
+    frame.src = `/lessons/consistent-hashing.html?embed=1&preview=1&panel=none&theme=${theme}`;
 }
 element('theme', HTMLButtonElement).addEventListener('click', () =>
   setTheme(required(themeModes[(themeModes.indexOf(theme) + 1) % 3])),
 );
 setTheme(theme);
+function finishPrompt(): void {
+  promptStarted = true;
+  clearTimeout(typing);
+  typing = undefined;
+  typedPrompt.textContent = prompt;
+  typedPrompt.dataset.state = 'complete';
+  promptObserver.disconnect();
+}
+function typePrompt(revealExample: boolean): void {
+  promptStarted = true;
+  promptObserver.disconnect();
+  clearTimeout(typing);
+  if (reduced.matches) {
+    finishPrompt();
+    return;
+  }
+  typedPrompt.textContent = '';
+  typedPrompt.dataset.state = 'typing';
+  let position = 0;
+  const nextCharacter = (): void => {
+    const character = required(prompt[position++]);
+    typedPrompt.textContent = prompt.slice(0, position);
+    if (position === prompt.length) {
+      finishPrompt();
+      if (revealExample) showExample();
+      return;
+    }
+    const delay = character === '.' ? 180 : character === ' ' ? 70 : 38 + (position % 4) * 9;
+    typing = setTimeout(nextCharacter, delay);
+  };
+  typing = setTimeout(nextCharacter, 250);
+}
+const promptObserver = new IntersectionObserver(
+  (entries) => {
+    if (!promptStarted && entries.some((entry) => entry.isIntersecting)) typePrompt(false);
+  },
+  { threshold: 0.4 },
+);
+$('prompt-copy').dataset.ready = 'true';
+if (reduced.matches) finishPrompt();
+else promptObserver.observe($('prompt-panel'));
+reduced.addEventListener('change', () => {
+  if (reduced.matches) finishPrompt();
+});
 function showExample(): void {
-  clearInterval(typing);
-  $('typed-prompt').textContent = prompt;
+  finishPrompt();
   $('demo-status').textContent =
     'Example ready. In your local workflow, your assistant writes and checks this visualization.';
   $('demo-result').hidden = false;
   element('demo-run', HTMLButtonElement).textContent = 'Example ready ✓';
   if (!(element('demo-frame', HTMLIFrameElement).getAttribute('src') ?? ''))
     element('demo-frame', HTMLIFrameElement).src =
-      `/lessons/consistent-hashing.html?embed=1&panel=none&theme=${theme}`;
+      `/lessons/consistent-hashing.html?embed=1&preview=1&panel=none&theme=${theme}`;
 }
 element('demo-run', HTMLButtonElement).addEventListener('click', () => {
   showExample();
@@ -51,23 +98,10 @@ element('demo-run', HTMLButtonElement).addEventListener('click', () => {
   });
 });
 element('demo-replay', HTMLButtonElement).addEventListener('click', () => {
-  clearInterval(typing);
   $('demo-result').hidden = true;
   element('demo-run', HTMLButtonElement).textContent = 'Show the example ↓';
   $('demo-status').textContent = 'Scripted preview of a question you could ask locally.';
-  if (reduced.matches) {
-    $('typed-prompt').textContent = prompt;
-    return;
-  }
-  let n = 0;
-  $('typed-prompt').textContent = '';
-  typing = setInterval(() => {
-    $('typed-prompt').textContent = prompt.slice(0, (n += 2));
-    if (n >= prompt.length) {
-      clearInterval(typing);
-      showExample();
-    }
-  }, 28);
+  typePrompt(true);
 });
 function art(slug: string): SVGSVGElement {
   const ns = 'http://www.w3.org/2000/svg';
@@ -566,120 +600,78 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// A small interactive preview uses the same clockwise ownership rule as the full lesson.
-let heroAdded = false;
-function renderHero(): void {
-  const ns = 'http://www.w3.org/2000/svg',
-    svg = document.createElementNS(ns, 'svg');
-  svg.setAttribute('viewBox', '0 0 400 250');
-  svg.setAttribute('role', 'img');
-  svg.setAttribute(
-    'aria-label',
-    heroAdded
-      ? 'Server D joins. Key 60 moves from C to D.'
-      : 'Servers A, B and C. Key 60 belongs to C.',
-  );
-  const add = <K extends keyof SVGElementTagNameMap>(
-    tag: K,
-    attrs: Record<string, string | number>,
-    text?: string | number,
-  ): SVGElementTagNameMap[K] => {
-    const e = document.createElementNS(ns, tag);
-    for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, String(v));
-    if (text !== undefined) e.textContent = String(text);
-    svg.appendChild(e);
-    return e;
-  };
-  const point = (slot: number, radius = 91): [number, number] => [
-    200 + radius * Math.sin((slot / 100) * Math.PI * 2),
-    125 - radius * Math.cos((slot / 100) * Math.PI * 2),
-  ];
-  add('circle', {
-    cx: 200,
-    cy: 125,
-    r: 91,
-    fill: 'none',
-    stroke: 'var(--border)',
-    'stroke-width': 2,
-    'stroke-dasharray': '4 5',
-  });
-  for (const [slot, label] of [
-    [16, 'A'],
-    [48, 'B'],
-    [80, 'C'],
-    ...(heroAdded ? [[64, 'D'] as const] : []),
-  ] as const) {
-    const [x, y] = point(slot);
-    add('circle', {
-      'data-server': label,
-      cx: x,
-      cy: y,
-      r: 19,
-      fill: 'var(--surface)',
-      stroke: label === 'D' ? 'var(--blue)' : 'var(--context)',
-      'stroke-width': 2,
-    });
-    add(
-      'text',
-      {
-        x,
-        y: y + 5,
-        'text-anchor': 'middle',
-        fill: label === 'D' ? 'var(--blue)' : 'var(--text)',
-        'font-size': 14,
-        'font-family': 'var(--mono)',
-      },
-      label,
-    );
+startHero(reduced);
+
+// Snap short sections one screen per wheel gesture; keep long libraries scrollable.
+let wheelLockedUntil = 0;
+let wheelAmount = 0;
+let lastWheelAt = 0;
+function scrollScreen(delta: number): boolean {
+  if (innerWidth <= 760 || $('tour-layer').hidden !== true || setup.open) return false;
+  const now = performance.now();
+  if (now < wheelLockedUntil) {
+    wheelLockedUntil = Math.max(wheelLockedUntil, now + 180);
+    return true;
   }
-  const [kx, ky] = point(60, 130),
-    [ox, oy] = point(heroAdded ? 64 : 80);
-  // Keep a visible gap at the server border, including the nearby D state.
-  const cx = heroAdded ? kx : 200,
-    cy = heroAdded ? ky : 125,
-    distance = Math.hypot(cx - ox, cy - oy),
-    ex = ox + ((cx - ox) / distance) * 24,
-    ey = oy + ((cy - oy) / distance) * 24;
-  add('path', {
-    'data-owner-connector': '',
-    d: `M${kx} ${ky} Q${cx} ${cy} ${ex} ${ey}`,
-    fill: 'none',
-    stroke: 'var(--blue)',
-    'stroke-width': 2,
+  if (now - lastWheelAt > 220) wheelAmount = 0;
+  lastWheelAt = now;
+  const sections = [...document.querySelectorAll<HTMLElement>('main > section')].filter(
+    (section) => section.hidden !== true,
+  );
+  const index = sections.findIndex((section) => {
+    const rect = section.getBoundingClientRect();
+    return (rect.top <= 1 && rect.bottom > 1) || (section.id === 'home' && scrollY < 1);
   });
-  add('circle', { cx: kx, cy: ky, r: 5, fill: 'var(--blue)' });
-  add(
-    'text',
-    {
-      x: 200,
-      y: 115,
-      'text-anchor': 'middle',
-      fill: 'var(--muted)',
-      'font-size': 12,
-    },
-    'KEY 60',
-  );
-  add(
-    'text',
-    {
-      x: 200,
-      y: 145,
-      'text-anchor': 'middle',
-      fill: 'var(--text)',
-      'font-size': 24,
-      'font-family': 'var(--mono)',
-    },
-    heroAdded ? 'C → D' : '→ C',
-  );
-  $('hero-ring').replaceChildren(svg);
-  element('hero-toggle', HTMLButtonElement).textContent = heroAdded
-    ? 'Remove server D −'
-    : 'Add server D +';
-  element('hero-toggle', HTMLButtonElement).setAttribute('aria-pressed', String(heroAdded));
-  $('hero-result').textContent = heroAdded ? 'Only keys in (48, 64] move.' : 'Key 60 belongs to C.';
+  const section = sections[index];
+  if (!section) return false;
+  const rect = section.getBoundingClientRect();
+  if (
+    rect.height > innerHeight + 1 &&
+    ((delta > 0 && rect.bottom > innerHeight + 2) || (delta < 0 && rect.top < -2))
+  )
+    return false;
+  const next = sections[index + (delta > 0 ? 1 : -1)];
+  if (!next) return false;
+  wheelAmount += delta;
+  if (Math.abs(wheelAmount) >= 35) {
+    wheelLockedUntil = now + (reduced.matches ? 180 : 700);
+    wheelAmount = 0;
+    next.scrollIntoView({ block: 'start', behavior: reduced.matches ? 'instant' : 'smooth' });
+  }
+  return true;
 }
-element('hero-toggle', HTMLButtonElement).addEventListener('click', () => {
-  heroAdded = !heroAdded;
-  renderHero();
+document.addEventListener(
+  'wheel',
+  (event) => {
+    if (event.ctrlKey || event.shiftKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+    if (
+      event.target instanceof Element &&
+      event.target.closest('dialog, input, textarea, select, #tour-layer')
+    )
+      return;
+    const pixels =
+      event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
+    if (pixels !== 0 && scrollScreen(pixels)) event.preventDefault();
+  },
+  { passive: false },
+);
+window.addEventListener('message', (event: MessageEvent<unknown>) => {
+  if (
+    event.origin !== location.origin ||
+    event.source !== element('demo-frame', HTMLIFrameElement).contentWindow
+  )
+    return;
+  const data = event.data;
+  if (
+    typeof data !== 'object' ||
+    data === null ||
+    !('type' in data) ||
+    data.type !== 'motion-preview-scroll' ||
+    !('delta' in data) ||
+    typeof data.delta !== 'number' ||
+    !Number.isFinite(data.delta)
+  )
+    return;
+  if (setup.open || $('tour-layer').hidden !== true) return;
+  if (!scrollScreen(data.delta)) window.scrollBy({ top: data.delta, behavior: 'instant' });
 });
-renderHero();

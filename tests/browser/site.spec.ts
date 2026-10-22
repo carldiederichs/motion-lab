@@ -43,7 +43,7 @@ for (const width of [1024, 1440, 1920])
       );
       expect(overlaps).toBe(0);
       await page.getByRole('button', { name: 'Run locally' }).click();
-      await expect(page.getByRole('dialog', { name: 'Take Motion Lab with you.' })).toBeVisible();
+      await expect(page.getByRole('dialog', { name: 'Run Motion Lab locally' })).toBeVisible();
       expect(await page.locator('#setup').evaluate((e) => e.scrollWidth <= e.clientWidth)).toBe(
         true,
       );
@@ -65,7 +65,7 @@ test('demo is labelled, waits for a click and makes no model request', async ({ 
   const requests: string[] = [];
   page.on('request', (r) => requests.push(r.url()));
   await page.goto('/');
-  await expect(page.getByText('Scripted demo · no AI request')).toBeVisible();
+  await expect(page.locator('#demo-status')).toContainText('after installing Motion Lab');
   await expect(page.locator('#demo-result')).toBeHidden();
   await page.getByRole('button', { name: 'Show the example' }).click();
   await expect(page.locator('#demo-result')).toBeVisible();

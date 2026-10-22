@@ -17,7 +17,7 @@ for (const colorScheme of ['dark', 'light'] as const)
       const controls = required(await page.locator('.hero-link').boundingBox());
       expect(controls.y + controls.height).toBeLessThan(height);
       await expect(page.locator('#typed-prompt')).toHaveText('');
-      await page.getByRole('link', { name: 'Try the walkthrough' }).click();
+      await page.getByRole('link', { name: 'Try this example' }).click();
       await expect
         .poll(async () => Math.round(required(await page.locator('#demo').boundingBox()).y))
         .toBe(0);

@@ -53,3 +53,83 @@ test('authoring QA rejects a store row wider than its background', async ({ page
   );
   expect(report.issues.some((issue) => issue.includes('row text overflows db'))).toBe(true);
 });
+
+test('hash routing stays clear for every position and repeated positions', async ({ page }) => {
+  const spec = specSchema.parse(
+    JSON.parse(await readFile(path.join(ROOT, 'examples/consistent-hashing.json'), 'utf8')),
+  );
+  const input = required(required(spec.simulation).params.find((param) => param.id === 'keys'));
+  const html = path.join(out, 'hash-position-coverage.html');
+  const groups = Array.from({ length: 17 }, (_group, index) =>
+    Array.from({ length: Math.min(6, 100 - index * 6) }, (_position, offset) => index * 6 + offset),
+  );
+  groups.push([60, 60, 160, -940, 64, 64]);
+  for (const keys of groups) {
+    input.default = keys;
+    await writeFile(html, await render(spec));
+    await page.goto(pathToFileURL(html).href + '?motion-qa=1');
+    await page.waitForSelector('#motion-qa-report', { state: 'attached' });
+    const report = qaReportSchema.parse(
+      JSON.parse(required(await page.locator('#motion-qa-report').textContent())),
+    );
+    expect(report.issues, `keys ${keys.join(', ')}`).toEqual([]);
+  }
+});
+
+test('geometry QA ignores hidden objects but rejects collisions when they become visible together', async ({
+  page,
+}) => {
+  const spec = specSchema.parse({
+    kind: 'motion',
+    version: 3,
+    slug: 'visible-collision',
+    title: 'Visibility collision check',
+    component: 'Systems',
+    aliases: [],
+    stage: { width: 600, height: 300 },
+    camera: false,
+    scene: {
+      actors: [
+        { id: 'a', kind: 'circle', x: 60, y: 150, r: 20, label: 'A' },
+        { id: 'b', kind: 'circle', x: 540, y: 150, r: 20, label: 'B' },
+        { id: 'c', kind: 'circle', x: 300, y: 150, r: 20, label: 'C', tone: 'hidden' },
+      ],
+      links: [{ id: 'route', from: 'a', to: 'b' }],
+      beats: [
+        { title: 'Route with C absent', text: 'C is hidden.', dur: 500, actions: [] },
+        {
+          title: 'C appears after routing ends',
+          text: 'The route is hidden.',
+          dur: 500,
+          actions: [
+            { do: 'tone', link: 'route', tone: 'hidden' },
+            { do: 'tone', actor: 'c', tone: 'mechanism' },
+          ],
+        },
+      ],
+    },
+    edgeCases: [
+      { label: 'First case', why: 'Same scene', params: {} },
+      { label: 'Second case', why: 'Same scene', params: {} },
+    ],
+  });
+  const html = path.join(out, 'visible-collision.html');
+  for (const colliding of [false, true]) {
+    if (colliding)
+      required(spec.scene).beats.push({
+        title: 'Colliding route',
+        text: 'The route crosses C.',
+        dur: 500,
+        actions: [{ do: 'tone', link: 'route', tone: 'mechanism' }],
+      });
+    await writeFile(html, await render(spec));
+    await page.goto(pathToFileURL(html).href + '?motion-qa=1');
+    await page.waitForSelector('#motion-qa-report', { state: 'attached' });
+    const report = qaReportSchema.parse(
+      JSON.parse(required(await page.locator('#motion-qa-report').textContent())),
+    );
+    expect(report.issues.some((issue) => issue.includes('link route runs through c'))).toBe(
+      colliding,
+    );
+  }
+});

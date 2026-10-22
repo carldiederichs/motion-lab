@@ -112,8 +112,8 @@
     ]
   },
   "complexity": {
-    "time": "O(rows \u00d7 cols)",
-    "space": "O(rows \u00d7 cols)",
+    "time": "O(rows × cols)",
+    "space": "O(rows × cols)",
     "example": "Each cell is inspected, and each land cell enters the frontier at most once. The visited set can contain every cell.",
     "derivation": [
       "Each cell is inspected, and each land cell enters the frontier at most once. The visited set can contain every cell."
@@ -134,5 +134,24 @@
         "grid": ["000", "000"]
       }
     }
-  ]
+  ],
+  "problem": {
+    "statement": "Given a grid containing 1 for land and 0 for water, count the islands. Land cells belong to the same island when they connect horizontally or vertically; diagonal contact does not connect them. Water surrounds the grid.",
+    "example": {
+      "input": "grid = [\"110\", \"010\", \"001\"]",
+      "output": "2",
+      "explanation": "The three land cells at the upper left form one island. The bottom-right cell forms another."
+    },
+    "constraints": [
+      "The grid has 1 to 300 rows and 1 to 300 columns.",
+      "Every cell contains either 0 or 1."
+    ],
+    "source": {
+      "number": 200,
+      "title": "Number of Islands",
+      "slug": "number-of-islands",
+      "relationship": "exact",
+      "note": "Problem restated here; open LeetCode for the original prompt and to submit your solution."
+    }
+  }
 }

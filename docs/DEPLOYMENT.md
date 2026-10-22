@@ -4,7 +4,7 @@ The application is static: no database, API keys, model account or environment s
 
 ## Current deployment
 
-Production: **https://motion-lab-alpha-three.vercel.app/**. Vercel is connected to this repository with `main` as the production branch. Push reviewed changes to `main` to trigger a new production build, then run the public smoke check below. The initial deployment passed unauthenticated route checks and a visual/interaction review in Chrome.
+Production: **https://motion-lab-dev.vercel.app/**. Vercel is connected to this repository with `main` as the production branch. Push reviewed changes to `main` to trigger a new production build, then run the public smoke check below. The initial deployment passed unauthenticated route checks and a visual/interaction review in Chrome.
 
 ## Vercel
 
@@ -31,7 +31,7 @@ See Railway's [Dockerfile guide](https://docs.railway.com/builds/dockerfiles) an
 From the repository:
 
 ```sh
-npx tsx scripts/smoke.ts https://motion-lab-alpha-three.vercel.app
+npx tsx scripts/smoke.ts https://motion-lab-dev.vercel.app
 ```
 
 This performs read-only requests to the landing page, catalogue, every lesson, assets and toolkit ZIP. It checks that private and unknown routes return 404. It does not fill forms, call a model or send local files.

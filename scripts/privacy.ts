@@ -35,6 +35,7 @@ export async function audit(root = ROOT): Promise<{ files: number; issues: strin
     'app.js',
     'style.css',
     'icon.svg',
+    'github.svg',
     '404.html',
     'catalogue.json',
     'downloads/motion-lab-toolkit.zip',

@@ -28,6 +28,7 @@ import type {
   State,
   InspectorRow,
 } from './player-types.ts';
+import { renderProblem } from './problem.ts';
 const GENERATORS = { ...coreGenerators, ...extraGenerators };
 
 const SPEC = specSchema.parse(JSON.parse(element('motion-spec', HTMLScriptElement).textContent));
@@ -722,7 +723,11 @@ class Stage {
     }
     for (const l of this.scene.links || []) {
       const geo = this.linkPath(l);
-      const path = el('path', { class: 's-link', d: geo.d, 'marker-end': `url(#${mid})` }, gk);
+      const path = el(
+        'path',
+        { class: 's-link', 'data-link': l.id, d: geo.d, 'marker-end': `url(#${mid})` },
+        gk,
+      );
       if (l.label !== undefined) {
         const lb = el(
           'text',
@@ -1690,12 +1695,11 @@ function setSide(panel: string | null, remember: boolean): void {
 function buildControls(): void {
   $('mp-title').textContent = SPEC.title;
   $('mp-subtitle').textContent = (SPEC.subtitle ?? '') || '';
+  renderProblem($('mp-problem'), SPEC.problem);
   document.title = SPEC.title;
   const home = element('mp-home', HTMLAnchorElement);
   home.href =
-    location.protocol === 'file:'
-      ? 'https://motion-lab-alpha-three.vercel.app/#examples'
-      : '/#examples';
+    location.protocol === 'file:' ? 'https://motion-lab-dev.vercel.app/#examples' : '/#examples';
   const from = params.get('from');
   if (from !== null && location.protocol !== 'file:') {
     try {
@@ -2284,17 +2288,19 @@ function qa(): void {
     for (const b of boxes)
       if (b.x < 0 || b.y < 0 || b.x + b.w > W || b.y + b.h > H)
         once(`${run.tag}out${b.id}`, `${run.tag}: ${b.id} is outside the stage`);
+    const overlappingActors: [string, string][] = [];
+    const crossingLinks: [string, string][] = [];
     for (let i = 0; i < boxes.length; i += 1)
       for (let j = i + 1; j < boxes.length; j += 1) {
         const p = required(boxes[i]);
         const q = required(boxes[j]);
         if (p.x < q.x + q.w && q.x < p.x + p.w && p.y < q.y + q.h && q.y < p.y + p.h)
-          once(`${run.tag}ov${p.id}${q.id}`, `${run.tag}: ${p.id} overlaps ${q.id}`);
+          overlappingActors.push([p.id, q.id]);
       }
     for (const l of sc.links || []) {
       for (let k = 2; k <= 28; k += 1) {
         const pt = stage.pointAt(l.id, k / 30);
-        const hit = boxes.find(
+        const hits = boxes.filter(
           (b) =>
             b.id !== l.from &&
             b.id !== l.to &&
@@ -2303,14 +2309,24 @@ function qa(): void {
             pt.y > b.y + 2 &&
             pt.y < b.y + b.h - 2,
         );
-        if (hit) {
-          once(`${run.tag}cross${l.id}`, `${run.tag}: link ${l.id} runs through ${hit.id}`);
-          break;
-        }
+        for (const hit of hits)
+          if (!crossingLinks.some(([link, actor]) => link === l.id && actor === hit.id))
+            crossingLinks.push([l.id, hit.id]);
       }
     }
     for (let ms = 0; ms <= stage.total; ms += 40) {
       const { st } = stage.stateAt(ms);
+      // A future server or a route from an earlier step cannot collide while hidden.
+      // Keep checking the same geometry whenever both objects are visible together.
+      for (const [a, b] of overlappingActors)
+        if (required(st.actors[a]).tone !== 'hidden' && required(st.actors[b]).tone !== 'hidden')
+          once(`${run.tag}ov${a}${b}`, `${run.tag}: ${a} overlaps ${b}`);
+      for (const [link, actor] of crossingLinks)
+        if (
+          required(st.links[link]).tone !== 'hidden' &&
+          required(st.actors[actor]).tone !== 'hidden'
+        )
+          once(`${run.tag}cross${link}${actor}`, `${run.tag}: link ${link} runs through ${actor}`);
       stage.render(st, ms, true);
       frames += 1;
       const c = stage.cam;
@@ -2636,3 +2652,4 @@ if (preview && SPEC.simulation?.generator === 'consistent-hash') {
     else if (wasPlaying) play();
   });
 }
+document.documentElement.dataset.motionReady = 'true';

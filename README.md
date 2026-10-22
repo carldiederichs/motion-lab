@@ -1,6 +1,6 @@
 # Motion Lab
 
-[Explore the live demo](https://motion-lab-alpha-three.vercel.app/) on desktop or mobile.
+[Explore the live demo](https://motion-lab-dev.vercel.app/) on desktop or mobile.
 
 Interactive explanations for the engineering question in front of you. Follow a request, step through an algorithm, inspect a state change or compare two designs. Change the inputs and watch the explanation respond. Portable code examples offer TypeScript, JavaScript, Python, Java and C++.
 
@@ -8,12 +8,16 @@ The public site is a static collection of examples. New explanations are created
 
 ## Run locally
 
-Requires Node.js 22.13 or newer. Download and unzip the toolkit, or clone this repository. In the project folder:
+Requires Node.js 22.13 or newer. Clone the repository and start the local server:
 
 ```sh
+git clone https://github.com/carldiederichs/motion-lab.git
+cd motion-lab
 npm ci --ignore-scripts
 npm run dev
 ```
+
+Alternatively, [download the toolkit ZIP](https://motion-lab-dev.vercel.app/downloads/motion-lab-toolkit.zip), unzip it and run the same commands from `npm ci` onward in its `motion-lab` folder.
 
 Open **http://127.0.0.1:4173**. Explore on desktop or mobile. Creating new explanations with your coding assistant requires a desktop environment.
 
@@ -70,8 +74,8 @@ Browser tests use installed Google Chrome on macOS and Playwright Chromium elsew
 
 `local/`, credentials, build artifacts and Git history never enter the toolkit archive. The public build reads only the explicit example catalogue, player and site assets. The local server binds to loopback; production serving disables local routes.
 
-The generation preview on the public page is labelled as a scripted demonstration. The examples use deterministic simulations or authored scenarios. They are explanatory models, not evidence that arbitrary application code has been executed or verified.
+The public page presents a prepared example of a question and its visualization. The examples use deterministic simulations or authored scenarios. They are explanatory models, not evidence that arbitrary application code has been executed or verified.
 
 ## License
 
-MIT. The diagram design adaptation includes its original notice in `docs/THIRD-PARTY-LICENSE.txt`.
+[MIT](LICENSE). You can use, modify and distribute the toolkit under this license. The diagram design adaptation retains its notice in `docs/THIRD-PARTY-LICENSE.txt`; the GitHub mark from Primer Octicons retains its notice in `docs/OCTICONS-LICENSE.txt`. The LeetCode mark comes from Simple Icons under CC0; see `docs/SIMPLE-ICONS-LICENSE.txt`.

@@ -3,7 +3,7 @@
   "version": 3,
   "slug": "reverse-linked-list",
   "title": "Reverse a Linked List",
-  "subtitle": "Save the next node before reversing a pointer. Watch the prefix and suffix change.",
+  "subtitle": "Reverse a list one pointer at a time while preserving the link to the nodes still to visit.",
   "component": "Algorithms",
   "date": "2026-10-22",
   "aliases": ["Reverse a Linked List", "Linked list + pointers"],
@@ -129,5 +129,25 @@
     "derivation": [
       "n is the number of list nodes. Each node is visited once. Only three references are kept; node values are not copied."
     ]
+  },
+  "problem": {
+    "statement": "Given the head of a singly linked list, reverse its links and return the new head.",
+    "example": {
+      "input": "head = [4, 8, 2]",
+      "output": "[2, 8, 4]",
+      "explanation": "The original last node becomes the head, and each next pointer points toward the previous node."
+    },
+    "constraints": [
+      "The list contains 0 to 5,000 nodes.",
+      "Node values are between −5,000 and 5,000.",
+      "The follow-up asks for both iterative and recursive solutions."
+    ],
+    "source": {
+      "number": 206,
+      "title": "Reverse Linked List",
+      "slug": "reverse-linked-list",
+      "relationship": "exact",
+      "note": "Problem restated here; open LeetCode for the original prompt and to submit your solution."
+    }
   }
 }

@@ -13,6 +13,8 @@ let category = '',
 const prompt = $('prompt-full').textContent.trim();
 const typedPrompt = $('typed-prompt');
 let promptStarted = false;
+let previewState: 'idle' | 'loading' | 'ready' | 'error' = 'idle';
+let previewTimeout: ReturnType<typeof setTimeout> | undefined;
 const themeModes = ['system', 'light', 'dark'];
 let theme = 'system';
 try {
@@ -28,9 +30,7 @@ function setTheme(value: string): void {
   element('theme', HTMLButtonElement).textContent =
     { system: '◐', light: '☀', dark: '☾' }[theme] ?? '◐';
   element('theme', HTMLButtonElement).setAttribute('aria-label', `Theme: ${theme}. Change theme`);
-  const frame = element('demo-frame', HTMLIFrameElement);
-  if (frame.src)
-    frame.src = `/lessons/consistent-hashing.html?embed=1&preview=1&panel=none&theme=${theme}`;
+  if (previewState !== 'idle') loadPreview();
 }
 element('theme', HTMLButtonElement).addEventListener('click', () =>
   setTheme(required(themeModes[(themeModes.indexOf(theme) + 1) % 3])),
@@ -82,14 +82,52 @@ reduced.addEventListener('change', () => {
 });
 function showExample(): void {
   finishPrompt();
-  $('demo-status').textContent =
-    'Example ready. In your local workflow, your assistant writes and checks this visualization.';
   $('demo-result').hidden = false;
-  element('demo-run', HTMLButtonElement).textContent = 'Example ready ✓';
-  if (!(element('demo-frame', HTMLIFrameElement).getAttribute('src') ?? ''))
-    element('demo-frame', HTMLIFrameElement).src =
-      `/lessons/consistent-hashing.html?embed=1&preview=1&panel=none&theme=${theme}`;
+  if (previewState === 'idle' || previewState === 'error') loadPreview();
 }
+function previewFailed(): void {
+  if (previewState !== 'loading') return;
+  clearTimeout(previewTimeout);
+  previewState = 'error';
+  $('demo-result').setAttribute('aria-busy', 'false');
+  $('preview-message').textContent =
+    'The example could not load. Try again, or open the full workspace above.';
+  $('preview-retry').hidden = false;
+  element('demo-run', HTMLButtonElement).textContent = 'Retry the example ↓';
+}
+function loadPreview(): void {
+  clearTimeout(previewTimeout);
+  previewState = 'loading';
+  $('demo-result').setAttribute('aria-busy', 'true');
+  $('preview-loading').hidden = false;
+  $('preview-retry').hidden = true;
+  $('preview-message').textContent = 'Loading the interactive example…';
+  element('demo-run', HTMLButtonElement).textContent = 'Loading example…';
+  previewTimeout = setTimeout(previewFailed, 10000);
+  element('demo-frame', HTMLIFrameElement).src =
+    `/lessons/consistent-hashing.html?embed=1&preview=1&panel=none&theme=${theme}`;
+}
+element('demo-frame', HTMLIFrameElement).addEventListener('load', () => {
+  if (previewState !== 'loading') return;
+  const frame = element('demo-frame', HTMLIFrameElement);
+  try {
+    if (frame.contentDocument?.documentElement.dataset.motionReady !== 'true') {
+      // The initial about:blank load can arrive after navigation starts.
+      if (frame.contentDocument?.URL !== 'about:blank') previewFailed();
+      return;
+    }
+  } catch {
+    previewFailed();
+    return;
+  }
+  clearTimeout(previewTimeout);
+  previewState = 'ready';
+  $('demo-result').setAttribute('aria-busy', 'false');
+  $('preview-loading').hidden = true;
+  element('demo-run', HTMLButtonElement).textContent = 'Example ready ✓';
+});
+element('demo-frame', HTMLIFrameElement).addEventListener('error', previewFailed);
+element('preview-retry', HTMLButtonElement).addEventListener('click', loadPreview);
 element('demo-run', HTMLButtonElement).addEventListener('click', () => {
   showExample();
   $('demo-result').scrollIntoView({
@@ -100,7 +138,6 @@ element('demo-run', HTMLButtonElement).addEventListener('click', () => {
 element('demo-replay', HTMLButtonElement).addEventListener('click', () => {
   $('demo-result').hidden = true;
   element('demo-run', HTMLButtonElement).textContent = 'Show the example ↓';
-  $('demo-status').textContent = 'Scripted preview of a question you could ask locally.';
   typePrompt(true);
 });
 function art(slug: string): SVGSVGElement {
@@ -480,7 +517,7 @@ const steps = [
   {
     target: 'prompt-panel',
     title: 'Start with your question',
-    text: 'Ask about a mechanism or the code you are working on. This preview is scripted; real creation happens in your local assistant.',
+    text: 'Motion Lab helps you understand code through interactive diagrams. This prepared prompt shows how you would ask your coding assistant to create one locally.',
   },
   {
     target: 'demo-result',
@@ -490,12 +527,12 @@ const steps = [
   {
     target: 'filters',
     title: 'Choose a useful starting point',
-    text: 'Filter by the question you have. The library includes algorithms, architecture, data structures and concurrency.',
+    text: 'Browse algorithms, architecture, data structures and concurrency. Algorithm pages explain the task and link to the corresponding or related LeetCode problem.',
   },
   {
     target: 'local-toolkit',
     title: 'Make the next one locally',
-    text: 'Use your own coding assistant and model to explain your next engineering question. The download includes this player and the Motion Lab skill. Downloading starts only when you click.',
+    text: 'Clone the open-source repository from GitHub, or download the ZIP. It includes the player, examples and a skill that your own coding assistant can use to create new explanations.',
   },
 ];
 function tourTargetRect():

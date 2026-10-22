@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta
       name="description"
-      content="Turn engineering questions into interactive explanations. Explore Motion Lab, then create your own with your AI assistant."
+      content="An open-source tool for interactive explanations of algorithms and software systems. Explore examples or build your own locally with your coding assistant."
     />
-    <title>Motion Lab · See how it works</title>
+    <title>Motion Lab · Interactive explanations of code and systems</title>
     <link rel="icon" href="/icon.svg" />
     <link rel="stylesheet" href="/style.css" />
     <script>
@@ -22,7 +22,14 @@
         ><img src="/icon.svg" alt="" width="28" height="28" />Motion Lab</a
       >
       <nav aria-label="Main">
-        <a href="#examples">Explore</a><button id="tour-start" class="quiet">Take a tour</button
+        <a href="#examples">Explore</a
+        ><a
+          class="github-link"
+          href="https://github.com/carldiederichs/motion-lab"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><span class="github-icon" aria-hidden="true"></span>GitHub</a
+        ><button id="tour-start" class="quiet">Take a tour</button
         ><button id="theme" class="icon" aria-label="Theme: system" title="Change theme">◐</button
         ><button class="button" data-setup>Run locally <span aria-hidden="true">↗</span></button>
       </nav>
@@ -31,25 +38,31 @@
       <section id="home" class="intro" aria-labelledby="headline">
         <div>
           <p class="eyebrow">
-            <span class="status-dot"></span> Interactive engineering explanations
+            <span class="status-dot"></span> Open-source engineering visualizations
           </p>
-          <h1 id="headline">See how it works.<br />Then make it yours.</h1>
+          <h1 id="headline">Understand code through interactive diagrams.</h1>
           <p class="lead">
-            Turn the thing you’re working on into a visual you can pause, change and understand.
-            Start with an example. Build the next one with your own AI assistant.
+            Motion Lab explains algorithms and software systems with diagrams you can step through.
+            Change the inputs and follow how data moves, what the code does and why the result
+            changes.
           </p>
           <div class="actions">
-            <a class="button primary" href="#demo"
-              >Try the walkthrough <span aria-hidden="true">↓</span></a
+            <a class="button primary" href="#examples"
+              >Explore examples <span aria-hidden="true">↓</span></a
             ><button class="quiet" data-setup>Create your own →</button>
           </div>
-          <p class="small desktop-note">No account needed. Explore here; create on your desktop.</p>
+          <p class="small desktop-note">
+            Explore the examples here without an account, or use your own AI coding assistant to
+            create explanations locally.
+          </p>
         </div>
         <div class="intro-aside">
-          <span class="eyebrow">Consistent hashing</span>
-          <h2 class="hero-title">Add a server. Move fewer keys.</h2>
+          <span class="eyebrow">Example: distributing data</span>
+          <h2 class="hero-title">What happens when a server joins?</h2>
           <p class="small hero-rule">
-            Hash each key to a position on the ring. Its owner is the first server clockwise.
+            A database spreads records across servers A, B and C. This animation shows where record
+            60 goes when server D joins, using a rule called consistent hashing. Each server’s
+            number is its position on the ring.
           </p>
           <div id="hero-ring" class="hero-ring" aria-label="Hash ring preview"></div>
           <div class="hero-controls" role="group" aria-label="Preview playback">
@@ -61,16 +74,15 @@
             <span class="small" id="hero-step">1 / 4</span>
           </div>
           <p id="hero-result" class="small hero-explanation">Key 60 belongs to C.</p>
-          <a class="quiet hero-link" href="#demo">Follow every step ↓</a>
+          <a class="quiet hero-link" href="#demo">Try this example ↓</a>
         </div>
       </section>
       <section id="demo" class="demo" aria-labelledby="demo-heading">
         <div class="section-line">
           <div>
-            <p class="eyebrow">From question to explanation</p>
+            <p class="eyebrow">Creating an explanation</p>
             <h2 id="demo-heading">What changes when a server joins?</h2>
           </div>
-          <span class="badge">Scripted demo · no AI request</span>
         </div>
         <div class="prompt-panel" id="prompt-panel">
           <div class="prompt-head">
@@ -84,7 +96,8 @@
             <span id="typed-prompt" aria-hidden="true"></span>
           </p>
           <div class="demo-status" aria-live="polite" id="demo-status">
-            A prepared example shows the local creation workflow.
+            This is an example of what you could ask your coding assistant after installing Motion
+            Lab.
           </div>
           <div class="prompt-actions">
             <button id="demo-run" class="button primary">
@@ -107,19 +120,23 @@
           loading="eager"
           sandbox="allow-scripts allow-same-origin allow-downloads"
         ></iframe>
+        <div class="preview-loading" id="preview-loading" hidden>
+          <p id="preview-message" role="status">Loading the interactive example…</p>
+          <button class="button" id="preview-retry" type="button" hidden>Retry example</button>
+        </div>
         <p class="small result-foot">Edit the keys, choose a step, or press Play.</p>
       </section>
       <section id="examples" class="library" aria-labelledby="examples-heading">
         <div class="section-line">
           <div>
-            <p class="eyebrow">Start somewhere familiar</p>
-            <h2 id="examples-heading">A few ways to see it.</h2>
+            <p class="eyebrow">Interactive examples</p>
+            <h2 id="examples-heading">Choose a topic to explore</h2>
           </div>
           <span id="count" class="small" aria-live="polite"></span>
         </div>
         <p class="section-intro">
-          These are starting points. Use the same toolkit to explain a service, a data structure or
-          a tricky piece of your own code.
+          Each example includes a diagram and playback controls. You can change inputs in the
+          simulations, follow the code in your preferred language and compare different approaches.
         </p>
         <div class="filters" id="filters">
           <label class="search-label"
@@ -142,11 +159,11 @@
       </section>
       <section class="own" id="make-your-own">
         <div>
-          <p class="eyebrow">Bring the question you actually have</p>
-          <h2>Your code. Your assistant.<br />Your next explanation.</h2>
+          <p class="eyebrow">Create your own explanation</p>
+          <h2>Use Motion Lab with the code you’re working on.</h2>
           <p>
-            “Why does this retry create two records?”<br />“Walk through this cache invalidation
-            path.”<br />“Show the boundaries in this service.”
+            Ask why a retry creates duplicate records, follow a cache invalidation path or map the
+            boundaries of a service. The examples above show the kinds of diagrams you can build.
           </p>
         </div>
         <div>
@@ -159,18 +176,26 @@
             permissions, privacy settings and usage limits apply.
           </p>
           <button class="button primary" id="local-toolkit" data-setup>
-            Get the local toolkit <span aria-hidden="true">↗</span>
+            Set up locally <span aria-hidden="true">↗</span>
           </button>
         </div>
       </section>
     </main>
     <footer class="wrap">
-      <span>Motion Lab</span><span>Made for understanding, one change at a time.</span
+      <span>Motion Lab</span
+      ><span
+        >Open source under the
+        <a
+          href="https://github.com/carldiederichs/motion-lab/blob/main/LICENSE"
+          target="_blank"
+          rel="noopener noreferrer"
+          >MIT license</a
+        >.</span
       ><a
         href="https://github.com/carldiederichs/motion-lab"
         target="_blank"
         rel="noopener noreferrer"
-        >Source ↗</a
+        >GitHub ↗</a
       >
     </footer>
     <dialog id="setup" aria-labelledby="setup-title">
@@ -178,21 +203,33 @@
         <span class="eyebrow">Create with your own assistant</span
         ><button id="setup-close" class="icon" aria-label="Close setup">✕</button>
       </div>
-      <h2 id="setup-title">Take Motion Lab with you.</h2>
+      <h2 id="setup-title">Run Motion Lab locally</h2>
       <p>
-        Use a desktop with Node.js 22.13 or newer and an AI coding assistant. The download contains
-        the player, examples and skill. It does not run anything until you start it.
+        The repository includes the player, examples and a skill for your AI coding assistant.
+        You’ll need a desktop with Node.js 22.13 or newer. Motion Lab is free to use, modify and
+        share under the MIT license.
       </p>
       <ol class="setup-steps">
         <li>
-          <strong>Download and unzip the toolkit.</strong
-          ><a class="button primary" id="download" href="/downloads/motion-lab-toolkit.zip" download
-            >Download toolkit .zip ↓</a
-          ><span class="small">Or clone the repository:</span>
+          <strong>Clone the repository.</strong>
+          <a
+            class="button github-link"
+            href="https://github.com/carldiederichs/motion-lab"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><span class="github-icon" aria-hidden="true"></span>View on GitHub ↗</a
+          >
           <div class="command">
             <pre><code>git clone https://github.com/carldiederichs/motion-lab.git</code></pre>
             <button class="quiet copy" aria-label="Copy clone command">Copy</button>
           </div>
+          <span class="small"
+            >Prefer a download?
+            <a id="download" href="/downloads/motion-lab-toolkit.zip" download
+              >Download the toolkit ZIP</a
+            >
+            and unzip it before continuing.</span
+          >
         </li>
         <li>
           <strong>Open the folder in a terminal.</strong>

@@ -24,6 +24,7 @@ for (const viewport of [
       await frame.getByRole('button', { name: /^Step 2:/ }).click();
       await expect(node).toBeHidden();
       const title = await frame.locator('#mp-cap-title').textContent();
+      await page.screenshot({ path: `artifacts/review/routing-${viewport.width}-${theme}.png` });
       const rows = await frame.locator('[data-actor="mapping"]').textContent();
       for (const invalid of [
         '9'.repeat(200),
@@ -56,6 +57,7 @@ for (const viewport of [
       await expect(frame.locator('#mp-cap-title')).toHaveText('2 of 6 keys move');
       await expect(frame.locator('[data-actor="mapping"]')).toContainText('49 → D');
       await expect(node).toBeVisible();
+      await page.screenshot({ path: `artifacts/review/migration-${viewport.width}-${theme}.png` });
       await frame.getByRole('button', { name: /^Step 2:/ }).click();
       await expect(node).toBeHidden();
       await input.fill('');

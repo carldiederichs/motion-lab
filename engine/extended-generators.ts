@@ -72,6 +72,25 @@ export const extraGenerators: Record<string, Generator> = {
       owner(k, nodes).id !== owner(k, [...nodes, added]).id ? [i] : [],
     );
     const moved = movedIndices.map((i) => required(keys[i]));
+    const routes: Link[] = keys.map((key, index) => {
+      const angle = (key / 100) * Math.PI * 2 - Math.PI / 2;
+      actors.push({
+        id: `position-${index}`,
+        kind: 'circle',
+        x: 290 + 220 * Math.cos(angle),
+        y: 245 + 220 * Math.sin(angle),
+        r: 4,
+        sub: `key ${key}`,
+        tone: 'hidden',
+      });
+      return {
+        id: `route-${index}`,
+        from: `position-${index}`,
+        to: owner(key, nodes).id,
+        bend: -60,
+        tone: 'hidden',
+      };
+    });
     const beats: Beat[] = [
       {
         title: 'Place servers on a hash ring',
@@ -92,7 +111,7 @@ export const extraGenerators: Record<string, Generator> = {
           : 'There are no sample keys to route. Add some positions above to see their owners. D has not joined yet.',
         dur: 2400,
         lines: [2, 3],
-        actions: [{ do: 'rows', actor: 'mapping', value: before }],
+        actions: [],
       },
       {
         title: 'A new server joins at slot 64',
@@ -103,7 +122,13 @@ export const extraGenerators: Record<string, Generator> = {
         text: 'D takes ownership of the interval after B at 48 through D at 64. Ownership elsewhere stays the same.',
         dur: 2300,
         lines: [4],
-        actions: [{ do: 'tone', actor: 'node-d', tone: 'mechanism' }],
+        actions: [
+          ...routes.flatMap((route): Action[] => [
+            { do: 'tone', link: route.id, tone: 'hidden' },
+            { do: 'tone', actor: route.from, tone: 'hidden' },
+          ]),
+          { do: 'tone', actor: 'node-d', tone: 'mechanism' },
+        ],
       },
       {
         title: `${moved.length} of ${keys.length} keys move`,
@@ -120,9 +145,31 @@ export const extraGenerators: Record<string, Generator> = {
         ],
       },
     ];
+    const routing = required(beats[1]);
+    routing.dur = Math.max(2400, keys.length * 1100);
+    keys.forEach((key, index) => {
+      const route = required(routes[index]);
+      const start = index / keys.length;
+      const end = (index + 1) / keys.length;
+      const arrival = start + (end - start) * 0.8;
+      const previous = routes[index - 1];
+      if (previous)
+        routing.actions.push(
+          { do: 'tone', link: previous.id, tone: 'hidden', at: [start, start] },
+          { do: 'tone', actor: previous.from, tone: 'hidden', at: [start, start] },
+        );
+      routing.actions.push(
+        { do: 'tone', link: route.id, tone: 'mechanism', at: [start, start] },
+        { do: 'tone', actor: route.from, tone: 'mechanism', at: [start, start] },
+        { do: 'label', token: 'key', text: `key ${key}`, at: [start, start] },
+        { do: 'move', token: 'key', link: route.id, at: [start, arrival] },
+        { do: 'hide', token: 'key', at: [arrival, arrival] },
+        { do: 'rows', actor: 'mapping', value: before.slice(0, index + 1), at: [arrival, arrival] },
+      );
+    });
     const migration = required(beats[3]);
     migration.dur = Math.min(8000, 2200 + moved.length * 650);
-    migration.actions = [];
+    migration.actions = moved.length ? [{ do: 'tone', link: 'migrate', tone: 'mechanism' }] : [];
     const current = [...before];
     movedIndices.forEach((row, index) => {
       const key = required(keys[row]);
@@ -141,7 +188,10 @@ export const extraGenerators: Record<string, Generator> = {
     if (!moved.length) migration.actions.push({ do: 'rows', actor: 'mapping', value: after });
     return {
       actors,
-      links: [{ id: 'migrate', from: 'node-c', to: 'node-d', bend: -38, tone: 'hidden' }],
+      links: [
+        ...routes,
+        { id: 'migrate', from: 'node-c', to: 'node-d', bend: -38, tone: 'hidden' },
+      ],
       tokens: [{ id: 'key', label: 'key' }],
       beats,
     };

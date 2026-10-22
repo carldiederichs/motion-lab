@@ -61,7 +61,11 @@ Build locally, run the verifier, then inspect the rendered states. A schema pass
 | Which nodes are reachable? | graph-bfs | Frontier order, visits, cycles and distance |
 | How does a list reverse without losing its tail? | reverse-linked-list | Saved next pointer and reversed prefix |
 | Why does dynamic programming avoid repeated work? | coin-change | Smaller solved amounts and unreachable states |
+| How can a range total avoid rescanning? | prefix-range | Leading zero, two boundaries and subtraction |
+| How many tasks overlap at once? | interval-sweep | Half-open intervals and end-before-start ordering |
+| Why is a prefix not always a complete word? | trie-prefix | Shared path, missing child and terminal marker |
+| Are all required feature flags present? | bitmask-flags | Per-bit intersection and the whole required mask |
 
-For an interval sweep, compose a `cells` timeline, an event `store`, and a counter `box`. For a new API or storage protocol, write fresh participants and message traces. Keep these authored traces explicitly illustrative. If the user needs arbitrary editable inputs, add and test a bounded deterministic generator instead of presenting a fixed trace as a simulator.
+The interval sweep template composes a `cells` timeline, interval boxes and active/peak counters. For a new API or storage protocol, write fresh participants and message traces. Keep these authored traces explicitly illustrative. If the user needs arbitrary editable inputs, add and test a bounded deterministic generator instead of presenting a fixed trace as a simulator.
 
 Inputs are deliberately small enough to inspect. The public numeric controls accept finite values between -999 and 999, with at most six displayed characters. Each lesson sets its own item limit. Coin values must be positive integers; grid rows use 0 and 1. Invalid edits preserve the last valid scene.

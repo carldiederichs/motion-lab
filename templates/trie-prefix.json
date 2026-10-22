@@ -1,0 +1,685 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "trie-prefix",
+  "title": "Why is a matching prefix not always a word?",
+  "subtitle": "A concrete trace you can adapt to your own engineering question.",
+  "component": "Algorithms",
+  "date": "2026-10-22",
+  "aliases": [
+    "Prefix tree",
+    "Why is a matching prefix not always a word?"
+  ],
+  "family": "Prefix tree",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "Complete word",
+      "scene": {
+        "actors": [
+          {
+            "id": "root",
+            "kind": "circle",
+            "x": 420,
+            "y": 80,
+            "r": 34,
+            "label": "root"
+          },
+          {
+            "id": "c",
+            "kind": "circle",
+            "x": 420,
+            "y": 190,
+            "r": 34,
+            "label": "c"
+          },
+          {
+            "id": "a",
+            "kind": "circle",
+            "x": 420,
+            "y": 300,
+            "r": 34,
+            "label": "a"
+          },
+          {
+            "id": "t",
+            "kind": "circle",
+            "x": 290,
+            "y": 440,
+            "r": 34,
+            "label": "t"
+          },
+          {
+            "id": "r",
+            "kind": "circle",
+            "x": 550,
+            "y": 440,
+            "r": 34,
+            "label": "r"
+          },
+          {
+            "id": "words",
+            "kind": "text",
+            "x": 170,
+            "y": 75,
+            "text": "Words: cat, car"
+          },
+          {
+            "id": "terminalT",
+            "kind": "text",
+            "x": 290,
+            "y": 515,
+            "text": "word ends"
+          },
+          {
+            "id": "terminalR",
+            "kind": "text",
+            "x": 550,
+            "y": 515,
+            "text": "word ends"
+          },
+          {
+            "id": "query",
+            "kind": "box",
+            "x": 780,
+            "y": 190,
+            "w": 220,
+            "h": 76,
+            "label": "Query",
+            "value": "car",
+            "valueSmall": true
+          },
+          {
+            "id": "found",
+            "kind": "box",
+            "x": 780,
+            "y": 320,
+            "w": 220,
+            "h": 76,
+            "label": "Whole word found?",
+            "value": "?",
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "root_c",
+            "to": "c",
+            "from": "root"
+          },
+          {
+            "id": "c_a",
+            "to": "a",
+            "from": "c"
+          },
+          {
+            "id": "a_t",
+            "to": "t",
+            "from": "a"
+          },
+          {
+            "id": "a_r",
+            "to": "r",
+            "from": "a"
+          }
+        ],
+        "beats": [
+          {
+            "title": "Share the common prefix",
+            "text": "The words cat and car share c then a. A complete word also needs a terminal marker; reaching a prefix alone is not enough.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "root",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              1
+            ]
+          },
+          {
+            "title": "Follow c",
+            "text": "Consume c; the matched prefix is now c.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "c",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "link": "root_c",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Follow a",
+            "text": "Consume a; the matched prefix is now ca.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "a",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "link": "c_a",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Follow r",
+            "text": "Consume r; the matched prefix is now car.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "r",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "link": "a_r",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Check the end of the word",
+            "text": "car ends at a terminal node, so the whole word exists.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "found",
+                "value": "true"
+              },
+              {
+                "do": "tone",
+                "actor": "found",
+                "tone": "success"
+              }
+            ],
+            "lines": [
+              6
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Prefix only",
+      "scene": {
+        "actors": [
+          {
+            "id": "root",
+            "kind": "circle",
+            "x": 420,
+            "y": 80,
+            "r": 34,
+            "label": "root"
+          },
+          {
+            "id": "c",
+            "kind": "circle",
+            "x": 420,
+            "y": 190,
+            "r": 34,
+            "label": "c"
+          },
+          {
+            "id": "a",
+            "kind": "circle",
+            "x": 420,
+            "y": 300,
+            "r": 34,
+            "label": "a"
+          },
+          {
+            "id": "t",
+            "kind": "circle",
+            "x": 290,
+            "y": 440,
+            "r": 34,
+            "label": "t"
+          },
+          {
+            "id": "r",
+            "kind": "circle",
+            "x": 550,
+            "y": 440,
+            "r": 34,
+            "label": "r"
+          },
+          {
+            "id": "words",
+            "kind": "text",
+            "x": 170,
+            "y": 75,
+            "text": "Words: cat, car"
+          },
+          {
+            "id": "terminalT",
+            "kind": "text",
+            "x": 290,
+            "y": 515,
+            "text": "word ends"
+          },
+          {
+            "id": "terminalR",
+            "kind": "text",
+            "x": 550,
+            "y": 515,
+            "text": "word ends"
+          },
+          {
+            "id": "query",
+            "kind": "box",
+            "x": 780,
+            "y": 190,
+            "w": 220,
+            "h": 76,
+            "label": "Query",
+            "value": "ca",
+            "valueSmall": true
+          },
+          {
+            "id": "found",
+            "kind": "box",
+            "x": 780,
+            "y": 320,
+            "w": 220,
+            "h": 76,
+            "label": "Whole word found?",
+            "value": "?",
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "root_c",
+            "to": "c",
+            "from": "root"
+          },
+          {
+            "id": "c_a",
+            "to": "a",
+            "from": "c"
+          },
+          {
+            "id": "a_t",
+            "to": "t",
+            "from": "a"
+          },
+          {
+            "id": "a_r",
+            "to": "r",
+            "from": "a"
+          }
+        ],
+        "beats": [
+          {
+            "title": "Share the common prefix",
+            "text": "The words cat and car share c then a. A complete word also needs a terminal marker; reaching a prefix alone is not enough.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "root",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              1
+            ]
+          },
+          {
+            "title": "Follow c",
+            "text": "Consume c; the matched prefix is now c.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "c",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "link": "root_c",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Follow a",
+            "text": "Consume a; the matched prefix is now ca.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "a",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "link": "c_a",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Check the end of the word",
+            "text": "ca is not a stored whole word. A matching prefix does not imply a matching word.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "found",
+                "value": "false"
+              },
+              {
+                "do": "tone",
+                "actor": "found",
+                "tone": "failure"
+              }
+            ],
+            "lines": [
+              6
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Missing suffix",
+      "scene": {
+        "actors": [
+          {
+            "id": "root",
+            "kind": "circle",
+            "x": 420,
+            "y": 80,
+            "r": 34,
+            "label": "root"
+          },
+          {
+            "id": "c",
+            "kind": "circle",
+            "x": 420,
+            "y": 190,
+            "r": 34,
+            "label": "c"
+          },
+          {
+            "id": "a",
+            "kind": "circle",
+            "x": 420,
+            "y": 300,
+            "r": 34,
+            "label": "a"
+          },
+          {
+            "id": "t",
+            "kind": "circle",
+            "x": 290,
+            "y": 440,
+            "r": 34,
+            "label": "t"
+          },
+          {
+            "id": "r",
+            "kind": "circle",
+            "x": 550,
+            "y": 440,
+            "r": 34,
+            "label": "r"
+          },
+          {
+            "id": "words",
+            "kind": "text",
+            "x": 170,
+            "y": 75,
+            "text": "Words: cat, car"
+          },
+          {
+            "id": "terminalT",
+            "kind": "text",
+            "x": 290,
+            "y": 515,
+            "text": "word ends"
+          },
+          {
+            "id": "terminalR",
+            "kind": "text",
+            "x": 550,
+            "y": 515,
+            "text": "word ends"
+          },
+          {
+            "id": "query",
+            "kind": "box",
+            "x": 780,
+            "y": 190,
+            "w": 220,
+            "h": 76,
+            "label": "Query",
+            "value": "catz",
+            "valueSmall": true
+          },
+          {
+            "id": "found",
+            "kind": "box",
+            "x": 780,
+            "y": 320,
+            "w": 220,
+            "h": 76,
+            "label": "Whole word found?",
+            "value": "?",
+            "valueSmall": true
+          }
+        ],
+        "links": [
+          {
+            "id": "root_c",
+            "to": "c",
+            "from": "root"
+          },
+          {
+            "id": "c_a",
+            "to": "a",
+            "from": "c"
+          },
+          {
+            "id": "a_t",
+            "to": "t",
+            "from": "a"
+          },
+          {
+            "id": "a_r",
+            "to": "r",
+            "from": "a"
+          }
+        ],
+        "beats": [
+          {
+            "title": "Share the common prefix",
+            "text": "The words cat and car share c then a. A complete word also needs a terminal marker; reaching a prefix alone is not enough.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "root",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              1
+            ]
+          },
+          {
+            "title": "Follow c",
+            "text": "Consume c; the matched prefix is now c.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "c",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "link": "root_c",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Follow a",
+            "text": "Consume a; the matched prefix is now ca.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "a",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "link": "c_a",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Follow t",
+            "text": "Consume t; the matched prefix is now cat.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "t",
+                "tone": "mechanism"
+              },
+              {
+                "do": "tone",
+                "link": "a_t",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "No edge for z",
+            "text": "There is no z child after cat. Stop instead of accepting the shorter word.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "t",
+                "tone": "failure"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Check the end of the word",
+            "text": "catz is not a stored whole word. A matching prefix does not imply a matching word.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "found",
+                "value": "false"
+              },
+              {
+                "do": "tone",
+                "actor": "found",
+                "tone": "failure"
+              }
+            ],
+            "lines": [
+              6
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Prefix only",
+      "why": "The path exists, but it has no terminal marker.",
+      "variant": 1
+    },
+    {
+      "label": "Missing suffix",
+      "why": "A complete shorter word cannot satisfy a longer query.",
+      "variant": 2
+    }
+  ],
+  "code": {
+    "language": "ts",
+    "lines": [
+      "let node = root;",
+      "for (const char of word) {",
+      "  node = node.children.get(char);",
+      "  if (!node) return false;",
+      "}",
+      "return node.terminal === true;"
+    ]
+  },
+  "complexity": {
+    "time": "O(m)",
+    "space": "O(1) per lookup",
+    "example": "Look up m characters in an existing trie.",
+    "derivation": [
+      "Each character follows one child map lookup.",
+      "The existing trie storage is not allocated by the query."
+    ]
+  }
+}

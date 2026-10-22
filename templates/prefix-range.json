@@ -1,0 +1,767 @@
+{
+  "kind": "motion",
+  "version": 3,
+  "slug": "prefix-range",
+  "title": "How can range totals avoid rescanning values?",
+  "subtitle": "A concrete trace you can adapt to your own engineering question.",
+  "component": "Algorithms",
+  "date": "2026-10-22",
+  "aliases": [
+    "Prefix totals",
+    "How can range totals avoid rescanning values?"
+  ],
+  "family": "Prefix totals",
+  "stage": {
+    "width": 960,
+    "height": 560
+  },
+  "camera": false,
+  "defaultPanel": "none",
+  "variants": [
+    {
+      "label": "Middle range",
+      "scene": {
+        "actors": [
+          {
+            "id": "inputLabel",
+            "kind": "text",
+            "x": 330,
+            "y": 90,
+            "text": "Input values"
+          },
+          {
+            "id": "input",
+            "kind": "cells",
+            "x": 180,
+            "y": 150,
+            "values": [
+              2,
+              1,
+              3,
+              4
+            ],
+            "cell": 90
+          },
+          {
+            "id": "prefixLabel",
+            "kind": "text",
+            "x": 315,
+            "y": 240,
+            "text": "Prefix totals: p[0] = 0"
+          },
+          {
+            "id": "prefix",
+            "kind": "cells",
+            "x": 135,
+            "y": 300,
+            "values": [
+              0,
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "cell": 90
+          },
+          {
+            "id": "answer",
+            "kind": "box",
+            "x": 740,
+            "y": 300,
+            "w": 220,
+            "h": 76,
+            "label": "Sum [1, 3)",
+            "value": "?",
+            "valueSmall": true
+          },
+          {
+            "id": "rule",
+            "kind": "text",
+            "x": 420,
+            "y": 450,
+            "text": "p[right] - p[left] removes the earlier values"
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Start before the first item",
+            "text": "Prefix index i stores the sum of the first i values. The leading zero makes a range starting at index zero work without a special case.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "prefix",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              1,
+              2
+            ]
+          },
+          {
+            "title": "Build prefix 1",
+            "text": "Add 2 to the earlier total 0. Prefix 1 is now 2.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 1,
+                "value": 2
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Build prefix 2",
+            "text": "Add 1 to the earlier total 2. Prefix 2 is now 3.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 2,
+                "value": 3
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Build prefix 3",
+            "text": "Add 3 to the earlier total 3. Prefix 3 is now 6.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 3,
+                "value": 6
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Build prefix 4",
+            "text": "Add 4 to the earlier total 6. Prefix 4 is now 10.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 4,
+                "value": 10
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  3,
+                  3
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Subtract the part before the range",
+            "text": "The half-open range [1, 3) includes indices 1 through 2.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cells",
+                "actor": "prefix",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "warning"
+              },
+              {
+                "do": "cells",
+                "actor": "prefix",
+                "range": [
+                  3,
+                  3
+                ],
+                "tone": "success"
+              }
+            ],
+            "lines": [
+              6
+            ]
+          },
+          {
+            "title": "Read the range total",
+            "text": "6 - 2 = 4. Negative values are safe because this uses addition and subtraction, not a monotonicity assumption.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "answer",
+                "value": 4
+              },
+              {
+                "do": "tone",
+                "actor": "answer",
+                "tone": "success"
+              }
+            ],
+            "lines": [
+              6
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Empty range",
+      "scene": {
+        "actors": [
+          {
+            "id": "inputLabel",
+            "kind": "text",
+            "x": 330,
+            "y": 90,
+            "text": "Input values"
+          },
+          {
+            "id": "input",
+            "kind": "cells",
+            "x": 180,
+            "y": 150,
+            "values": [
+              2,
+              1,
+              3,
+              4
+            ],
+            "cell": 90
+          },
+          {
+            "id": "prefixLabel",
+            "kind": "text",
+            "x": 315,
+            "y": 240,
+            "text": "Prefix totals: p[0] = 0"
+          },
+          {
+            "id": "prefix",
+            "kind": "cells",
+            "x": 135,
+            "y": 300,
+            "values": [
+              0,
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "cell": 90
+          },
+          {
+            "id": "answer",
+            "kind": "box",
+            "x": 740,
+            "y": 300,
+            "w": 220,
+            "h": 76,
+            "label": "Sum [2, 2)",
+            "value": "?",
+            "valueSmall": true
+          },
+          {
+            "id": "rule",
+            "kind": "text",
+            "x": 420,
+            "y": 450,
+            "text": "p[right] - p[left] removes the earlier values"
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Start before the first item",
+            "text": "Prefix index i stores the sum of the first i values. The leading zero makes a range starting at index zero work without a special case.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "prefix",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              1,
+              2
+            ]
+          },
+          {
+            "title": "Build prefix 1",
+            "text": "Add 2 to the earlier total 0. Prefix 1 is now 2.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 1,
+                "value": 2
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Build prefix 2",
+            "text": "Add 1 to the earlier total 2. Prefix 2 is now 3.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 2,
+                "value": 3
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Build prefix 3",
+            "text": "Add 3 to the earlier total 3. Prefix 3 is now 6.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 3,
+                "value": 6
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Build prefix 4",
+            "text": "Add 4 to the earlier total 6. Prefix 4 is now 10.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 4,
+                "value": 10
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  3,
+                  3
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Subtract the part before the range",
+            "text": "The start and end coincide, so this range contains no items.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cells",
+                "actor": "prefix",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "warning"
+              },
+              {
+                "do": "cells",
+                "actor": "prefix",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "success"
+              }
+            ],
+            "lines": [
+              6
+            ]
+          },
+          {
+            "title": "Read the range total",
+            "text": "3 - 3 = 0. Negative values are safe because this uses addition and subtraction, not a monotonicity assumption.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "answer",
+                "value": 0
+              },
+              {
+                "do": "tone",
+                "actor": "answer",
+                "tone": "success"
+              }
+            ],
+            "lines": [
+              6
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Negative values",
+      "scene": {
+        "actors": [
+          {
+            "id": "inputLabel",
+            "kind": "text",
+            "x": 330,
+            "y": 90,
+            "text": "Input values"
+          },
+          {
+            "id": "input",
+            "kind": "cells",
+            "x": 180,
+            "y": 150,
+            "values": [
+              -2,
+              5,
+              -1,
+              4
+            ],
+            "cell": 90
+          },
+          {
+            "id": "prefixLabel",
+            "kind": "text",
+            "x": 315,
+            "y": 240,
+            "text": "Prefix totals: p[0] = 0"
+          },
+          {
+            "id": "prefix",
+            "kind": "cells",
+            "x": 135,
+            "y": 300,
+            "values": [
+              0,
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "cell": 90
+          },
+          {
+            "id": "answer",
+            "kind": "box",
+            "x": 740,
+            "y": 300,
+            "w": 220,
+            "h": 76,
+            "label": "Sum [0, 3)",
+            "value": "?",
+            "valueSmall": true
+          },
+          {
+            "id": "rule",
+            "kind": "text",
+            "x": 420,
+            "y": 450,
+            "text": "p[right] - p[left] removes the earlier values"
+          }
+        ],
+        "links": [],
+        "beats": [
+          {
+            "title": "Start before the first item",
+            "text": "Prefix index i stores the sum of the first i values. The leading zero makes a range starting at index zero work without a special case.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "tone",
+                "actor": "prefix",
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              1,
+              2
+            ]
+          },
+          {
+            "title": "Build prefix 1",
+            "text": "Add -2 to the earlier total 0. Prefix 1 is now -2.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 1,
+                "value": -2
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Build prefix 2",
+            "text": "Add 5 to the earlier total -2. Prefix 2 is now 3.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 2,
+                "value": 3
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  1,
+                  1
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Build prefix 3",
+            "text": "Add -1 to the earlier total 3. Prefix 3 is now 2.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 3,
+                "value": 2
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  2,
+                  2
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Build prefix 4",
+            "text": "Add 4 to the earlier total 2. Prefix 4 is now 6.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cellValue",
+                "actor": "prefix",
+                "index": 4,
+                "value": 6
+              },
+              {
+                "do": "cells",
+                "actor": "input",
+                "range": [
+                  3,
+                  3
+                ],
+                "tone": "mechanism"
+              }
+            ],
+            "lines": [
+              3,
+              4
+            ]
+          },
+          {
+            "title": "Subtract the part before the range",
+            "text": "The half-open range [0, 3) includes indices 0 through 2.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "cells",
+                "actor": "prefix",
+                "range": [
+                  0,
+                  0
+                ],
+                "tone": "warning"
+              },
+              {
+                "do": "cells",
+                "actor": "prefix",
+                "range": [
+                  3,
+                  3
+                ],
+                "tone": "success"
+              }
+            ],
+            "lines": [
+              6
+            ]
+          },
+          {
+            "title": "Read the range total",
+            "text": "2 - 0 = 2. Negative values are safe because this uses addition and subtraction, not a monotonicity assumption.",
+            "dur": 1600,
+            "actions": [
+              {
+                "do": "set",
+                "actor": "answer",
+                "value": 2
+              },
+              {
+                "do": "tone",
+                "actor": "answer",
+                "tone": "success"
+              }
+            ],
+            "lines": [
+              6
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "edgeCases": [
+    {
+      "label": "Empty range",
+      "why": "The same prefix is subtracted from itself.",
+      "variant": 1
+    },
+    {
+      "label": "Negative values",
+      "why": "Prefix sums need not increase.",
+      "variant": 2
+    }
+  ],
+  "code": {
+    "language": "ts",
+    "lines": [
+      "function prefixes(values: number[]) {",
+      "  const p = [0];",
+      "  for (const value of values) {",
+      "    p.push(p[p.length - 1] + value);",
+      "  }",
+      "  // Sum [left, right): p[right] - p[left]",
+      "  return p;",
+      "}"
+    ]
+  },
+  "complexity": {
+    "time": "O(n) build; O(1) query",
+    "space": "O(n)",
+    "example": "Store n + 1 totals, then subtract two of them.",
+    "derivation": [
+      "One addition per input value builds the table.",
+      "Each range query reads two totals and subtracts once."
+    ]
+  }
+}

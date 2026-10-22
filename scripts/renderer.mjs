@@ -111,7 +111,12 @@ export function validateScene(scene, label = "Scene") {
   const ids = unique(scene.actors, "actor");
   const links = unique(scene.links || [], "link");
   const tokens = unique(scene.tokens || [], "token");
+  const pointers = new Map();
   for (const a of scene.actors) {
+    const named = unique(a.pointers || [], `${a.id} pointer`);
+    pointers.set(a.id, named);
+    for (const pointer of a.pointers || [])
+      need(typeof pointer.label === "string" && Number.isInteger(pointer.index), `${a.id}: pointer needs label and integer index`);
     need(
       kinds.has(a.kind) && finite(a.x) && finite(a.y),
       `${label}: invalid actor ${a.id}`,
@@ -187,6 +192,8 @@ export function validateScene(scene, label = "Scene") {
         ].includes(a.do)
       )
         need(ids.has(a.actor), `${label}: action needs an actor`);
+      if (a.do === "pointer")
+        need(pointers.get(a.actor)?.has(a.pointer) && Number.isInteger(a.index), `${label}: missing pointer or invalid index`);
       if ("tone" in a) need(tones.has(a.tone), `${label}: invalid tone`);
       if (a.at)
         need(

@@ -37,3 +37,61 @@ test("subsets fixture enumerates every subset exactly once", async () => {
     assert.equal(new Set(records).size, records.length);
   }
 });
+
+const fixture = async (name) => JSON.parse(await readFile(new URL(name + ".json", fixtures)));
+const actor = (scene, id) => scene.actors.find((a) => a.id === id);
+const finalValue = (scene, id) => scene.beats.flatMap((b) => b.actions)
+  .filter((a) => a.do === "set" && a.actor === id).at(-1)?.value;
+
+test("prefix queries agree with direct range addition, including empty and negative ranges", async () => {
+  const s = await fixture("prefix-range");
+  for (const [i, [left, right]] of [[1, 3], [2, 2], [0, 3]].entries()) {
+    const scene = s.variants[i].scene;
+    const values = actor(scene, "input").values;
+    assert.equal(finalValue(scene, "answer"), values.slice(left, right).reduce((a, b) => a + b, 0));
+    for (const a of scene.beats.flatMap((b) => b.actions).filter((a) => a.do === "cellValue"))
+      assert.equal(a.value, values.slice(0, a.index).reduce((x, y) => x + y, 0));
+  }
+});
+
+test("interval sweep agrees with direct occupancy and does not double-count touching endpoints", async () => {
+  const s = await fixture("interval-sweep");
+  for (const [i, intervals] of [[[1, 4], [2, 5], [3, 6]], [[1, 3], [3, 5]], []].entries()) {
+    const scene = s.variants[i].scene;
+    const expected = Math.max(0, ...Array.from({ length: 29 }, (_, j) => j / 4)
+      .map((time) => intervals.filter(([start, end]) => start <= time && time < end).length));
+    const counts = scene.beats.flatMap((b) => b.actions).filter((a) => a.actor === "active" && a.do === "set");
+    assert(counts.every((a) => a.value >= 0));
+    assert.equal(finalValue(scene, "active") ?? actor(scene, "active").value, 0);
+    assert.equal(finalValue(scene, "peak") ?? actor(scene, "peak").value, expected);
+  }
+});
+
+test("trie lookup distinguishes stored words from prefixes and missing suffixes", async () => {
+  const s = await fixture("trie-prefix");
+  for (const { scene } of s.variants)
+    assert.equal(finalValue(scene, "found"), String(new Set(["cat", "car"]).has(actor(scene, "query").value)));
+});
+
+test("flag checks require every requested bit, including the empty requirement", async () => {
+  const s = await fixture("bitmask-flags");
+  for (const { scene } of s.variants) {
+    const enabled = actor(scene, "enabled").values;
+    const required = actor(scene, "required").values;
+    assert.equal(finalValue(scene, "result"), String(required.every((bit, i) => !bit || enabled[i] === 1)));
+    for (const a of scene.beats.flatMap((b) => b.actions).filter((a) => a.do === "cellValue"))
+      assert.equal(a.value, enabled[a.index] && required[a.index]);
+  }
+});
+
+for (const malformed of ["missing id", "duplicate id", "unknown pointer"]) {
+  test(`reject ${malformed} in a timeline`, async () => {
+    const s = await fixture("interval-sweep");
+    const scene = s.variants[0].scene;
+    const timeline = scene.actors.find((a) => a.pointers?.length);
+    if (malformed === "missing id") delete timeline.pointers[0].id;
+    if (malformed === "duplicate id") timeline.pointers.push({ ...timeline.pointers[0] });
+    if (malformed === "unknown pointer") scene.beats[0].actions.push({ do: "pointer", actor: timeline.id, pointer: "absent", index: 0 });
+    assert.throws(() => validate(s), /pointer/);
+  });
+}

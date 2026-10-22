@@ -11,13 +11,19 @@ for (const file of await readdir(fixtureDir)) {
     html = path.join(out, spec.slug + ".html");
   await writeFile(html, await render(spec));
   for (const theme of ["light", "dark"])
-    test(`authored ${spec.slug} in ${theme}`, async ({ page }) => {
-      await page.setViewportSize({ width: 1440, height: 1000 });
+    for (const width of [1024, 1440, 1920])
+    test(`authored ${spec.slug} in ${theme} at ${width}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 1000 });
       await page.goto(pathToFileURL(html).href + `?motion-qa=1&theme=${theme}`);
       await page.waitForSelector("#motion-qa-report", { state: "attached" });
       const report = JSON.parse(
         await page.locator("#motion-qa-report").textContent(),
       );
       expect(report.issues).toEqual([]);
+      if (width === 1440) {
+        await page.goto(pathToFileURL(html).href + `?theme=${theme}`);
+        await page.locator("#mp-chapters button").last().click();
+        await page.screenshot({ path: path.join(out, `${spec.slug}-${theme}.png`), fullPage: true });
+      }
     });
 }

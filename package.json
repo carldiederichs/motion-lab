@@ -18,7 +18,9 @@
     "lint": "eslint . --max-warnings 0",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "check": "npm run typecheck && npm run lint && npm run format:check"
+    "check": "npm run typecheck && npm run lint && npm run format:check",
+    "test:languages": "tsx scripts/test-code-languages.ts",
+    "posttest": "tsx scripts/test-ci.ts"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1",

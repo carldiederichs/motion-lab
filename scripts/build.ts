@@ -28,10 +28,11 @@ for (const item of catalogue) {
   await writeFile(path.join(out, 'lessons', `${spec.slug}.html`), await render(spec));
 }
 for (const file of await readdir(path.join(ROOT, 'site'))) {
-  if (!['index.html', 'app.ts', 'style.css', 'icon.svg', '404.html'].includes(file))
+  if (!['index.html', 'app.ts', 'hero.ts', 'style.css', 'icon.svg', '404.html'].includes(file))
     throw Error(`Unexpected site file: ${file}`);
   const info = await lstat(path.join(ROOT, 'site', file));
   if (!info.isFile() || info.isSymbolicLink()) throw Error('Site assets must be regular files');
+  if (file === 'hero.ts') continue;
   if (file === 'app.ts') {
     await build({
       entryPoints: [path.join(ROOT, 'site/app.ts')],

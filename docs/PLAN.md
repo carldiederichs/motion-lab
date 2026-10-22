@@ -1,13 +1,13 @@
 # Delivery checklist
 
-Target: a public desktop showcase and a downloadable local toolkit. Live on [Vercel](https://motion-lab-alpha-three.vercel.app/).
+Target: a public responsive showcase and a downloadable local toolkit. Live on [Vercel](https://motion-lab-alpha-three.vercel.app/).
 
 - [x] Inspect the existing renderer and catalogue to identify reusable visual families.
 - [x] Establish a new repository with no inherited Git history or personal catalogue data.
 - [x] Extract and audit the reusable renderer and selected general-purpose simulations.
 - [x] Add a static showcase, searchable category filters and a theme switch.
 - [x] Add a dismissible guided tour and labelled scripted prompt-to-visualization demo.
-- [x] Add explicit toolkit download and local setup instructions, with a desktop-only notice.
+- [x] Add explicit toolkit download and local setup instructions, with desktop authoring instructions.
 - [x] Package a model-independent skill, templates, validator and local builder.
 - [x] Seed algorithm, sequence, architecture, ring, grid, tree, storage and concurrency examples.
 - [x] Verify diverse new prompts against templates; repair coverage gaps.
@@ -72,3 +72,17 @@ No application form is part of this workflow.
 - [x] Verify intermediate frames, reverse scrubbing, desktop layouts and fresh authoring.
 
 See [the transport audit](TRANSPORT-AUDIT.md) for per-family behavior and verification limits.
+
+## Responsive preview and language follow-up
+
+- [x] Animate the hero and type the prompt with a blinking cursor; respect manual pause and reduced motion.
+- [x] Fit desktop sections to the viewport and keep long content reachable.
+- [x] Adapt the landing page, gallery, walkthroughs, setup and guided tour to phones.
+- [x] Keep editable inputs, reset, steps, timeline progress, prediction and code access in the compact landing preview.
+- [x] Reject extreme or malformed input without distorting the diagram; cover empty inputs, repeated positions, boundaries and edits during playback.
+- [x] Hide the unjoined server and keep ring lines clear of slot labels.
+- [x] Offer five code languages with correct scenario code and chapter highlights.
+- [x] Preserve strict TypeScript and verify language examples by compiling and running them.
+- [x] Run the full browser suite and test a clean downloaded toolkit.
+
+Release details and verification boundaries are in [the release review](RELEASE-REVIEW.md).

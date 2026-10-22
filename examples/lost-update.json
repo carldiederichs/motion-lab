@@ -49,6 +49,56 @@
       "  await writeStock(stock - 1);",
       "  await recordSale();",
       "}"
+    ],
+    "alternatives": [
+      {
+        "language": "js",
+        "lines": [
+          "const stock = await readStock();",
+          "if (stock > 0) {",
+          "  await writeStock(stock - 1);",
+          "  await recordSale();",
+          "}"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5]]
+      },
+      {
+        "language": "python",
+        "lines": [
+          "# Inside an async function; each call is a request.",
+          "stock = await read_stock()",
+          "if stock > 0:",
+          "    await write_stock(stock - 1)",
+          "    await record_sale()"
+        ],
+        "sourceLines": [[1], [1], [2], [3], [4]]
+      },
+      {
+        "language": "java",
+        "lines": [
+          "// Each call is a separate blocking database request.",
+          "// Multiple threads may interleave these calls.",
+          "int stock = readStock();",
+          "if (stock > 0) {",
+          "  writeStock(stock - 1);",
+          "  recordSale();",
+          "}"
+        ],
+        "sourceLines": [[1], [1], [1], [2], [3], [4], [5]]
+      },
+      {
+        "language": "cpp",
+        "lines": [
+          "// Each call is a separate blocking database request.",
+          "// Multiple threads may interleave these calls.",
+          "int stock = readStock();",
+          "if (stock > 0) {",
+          "  writeStock(stock - 1);",
+          "  recordSale();",
+          "}"
+        ],
+        "sourceLines": [[1], [1], [1], [2], [3], [4], [5]]
+      }
     ]
   },
   "edgeCases": [

@@ -10,23 +10,29 @@ The application is live at [motion-lab-alpha-three.vercel.app](https://motion-la
 - An explicitly triggered toolkit download and a portable skill for the visitor's own coding assistant.
 - Static Vercel configuration and a Railway-compatible, non-root Docker server.
 
+## Responsive and language update
+
+The landing page now has an animated hashing example, a typewritten prompt, a compact editable preview and a blue node monogram. Desktop sections fill the viewport; phone layouts use natural scrolling. The preview includes input/reset, four steps, progress, prediction and code access. It rejects extreme or malformed input without distorting the diagram, and handles empty samples, repeated hashes and wraparound.
+
+Portable examples offer TypeScript, JavaScript, Python, Java and C++ with matching chapter highlights. Runtime-specific examples retain their original language. Thirty Python, Java and C++ algorithm implementations are compiled and executed against boundary and counterexample cases. The strict compiler and lint configuration is unchanged.
+
 ## Verified for this release
 
-| Check                  | Result                                                                                                      |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Node tests             | 92 passed                                                                                                   |
-| Browser tests          | 156 passed, including arrival timing, reverse scrubbing, code contrast, exact clipboard text and navigation |
-| Transfer timing        | Payload labels, receiving state and reverse scrubbing covered by browser and semantic checks                |
-| Desktop layouts        | 1024, 1440 and 1920px; light and dark                                                                       |
-| Visual review          | Inspected rendered screenshots of all 15 public examples; interacted with the landing page and tour         |
-| Toolkit ZIP            | Unpacked, installed locked dependencies, built, created and revised three engineering explanations          |
-| Fresh Git checkout     | Strict checks, build, revised authoring, local serving, production routes and isolation passed              |
-| Privacy audit          | No findings in the current release files and static output                                                  |
-| Docker                 | Built and served all lessons, assets and toolkit; protected routes returned 404                             |
-| Container restrictions | Non-root user, read-only filesystem and all Linux capabilities dropped                                      |
-| Public deployment      | Unauthenticated smoke check passed for all 15 lessons, assets, download and private-route isolation         |
-| Deployed code          | Public runtime and toolkit files compared with the released source                                          |
-| Live Chrome review     | BFS transport and code panel, setup commands, both themes and representative authored cases                 |
+| Check                  | Result                                                                                              |
+| ---------------------- | --------------------------------------------------------------------------------------------------- |
+| Node tests             | 106 passed                                                                                          |
+| Browser tests          | 199 passed, including responsive preview, oversized inputs, prediction, languages and navigation    |
+| Transfer timing        | Payload labels, receiving state and reverse scrubbing covered by browser and semantic checks        |
+| Responsive layouts     | 360, 390, 844, 1024, 1440 and 1920px; light and dark                                                |
+| Visual review          | Inspected rendered screenshots of all 15 public examples; interacted with the landing page and tour |
+| Toolkit ZIP            | Unpacked, installed locked dependencies, built, created and revised three engineering explanations  |
+| Fresh Git checkout     | Strict checks, build, revised authoring, local serving, production routes and isolation passed      |
+| Privacy audit          | No findings in the current release files and static output                                          |
+| Docker                 | Built and served all lessons, assets and toolkit; protected routes returned 404                     |
+| Container restrictions | Non-root user, read-only filesystem and all Linux capabilities dropped                              |
+| Public deployment      | Unauthenticated smoke check passed for all 15 lessons, assets, download and private-route isolation |
+| Deployed code          | Public runtime and toolkit files compared with the released source                                  |
+| Live Chrome review     | BFS transport and code panel, setup commands, both themes and representative authored cases         |
 
 The browser suite checks every example and template in both themes, timeline geometry, scenario changes, controls, inputs, search, tour positioning and explicit downloads. Algorithm tests use independent reference implementations where applicable. See [the testing strategy](TESTING.md) for the checks and their limits.
 

@@ -129,13 +129,13 @@ test('invalid inputs preserve the last valid visualization and recover', async (
   await expect(input).not.toHaveAttribute('aria-invalid', 'true');
   await expect(page.locator('#mp-cap-text')).toContainText('4, 5');
 });
-test('hero changes ownership and returns to the original state', async ({ page }) => {
+test('hero steps through ownership and restarts', async ({ page }) => {
   await page.goto('/');
-  await page.locator('#hero-toggle').click();
-  await expect(page.locator('#hero-result')).toContainText('(48, 64]');
-  await expect(page.locator('#hero-toggle')).toHaveAttribute('aria-pressed', 'true');
-  await page.locator('#hero-toggle').click();
-  await expect(page.locator('#hero-result')).toHaveText('Key 60 belongs to C.');
+  for (let i = 0; i < 3; i++) await page.locator('#hero-toggle').click();
+  await expect(page.locator('#hero-result')).toContainText('D now stores key 60');
+  await expect(page.locator('#hero-play')).toHaveText('Resume');
+  await page.locator('#hero-restart').click();
+  await expect(page.locator('#hero-result')).toContainText('C stores the record');
 });
 test('tour blocks background controls and Escape restores them', async ({ page }) => {
   await page.goto('/');

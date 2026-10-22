@@ -1,8 +1,8 @@
 # Motion Lab
 
-[Explore the live demo](https://motion-lab-alpha-three.vercel.app/) in a desktop browser.
+[Explore the live demo](https://motion-lab-alpha-three.vercel.app/) on desktop or mobile.
 
-Interactive explanations for the engineering question in front of you. Follow a request, step through an algorithm, inspect a state change or compare two designs. Change the inputs and watch the explanation respond.
+Interactive explanations for the engineering question in front of you. Follow a request, step through an algorithm, inspect a state change or compare two designs. Change the inputs and watch the explanation respond. Portable code examples offer TypeScript, JavaScript, Python, Java and C++.
 
 The public site is a static collection of examples. New explanations are created locally by your own AI coding assistant using the included skill. There is no hosted chatbot, model billing, account system or analytics.
 
@@ -15,7 +15,7 @@ npm ci --ignore-scripts
 npm run dev
 ```
 
-Open **http://127.0.0.1:4173**. Desktop browsers are the supported target; use a window at least 1024 pixels wide.
+Open **http://127.0.0.1:4173**. Explore on desktop or mobile. Creating new explanations with your coding assistant requires a desktop environment.
 
 Open your file-capable coding assistant in this folder. Describe your own code, system or engineering question; the examples are starting points, not the limits of the tool.
 

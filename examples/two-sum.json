@@ -53,6 +53,69 @@
           "  }",
           "  return null;",
           "}"
+        ],
+        "alternatives": [
+          {
+            "language": "js",
+            "lines": [
+              "function twoSum(nums, target) {",
+              "  const seen = new Map();",
+              "  for (let i = 0; i < nums.length; i++) {",
+              "    const need = target - nums[i];",
+              "    if (seen.has(need)) return [seen.get(need), i];",
+              "    seen.set(nums[i], i);",
+              "  }",
+              "  return null;",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9]]
+          },
+          {
+            "language": "python",
+            "lines": [
+              "def two_sum(nums, target):",
+              "    seen = {}",
+              "    for i, value in enumerate(nums):",
+              "        need = target - value",
+              "        if need in seen:",
+              "            return [seen[need], i]",
+              "        seen[value] = i",
+              "    return None"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [5], [6], [8]]
+          },
+          {
+            "language": "java",
+            "lines": [
+              "static int[] twoSum(int[] nums, int target) {",
+              "  Map<Integer, Integer> seen = new HashMap<>();",
+              "  for (int i = 0; i < nums.length; i++) {",
+              "    int need = target - nums[i];",
+              "    if (seen.containsKey(need))",
+              "      return new int[] {seen.get(need), i};",
+              "    seen.put(nums[i], i);",
+              "  }",
+              "  return null;",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [5], [6], [7], [8], [9]]
+          },
+          {
+            "language": "cpp",
+            "lines": [
+              "std::vector<int> twoSum(",
+              "    const std::vector<int>& nums, int target) {",
+              "  std::unordered_map<int, int> seen;",
+              "  for (int i = 0; i < int(nums.size()); ++i) {",
+              "    int need = target - nums[i];",
+              "    if (seen.count(need)) return {seen.at(need), i};",
+              "    seen[nums[i]] = i;",
+              "  }",
+              "  return {};",
+              "}"
+            ],
+            "sourceLines": [[1], [1], [2], [3], [4], [5], [6], [7], [8], [9]]
+          }
         ]
       },
       "complexity": {
@@ -80,10 +143,68 @@
           "  }",
           "  return null;",
           "}"
+        ],
+        "alternatives": [
+          {
+            "language": "js",
+            "lines": [
+              "function twoSum(nums, target) {",
+              "  for (let i = 0; i < nums.length; i++) {",
+              "    for (let j = i + 1; j < nums.length; j++) {",
+              "      if (nums[i] + nums[j] === target) return [i, j];",
+              "    }",
+              "  }",
+              "  return null;",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8]]
+          },
+          {
+            "language": "python",
+            "lines": [
+              "def two_sum(nums, target):",
+              "    for i in range(len(nums)):",
+              "        for j in range(i + 1, len(nums)):",
+              "            if nums[i] + nums[j] == target:",
+              "                return [i, j]",
+              "    return None"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [4], [7]]
+          },
+          {
+            "language": "java",
+            "lines": [
+              "static int[] twoSum(int[] nums, int target) {",
+              "  for (int i = 0; i < nums.length; i++) {",
+              "    for (int j = i + 1; j < nums.length; j++) {",
+              "      if (nums[i] + nums[j] == target)",
+              "        return new int[] {i, j};",
+              "    }",
+              "  }",
+              "  return null;",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [4], [5], [6], [7], [8]]
+          },
+          {
+            "language": "cpp",
+            "lines": [
+              "std::vector<int> twoSum(",
+              "    const std::vector<int>& nums, int target) {",
+              "  for (int i = 0; i < int(nums.size()); ++i) {",
+              "    for (int j = i + 1; j < int(nums.size()); ++j) {",
+              "      if (nums[i] + nums[j] == target) return {i, j};",
+              "    }",
+              "  }",
+              "  return {};",
+              "}"
+            ],
+            "sourceLines": [[1], [1], [2], [3], [4], [5], [6], [7], [8]]
+          }
         ]
       },
       "complexity": {
-        "time": "O(n²)",
+        "time": "O(n\u00b2)",
         "space": "O(1)",
         "derivation": [
           "n is the number of input values. Auxiliary space excludes the supplied array.",

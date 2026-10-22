@@ -63,10 +63,77 @@
       "  }",
       "}",
       "return dp[amount] === Infinity ? -1 : dp[amount];"
+    ],
+    "alternatives": [
+      {
+        "language": "js",
+        "lines": [
+          "const dp = Array(amount + 1).fill(Infinity);",
+          "dp[0] = 0;",
+          "for (let a = 1; a <= amount; a++) {",
+          "  for (const c of coins) {",
+          "    if (c <= a) dp[a] = Math.min(dp[a], dp[a-c] + 1);",
+          "  }",
+          "}",
+          "return dp[amount] === Infinity ? -1 : dp[amount];"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8]]
+      },
+      {
+        "language": "python",
+        "lines": [
+          "def coin_change(coins, amount):",
+          "    dp = [float('inf')] * (amount + 1)",
+          "    dp[0] = 0",
+          "    for a in range(1, amount + 1):",
+          "        for c in coins:",
+          "            if c <= a:",
+          "                dp[a] = min(dp[a], dp[a - c] + 1)",
+          "    result = dp[amount]",
+          "    return -1 if result == float('inf') else result"
+        ],
+        "sourceLines": [[1], [1], [2], [3], [4], [5], [5], [8], [8]]
+      },
+      {
+        "language": "java",
+        "lines": [
+          "static int coinChange(int[] coins, int amount) {",
+          "  int[] dp = new int[amount + 1];",
+          "  Arrays.fill(dp, amount + 1);",
+          "  dp[0] = 0;",
+          "  for (int a = 1; a <= amount; a++) {",
+          "    for (int c : coins) {",
+          "      if (c <= a)",
+          "        dp[a] = Math.min(dp[a], dp[a - c] + 1);",
+          "    }",
+          "  }",
+          "  return dp[amount] > amount ? -1 : dp[amount];",
+          "}"
+        ],
+        "sourceLines": [[1], [1], [1], [2], [3], [4], [5], [5], [6], [7], [8], [8]]
+      },
+      {
+        "language": "cpp",
+        "lines": [
+          "int coinChange(",
+          "    const std::vector<int>& coins, int amount) {",
+          "  std::vector<int> dp(amount + 1, amount + 1);",
+          "  dp[0] = 0;",
+          "  for (int a = 1; a <= amount; ++a) {",
+          "    for (int c : coins) {",
+          "      if (c <= a)",
+          "        dp[a] = std::min(dp[a], dp[a - c] + 1);",
+          "    }",
+          "  }",
+          "  return dp[amount] > amount ? -1 : dp[amount];",
+          "}"
+        ],
+        "sourceLines": [[1], [1], [1], [2], [3], [4], [5], [5], [6], [7], [8], [8]]
+      }
     ]
   },
   "complexity": {
-    "time": "O(amount · coins)",
+    "time": "O(amount \u00b7 coins)",
     "space": "O(amount)",
     "derivation": [
       "amount is the target value; coins is the number of positive denominations. Each amount tries every denomination. The table contains amount + 1 entries, including zero."

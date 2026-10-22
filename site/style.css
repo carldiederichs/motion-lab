@@ -305,6 +305,41 @@ h2 {
   letter-spacing: -0.02em;
   margin: 16px 0 6px;
 }
+.prompt-copy {
+  display: grid;
+}
+.prompt-copy > span {
+  grid-area: 1 / 1;
+}
+.prompt-copy[data-ready] .prompt-full {
+  clip-path: inset(50%);
+  user-select: none;
+}
+.prompt-full::after,
+#typed-prompt::after {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -0.12em;
+  visibility: hidden;
+}
+#typed-prompt[data-state='typing']::after {
+  visibility: visible;
+  background: var(--blue);
+  animation: prompt-caret 0.8s step-end infinite;
+}
+@keyframes prompt-caret {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #typed-prompt::after {
+    animation: none;
+  }
+}
 .demo-status {
   font-size: 12px;
   color: var(--muted);
@@ -762,4 +797,322 @@ dialog > p {
   border: 0;
   border-right: 1px solid var(--blue);
   border-bottom: 1px solid var(--blue);
+}
+
+/* Each landing section starts on a screen boundary. Tall sections remain scrollable. */
+@media (min-width: 761px) {
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 0;
+  }
+  .topbar {
+    height: 84px;
+  }
+  main > section {
+    min-height: 100svh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .intro {
+    min-height: calc(100svh - 84px);
+    scroll-margin-top: 84px;
+  }
+  .demo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .own {
+    align-items: center;
+  }
+  footer {
+    scroll-snap-align: end;
+  }
+  html:has(#tour-layer:not([hidden])) {
+    scroll-snap-type: none;
+  }
+}
+.hero-title {
+  font-size: 21px;
+  margin: 10px 0;
+}
+.hero-rule {
+  margin: 0;
+  max-width: 350px;
+}
+.hero-explanation {
+  min-height: 4.8em;
+  max-width: 380px;
+  margin-bottom: 4px;
+}
+.hero-link {
+  font-size: 12px;
+  display: inline-block;
+}
+.hero-ring {
+  height: clamp(190px, 29svh, 290px);
+}
+@media (min-width: 761px) and (max-height: 800px) {
+  .intro {
+    padding-top: 22px;
+    padding-bottom: 22px;
+    gap: 32px;
+  }
+  .intro-aside {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .hero-ring {
+    height: 190px;
+    margin: 0;
+  }
+  h1 {
+    font-size: clamp(32px, 3.5vw, 46px);
+  }
+  .lead {
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+}
+
+.hero-controls {
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+.hero-controls .button {
+  padding: 9px 12px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+#hero-play {
+  min-width: 75px;
+}
+#hero-step {
+  margin-left: auto;
+  white-space: nowrap;
+}
+.hero-explanation {
+  min-height: 4.8em;
+  margin-top: 14px;
+}
+.hero-link {
+  padding-left: 0;
+}
+.hero-newcomer {
+  transition: opacity 0.65s ease;
+}
+@media (min-width: 761px) {
+  .result {
+    height: 100svh;
+    min-height: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .result-head,
+  .result-foot {
+    flex-shrink: 0;
+  }
+  .result iframe {
+    height: auto;
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  html {
+    scroll-snap-type: none;
+    scroll-padding-top: 0;
+  }
+  .wrap {
+    padding-inline: 18px;
+  }
+  .topbar {
+    flex-wrap: wrap;
+    padding-block: 12px;
+    gap: 10px;
+  }
+  .brand {
+    font-size: 16px;
+  }
+  .topbar nav {
+    width: 100%;
+    gap: 10px;
+    justify-content: space-between;
+  }
+  .topbar #tour-start {
+    display: inline-block;
+  }
+  .topbar nav > a {
+    display: inline-block;
+  }
+  .topbar .button {
+    padding: 9px 12px;
+  }
+  .intro {
+    padding-block: 28px;
+    gap: 24px;
+  }
+  h1 {
+    font-size: clamp(30px, 8vw, 40px);
+    margin-bottom: 16px;
+  }
+  .lead {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .actions {
+    gap: 14px;
+  }
+  .actions .button {
+    font-size: 12px;
+    padding: 12px;
+  }
+  .desktop-note {
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+  .intro-aside {
+    display: block;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    padding: 24px 0 0;
+  }
+  .hero-title {
+    font-size: 20px;
+  }
+  .hero-rule,
+  .hero-explanation {
+    max-width: none;
+  }
+  .hero-ring {
+    height: 230px;
+    margin: 0;
+  }
+  .hero-controls .button {
+    min-height: 40px;
+  }
+  .hero-explanation {
+    min-height: 4.8em;
+  }
+  .demo {
+    padding-block: 28px;
+  }
+  .section-line {
+    gap: 10px;
+  }
+  h2 {
+    font-size: 23px;
+  }
+  .prompt-panel {
+    padding: 16px;
+  }
+  .prompt-panel > p {
+    font-size: 18px;
+    margin-block: 16px;
+    min-height: 85px;
+  }
+  .prompt-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .result {
+    height: 100svh;
+    min-height: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .result iframe {
+    min-width: 0;
+    height: auto;
+    flex: 1;
+    min-height: 0;
+  }
+  .result-head {
+    min-width: 0;
+    padding: 12px;
+    flex-wrap: wrap;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .result-head strong {
+    margin-right: 0;
+  }
+  .result-head a {
+    font-size: 12px;
+  }
+  .result-foot {
+    flex-shrink: 0;
+    font-size: 11px;
+    padding: 0 12px 10px;
+  }
+  .library {
+    padding-block: 28px;
+  }
+  .card-art {
+    height: 108px;
+  }
+  .card-copy {
+    padding: 16px;
+  }
+  .card p {
+    margin-bottom: 14px;
+  }
+  .own {
+    padding-block: 28px;
+    gap: 0;
+  }
+  .own h2 {
+    font-size: 25px;
+  }
+  .own p {
+    margin-block: 12px;
+  }
+  dialog {
+    padding: 20px;
+    width: calc(100vw - 24px);
+    max-height: calc(100dvh - 24px);
+  }
+  dialog h2 {
+    font-size: 23px;
+  }
+  .setup-steps {
+    padding-left: 16px;
+  }
+  .command {
+    gap: 8px;
+  }
+  .command code {
+    font-size: 11px;
+  }
+  #tour-card {
+    width: min(340px, calc(100vw - 32px));
+    padding: 16px;
+  }
+}
+@media (min-width: 761px) and (max-height: 600px) {
+  main > section {
+    min-height: auto;
+  }
+  .intro {
+    min-height: calc(100svh - 84px);
+  }
+  .hero-ring {
+    height: 150px;
+  }
+  .intro-aside {
+    padding-inline: 16px;
+  }
+}
+
+@media (max-width: 620px) {
+  .result {
+    height: max(100svh, 820px);
+  }
 }

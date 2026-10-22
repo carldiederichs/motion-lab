@@ -36,7 +36,7 @@ npx tsx scripts/smoke.ts https://motion-lab-alpha-three.vercel.app
 
 This performs read-only requests to the landing page, catalogue, every lesson, assets and toolkit ZIP. It checks that private and unknown routes return 404. It does not fill forms, call a model or send local files.
 
-Open the URL yourself at desktop width. Try the ring button, one tour, category/search filters, a changed lesson input, an edge case, code and complexity panels, and the explicit download. The application is prepared for desktop widths of 1024px and above; phone use is not a supported authoring workflow.
+Open the URL on desktop and at phone width. Try the hero controls, guided tour, filters, changed inputs, a very large invalid number, code languages and the explicit download. Desktop sections fit the viewport; short phones allow natural scrolling to keep diagrams readable. Local authoring requires a desktop coding assistant.
 
 ## Before each release
 

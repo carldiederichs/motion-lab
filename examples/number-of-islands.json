@@ -38,6 +38,77 @@
       "    visitAndPushUnseenNeighbours(stack.pop());",
       "  }",
       "}"
+    ],
+    "alternatives": [
+      {
+        "language": "js",
+        "lines": [
+          "for (const cell of grid) {",
+          "  if (!cell.land || visited.has(cell)) continue;",
+          "  islands++; stack.push(cell); visited.add(cell);",
+          "  while (stack.length) {",
+          "    visitAndPushUnseenNeighbours(stack.pop());",
+          "  }",
+          "}"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6], [7]]
+      },
+      {
+        "language": "python",
+        "lines": [
+          "# Cells expose land and neighbours; identity is stable.",
+          "for cell in grid:",
+          "    if not cell.land or cell in visited:",
+          "        continue",
+          "    islands += 1",
+          "    stack.append(cell)",
+          "    visited.add(cell)",
+          "    while stack:",
+          "        current = stack.pop()",
+          "        for neighbour in current.neighbours:",
+          "            if not neighbour.land or neighbour in visited:",
+          "                continue",
+          "            visited.add(neighbour)",
+          "            stack.append(neighbour)"
+        ],
+        "sourceLines": [[1], [1], [2], [2], [3], [3], [3], [4], [5], [5], [5], [5], [5], [5]]
+      },
+      {
+        "language": "java",
+        "lines": [
+          "// Cell uses identity; neighbours lists adjacent cells.",
+          "for (Cell cell : grid) {",
+          "  if (!cell.land || visited.contains(cell)) continue;",
+          "  islands++; stack.push(cell); visited.add(cell);",
+          "  while (!stack.isEmpty()) {",
+          "    Cell current = stack.pop();",
+          "    for (Cell next : current.neighbours) {",
+          "      if (next.land && visited.add(next))",
+          "        stack.push(next);",
+          "    }",
+          "  }",
+          "}"
+        ],
+        "sourceLines": [[1], [1], [2], [3], [4], [5], [5], [5], [5], [6], [6], [7]]
+      },
+      {
+        "language": "cpp",
+        "lines": [
+          "// Cells have stable addresses and neighbour pointers.",
+          "for (Cell* cell : grid) {",
+          "  if (!cell->land || visited.count(cell)) continue;",
+          "  ++islands; stack.push(cell); visited.insert(cell);",
+          "  while (!stack.empty()) {",
+          "    Cell* current = stack.top(); stack.pop();",
+          "    for (Cell* next : current->neighbours) {",
+          "      if (next->land && visited.insert(next).second)",
+          "        stack.push(next);",
+          "    }",
+          "  }",
+          "}"
+        ],
+        "sourceLines": [[1], [1], [2], [3], [4], [5], [5], [5], [5], [6], [6], [7]]
+      }
     ]
   },
   "complexity": {

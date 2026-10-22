@@ -58,7 +58,7 @@ export const extraGenerators: Record<string, Generator> = {
         r: 28,
         label: n.id.slice(-1).toUpperCase(),
         sub: `slot ${n.slot}`,
-        tone: n === added ? 'muted' : null,
+        tone: n === added ? 'hidden' : null,
       });
     }
     const before = keys.map((k) => `${k} → ${owner(k, nodes).id.slice(-1).toUpperCase()}`);
@@ -68,7 +68,10 @@ export const extraGenerators: Record<string, Generator> = {
           .id.slice(-1)
           .toUpperCase()}`,
     );
-    const moved = keys.filter((k) => owner(k, nodes).id !== owner(k, [...nodes, added]).id);
+    const movedIndices = keys.flatMap((k, i) =>
+      owner(k, nodes).id !== owner(k, [...nodes, added]).id ? [i] : [],
+    );
+    const moved = movedIndices.map((i) => required(keys[i]));
     const beats: Beat[] = [
       {
         title: 'Place servers on a hash ring',
@@ -79,18 +82,24 @@ export const extraGenerators: Record<string, Generator> = {
       },
       {
         title: 'Route each key to its current owner',
-        text: `The keys map to A, B or C. For example, ${keys[0] ?? 0} goes to ${owner(
-          keys[0] ?? 0,
-          nodes,
-        )
-          .id.slice(-1)
-          .toUpperCase()}. D has not joined yet.`,
+        text: keys.length
+          ? `The keys map to A, B or C. For example, ${keys[0] ?? 0} goes to ${owner(
+              keys[0] ?? 0,
+              nodes,
+            )
+              .id.slice(-1)
+              .toUpperCase()}. D has not joined yet.`
+          : 'There are no sample keys to route. Add some positions above to see their owners. D has not joined yet.',
         dur: 2400,
         lines: [2, 3],
         actions: [{ do: 'rows', actor: 'mapping', value: before }],
       },
       {
         title: 'A new server joins at slot 64',
+        predict: {
+          q: 'D is joining at position 64. Which interval will D own, and which existing server gives up those keys?',
+          a: 'D owns keys after B at 48 through position 64, inclusive. Those keys previously belonged to C at 80. All other ownership stays unchanged.',
+        },
         text: 'D takes ownership of the interval after B at 48 through D at 64. Ownership elsewhere stays the same.',
         dur: 2300,
         lines: [4],
@@ -115,31 +124,18 @@ export const extraGenerators: Record<string, Generator> = {
     migration.dur = Math.min(8000, 2200 + moved.length * 650);
     migration.actions = [];
     const current = [...before];
-    moved.forEach((key, index) => {
+    movedIndices.forEach((row, index) => {
+      const key = required(keys[row]);
       const start = index / moved.length;
       const end = (index + 1) / moved.length;
       const arrival = start + (end - start) * 0.82;
-      keys.forEach((k, i) => {
-        if (k === key) current[i] = required(after[i]);
-      });
+      current[row] = required(after[row]);
       migration.actions.push(
         { do: 'label', token: 'key', text: `key ${key}`, at: [start, start] },
         { do: 'move', token: 'key', link: 'migrate', at: [start, arrival] },
         { do: 'hide', token: 'key', at: [arrival, arrival] },
         { do: 'rows', actor: 'mapping', value: [...current], at: [arrival, arrival] },
-        ...keys.flatMap((k, i): Action[] =>
-          k === key
-            ? [
-                {
-                  do: 'cells',
-                  actor: 'keys',
-                  range: [i, i],
-                  tone: 'warning',
-                  at: [arrival, arrival],
-                },
-              ]
-            : [],
-        ),
+        { do: 'cells', actor: 'keys', range: [row, row], tone: 'warning', at: [arrival, arrival] },
       );
     });
     if (!moved.length) migration.actions.push({ do: 'rows', actor: 'mapping', value: after });

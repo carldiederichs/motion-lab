@@ -28,7 +28,7 @@
       </nav>
     </header>
     <main class="wrap">
-      <section class="intro" aria-labelledby="headline">
+      <section id="home" class="intro" aria-labelledby="headline">
         <div>
           <p class="eyebrow">
             <span class="status-dot"></span> Interactive engineering explanations
@@ -43,18 +43,25 @@
               >Try the walkthrough <span aria-hidden="true">↓</span></a
             ><button class="quiet" data-setup>Create your own →</button>
           </div>
-          <p class="small desktop-note">Made for desktop. No account needed to explore.</p>
+          <p class="small desktop-note">No account needed. Explore here; create on your desktop.</p>
         </div>
         <div class="intro-aside">
-          <span class="eyebrow">One change. Follow the consequences.</span>
-          <div id="hero-ring" class="hero-ring" aria-label="Hash ring preview"></div>
-          <div class="hero-controls">
-            <button class="button" id="hero-toggle" aria-pressed="false">Add server D +</button
-            ><span id="hero-result" class="small" aria-live="polite">Key 60 belongs to C.</span>
-          </div>
-          <p class="small">
-            Change the system. See what moves. Open the walkthrough below to inspect every step.
+          <span class="eyebrow">Consistent hashing</span>
+          <h2 class="hero-title">Add a server. Move fewer keys.</h2>
+          <p class="small hero-rule">
+            Hash each key to a position on the ring. Its owner is the first server clockwise.
           </p>
+          <div id="hero-ring" class="hero-ring" aria-label="Hash ring preview"></div>
+          <div class="hero-controls" role="group" aria-label="Preview playback">
+            <button class="button" id="hero-restart" aria-label="Restart animation">↺</button>
+            <button class="button" id="hero-play" aria-pressed="true" aria-label="Pause animation">
+              Pause
+            </button>
+            <button class="button" id="hero-toggle">Next step →</button>
+            <span class="small" id="hero-step">1 / 4</span>
+          </div>
+          <p id="hero-result" class="small hero-explanation">Key 60 belongs to C.</p>
+          <a class="quiet hero-link" href="#demo">Follow every step ↓</a>
         </div>
       </section>
       <section id="demo" class="demo" aria-labelledby="demo-heading">
@@ -70,8 +77,11 @@
             <span class="small">You → your AI assistant</span
             ><button id="demo-replay" class="quiet">Replay demo</button>
           </div>
-          <p id="typed-prompt">
-            Show me consistent hashing. Add a server and show which keys move.
+          <p class="prompt-copy" id="prompt-copy">
+            <span class="prompt-full" id="prompt-full"
+              >Show me consistent hashing. Add a server and show which keys move.</span
+            >
+            <span id="typed-prompt" aria-hidden="true"></span>
           </p>
           <div class="demo-status" aria-live="polite" id="demo-status">
             A prepared example shows the local creation workflow.
@@ -82,24 +92,22 @@
             ><button class="quiet" data-setup>How do I ask my own question?</button>
           </div>
         </div>
-        <div id="demo-result" class="result" hidden>
-          <div class="result-head">
-            <div>
-              <span class="status-dot"></span><strong>Your interactive explanation</strong
-              ><span class="small">Prepared example</span>
-            </div>
-            <a class="quiet" href="/lessons/consistent-hashing.html">Open full workspace ↗</a>
+      </section>
+      <section id="demo-result" class="result" aria-label="Try the interactive explanation" hidden>
+        <div class="result-head">
+          <div>
+            <span class="status-dot"></span><strong>Your interactive explanation</strong
+            ><span class="small">Prepared example</span>
           </div>
-          <iframe
-            id="demo-frame"
-            title="Interactive consistent hashing visualization"
-            loading="lazy"
-            sandbox="allow-scripts allow-same-origin allow-downloads"
-          ></iframe>
-          <p class="small result-foot">
-            Press Play or use the chapter controls. The explanation waits for you.
-          </p>
+          <a class="quiet" href="/lessons/consistent-hashing.html">Open full workspace ↗</a>
         </div>
+        <iframe
+          id="demo-frame"
+          title="Interactive consistent hashing visualization"
+          loading="eager"
+          sandbox="allow-scripts allow-same-origin allow-downloads"
+        ></iframe>
+        <p class="small result-foot">Edit the keys, choose a step, or press Play.</p>
       </section>
       <section id="examples" class="library" aria-labelledby="examples-heading">
         <div class="section-line">

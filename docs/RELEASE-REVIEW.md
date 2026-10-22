@@ -15,7 +15,7 @@ The application is ready to connect to a hosting provider. No provider account o
 | Check | Result |
 | --- | --- |
 | Node tests | 54 passed |
-| Browser tests | 64 passed |
+| Browser tests | 70 passed |
 | Desktop layouts | 1024, 1440 and 1920px; light and dark |
 | Visual review | Inspected rendered screenshots of all 15 public examples; interacted with the landing page and tour |
 | Toolkit ZIP | Unpacked, built and authored a local explanation without runtime dependencies |

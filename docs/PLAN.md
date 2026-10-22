@@ -42,3 +42,11 @@ Authoring and deployment work landed through [PR 1](https://github.com/carldiede
 - [ ] Optional: enable the prepared GitHub Actions workflow and verify its first run. The current OAuth login cannot upload workflow files; hosting does not depend on this step.
 
 No application form is part of this workflow.
+
+## Gallery visual follow-up
+
+- [x] Check current hosting options against this static application.
+- [x] Stop the hero connector outside server labels in both ownership states.
+- [x] Give each gallery preview a distinct, relevant representation of its topic.
+- [x] Verify geometry, both themes and desktop widths; inspect the rendered changes.
+- [ ] Commit, publish and merge the verified update.

@@ -240,23 +240,26 @@ npm run dev</code></pre>
             <button class="quiet copy" aria-label="Copy run commands">Copy</button>
           </div>
           <span class="small"
-            >Open http://127.0.0.1:4173. The gallery runs locally in your browser.</span
+            >Keep the terminal running and open the local address it prints in your browser.</span
           >
         </li>
         <li>
           <strong>Describe your own engineering question.</strong>
           <p class="small">
-            Open this folder in your own file-capable AI coding assistant. In Codex, select Motion
-            Lab from the / skill menu, or type $motion-lab. Replace the bracketed text below with
-            your question or relevant code.
+            Open the motion-lab project folder in your coding assistant. Paste the prompt below into
+            Codex’s chat input and replace the question with your own. The $motion-lab prefix
+            selects the included skill; it is not a terminal command or Windows-specific syntax.
           </p>
           <div class="command">
-            <pre><code>$motion-lab Explain [my code, system or engineering question] visually. Show what moves, what changes and why. Include a contrasting case.</code></pre>
+            <pre><code>$motion-lab Explain why a retry can create duplicate records. Show the broken version and a version that uses an idempotency key.</code></pre>
             <button class="quiet copy" aria-label="Copy assistant prompt">Copy</button>
           </div>
-          <p class="small">If your assistant does not discover the skill, use this instead:</p>
+          <p class="small">
+            If Codex cannot find the skill, check the project folder and restart Codex. For another
+            assistant that does not discover repository skills, paste this into its chat:
+          </p>
           <div class="command">
-            <pre><code>Read .agents/skills/motion-lab/SKILL.md and use it to create a visual explanation of [my engineering question]. Build it, verify it and show me the local result.</code></pre>
+            <pre><code>Read .agents/skills/motion-lab/SKILL.md and use it to explain why a retry can create duplicate records. Show the broken and safe versions, build the visualization and verify the result.</code></pre>
             <button class="quiet copy" aria-label="Copy fallback prompt">Copy</button>
           </div>
           <span class="small"

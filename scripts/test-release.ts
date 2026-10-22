@@ -20,7 +20,9 @@ async function exercise(root: string, label: string): Promise<void> {
   run(root, ['scripts/cli.ts', 'validate', 'local/retry-example.json']);
   run(root, ['scripts/cli.ts', 'build', 'local/retry-example.json']);
   await access(path.join(root, 'local/retry-example.html'));
-  for (const template of ['transactional-outbox', 'replica-read', 'next-greater']) {
+  run(root, ['scripts/verify.ts', 'local/retry-example.html']);
+  const templates = ['transactional-outbox', 'replica-read', 'next-greater', 'request-sequence'];
+  for (const template of templates) {
     const slug = `fresh-${template}`;
     run(root, ['scripts/cli.ts', 'new', slug, '--template', template]);
     const source = path.join(root, `local/${slug}.json`);
@@ -47,7 +49,7 @@ async function exercise(root: string, label: string): Promise<void> {
   try {
     const address = localServer.address();
     assert(address !== null && typeof address !== 'string');
-    for (const template of ['transactional-outbox', 'replica-read', 'next-greater']) {
+    for (const template of templates) {
       const response: Response = await fetch(
         `http://127.0.0.1:${address.port}/local/fresh-${template}.html`,
       );
@@ -81,6 +83,7 @@ async function exercise(root: string, label: string): Promise<void> {
       '/local/fresh-transactional-outbox.html',
       '/local/fresh-replica-read.html',
       '/local/fresh-next-greater.html',
+      '/local/fresh-request-sequence.html',
       '/.env',
       '/AGENTS.md',
       '/examples/catalogue.json',

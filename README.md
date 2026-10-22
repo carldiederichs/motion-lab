@@ -1,14 +1,12 @@
 # Motion Lab
 
-[Explore the live demo](https://motion-lab-dev.vercel.app/) on desktop or mobile.
+Motion Lab explains algorithms and software systems through interactive diagrams. Step through a request, change an input or compare two designs, then follow how the data and state change. Code examples are available in TypeScript, JavaScript, Python, Java and C++.
 
-Interactive explanations for the engineering question in front of you. Follow a request, step through an algorithm, inspect a state change or compare two designs. Change the inputs and watch the explanation respond. Portable code examples offer TypeScript, JavaScript, Python, Java and C++.
-
-The public site is a static collection of examples. New explanations are created locally by your own AI coding assistant using the included skill. There is no hosted chatbot, model billing, account system or analytics.
+[Explore the live demo](https://motion-lab-dev.vercel.app/) in your browser, or run the toolkit locally to create explanations with your own AI coding assistant. The hosted site contains prepared examples and does not require an account or provide model access.
 
 ## Run locally
 
-Requires Node.js 22.13 or newer. Clone the repository and start the local server:
+Install Node.js 22.13 or newer, then run these commands in your terminal:
 
 ```sh
 git clone https://github.com/carldiederichs/motion-lab.git
@@ -17,52 +15,77 @@ npm ci --ignore-scripts
 npm run dev
 ```
 
-Alternatively, [download the toolkit ZIP](https://motion-lab-dev.vercel.app/downloads/motion-lab-toolkit.zip), unzip it and run the same commands from `npm ci` onward in its `motion-lab` folder.
+Keep the terminal running and open the local address it prints in your browser. Press `Ctrl+C` in that terminal when you want to stop the server.
 
-Open **http://127.0.0.1:4173**. Explore on desktop or mobile. Creating new explanations with your coding assistant requires a desktop environment.
+If you prefer not to use Git, [download the toolkit](https://motion-lab-dev.vercel.app/downloads/motion-lab-toolkit.zip), extract it and open its `motion-lab` folder in a terminal. Run the two `npm` commands above to install dependencies and start the server.
 
-Open your file-capable coding assistant in this folder. Describe your own code, system or engineering question; the examples are starting points, not the limits of the tool.
+## Create with your coding assistant
 
-In Codex, select Motion Lab from the `/` skill menu, or type:
+Open the `motion-lab` project folder in your coding assistant. It needs permission to read and write project files and run the local builder.
 
-```text
-$motion-lab Explain [my code, system or engineering question] visually. Show what moves, what changes and why. Include a contrasting case.
-```
+### Codex
 
-Replace the bracketed text with your question. For example: “Why can a retry create duplicate records, and how would an idempotency key prevent that?”
-
-If your assistant does not discover repository skills, ask it to read the file explicitly:
+Codex discovers the included skill from `.agents/skills/motion-lab/SKILL.md`. Enter this in **Codex's chat input**:
 
 ```text
-Read .agents/skills/motion-lab/SKILL.md and use it to create a visual explanation of [my engineering question]. Build it, verify it and show me the local result.
+$motion-lab Explain why a retry can create duplicate records. Show the broken version and a version that uses an idempotency key.
 ```
 
-Use your own assistant and model with file access and the ability to run the builder. The website does not connect to a model. Local operation does not imply an offline model: your assistant may send context to its provider under its own settings.
+The `$motion-lab` prefix selects a Codex skill; it is not a terminal command or Windows-specific syntax. Replace the example question with your own code, system or engineering question. If the skill does not appear, check that Codex is open in this project folder and restart Codex. See [Codex skills](https://developers.openai.com/codex/skills/) for discovery and invocation details.
 
-## Make an explanation
+### Other coding assistants
+
+If your assistant does not discover the repository skill automatically, give it the file path in its chat:
+
+```text
+Read .agents/skills/motion-lab/SKILL.md and use it to explain why a retry can create duplicate records. Show the broken and safe versions, build the visualization and verify the result.
+```
+
+The skill guides your assistant through choosing a diagram, creating the explanation and checking its output. It saves generated files in `local/`, which is excluded from the public build and toolkit archive. The examples are starting points; you can ask about other algorithms, architecture, requests and state changes.
+
+Use your own assistant and model. Motion Lab does not handle API keys or bill for model usage. Your assistant may send project context to its provider according to its own permissions and privacy settings.
+
+## Create without an assistant
+
+In a second terminal, open the project folder and create a visualization from a template:
 
 ```sh
 npx tsx scripts/cli.ts new my-flow --template request-sequence
-# Edit local/my-flow.json, or ask your assistant to edit it.
+```
+
+Edit `local/my-flow.json`, then validate and build it:
+
+```sh
 npx tsx scripts/cli.ts validate local/my-flow.json
 npx tsx scripts/cli.ts build local/my-flow.json
 ```
 
-Open the generated HTML directly, or visit `/local/my-flow.html` on the local dev server. The JSON describes actors, connections, chapter explanations and changes over time. It does not execute arbitrary code. For a different diagram family, choose an example from `examples/catalogue.json` and consult [the authoring guide](docs/AUTHORING.md).
+Open `local/my-flow.html` in your browser. The JSON describes actors, connections, explanations and changes over time; it does not execute arbitrary code. The [authoring guide](docs/AUTHORING.md) covers the available diagram types and templates.
 
-Before sharing, install a browser for verification and check the result:
+## Verify a visualization
+
+Before sharing a generated explanation, install the verification browser and run the player checks:
 
 ```sh
 npx playwright install chromium
 npx tsx scripts/verify.ts local/my-flow.html
 ```
 
-The verifier checks the player in both themes. Also inspect the actual diagram, code and transitions; automated geometry checks cannot establish that an explanation is correct.
+The verifier checks both light and dark themes. It uses Google Chrome on macOS and Playwright Chromium elsewhere. On a Mac without Chrome, select the downloaded Chromium browser with:
+
+```sh
+PLAYWRIGHT_CHANNEL=chromium npx tsx scripts/verify.ts local/my-flow.html
+```
+
+Also inspect the diagram, code and transitions yourself. Automated checks can find layout problems, but they cannot establish that an explanation is correct. Authored scenes and simulations do not execute or verify the application code they describe.
 
 ## Develop and test
 
+From the project folder, run:
+
 ```sh
 npm ci --ignore-scripts
+npx playwright install chromium
 npm run check
 npm test
 npm run build
@@ -70,12 +93,16 @@ npm run test:browser
 npm run check:privacy
 ```
 
-Browser tests use installed Google Chrome on macOS and Playwright Chromium elsewhere. Set `PLAYWRIGHT_CHANNEL=chromium` to use the downloaded browser explicitly. See [code standards](docs/CODE-QUALITY.md), [testing](docs/TESTING.md), [deployment](docs/DEPLOYMENT.md) and [the delivery checklist](docs/PLAN.md).
+Browser tests use the same browser selection as the visualization verifier. The strict checks cover TypeScript, lint and formatting. Release checks verify that local work, credentials, build artifacts and Git history stay out of the downloadable toolkit. The development server accepts connections from your own machine; production serving disables local routes.
 
-`local/`, credentials, build artifacts and Git history never enter the toolkit archive. The public build reads only the explicit example catalogue, player and site assets. The local server binds to loopback; production serving disables local routes.
+## Documentation
 
-The public page presents a prepared example of a question and its visualization. The examples use deterministic simulations or authored scenarios. They are explanatory models, not evidence that arbitrary application code has been executed or verified.
+- [Authoring guide](docs/AUTHORING.md)
+- [Code standards](docs/CODE-QUALITY.md)
+- [Testing guide](docs/TESTING.md)
+- [Deployment guide](docs/DEPLOYMENT.md)
+- [Delivery checklist](docs/PLAN.md)
 
 ## License
 
-[MIT](LICENSE) for Motion Lab's original code. Keep the copyright and license notices when redistributing it. Third-party components retain their own notices, which are included in the source, hosted bundles, standalone lessons and downloadable toolkit. See [licensing and third-party sources](docs/LICENSING.md) for scope, upstream licenses and trademark information.
+Motion Lab's original code is available under the [MIT License](LICENSE). Keep its copyright and license notices when redistributing it. Third-party components retain their own notices in the source, hosted application, standalone lessons and downloadable toolkit. See [licensing and third-party sources](docs/LICENSING.md) for details.

@@ -1,6 +1,8 @@
 import { readFile, readdir, lstat } from 'node:fs/promises';
 import path from 'node:path';
 
+import { format, resolveConfig } from 'prettier';
+
 import { ROOT } from './renderer.ts';
 import { required, hasCode } from '../engine/assert.ts';
 // Deliberate allowlist. Never package working directories or Git history.
@@ -49,6 +51,16 @@ export async function releaseFiles(root = ROOT): Promise<string[]> {
   }
   return files;
 }
+
+export async function releaseContents(rel: string, root = ROOT): Promise<Buffer> {
+  const filename = path.join(root, rel);
+  const contents = await readFile(filename);
+  if (rel !== 'vercel.json') return contents;
+  // Vercel minifies its config before building. Keep the portable copy formatted.
+  const options = await resolveConfig(filename);
+  const json: unknown = JSON.parse(contents.toString('utf8'));
+  return Buffer.from(await format(JSON.stringify(json, null, 2), { ...options, parser: 'json' }));
+}
 const crcTable = Array.from({ length: 256 }, (_, i) => {
   for (let n = 0; n < 8; n++) i = i & 1 ? 0xedb88320 ^ (i >>> 1) : i >>> 1;
   return i >>> 0;
@@ -64,7 +76,7 @@ export async function toolkitZip(): Promise<Buffer<ArrayBuffer>> {
   let offset = 0;
   for (const rel of await releaseFiles()) {
     const name = Buffer.from(`motion-lab/${rel}`),
-      data = await readFile(path.join(ROOT, rel)),
+      data = await releaseContents(rel),
       crc = crc32(data);
     const h = Buffer.alloc(30);
     h.writeUInt32LE(0x04034b50);

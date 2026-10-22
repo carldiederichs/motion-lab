@@ -6,10 +6,7 @@
   "subtitle": "An authored trace built from reusable Motion Lab primitives.",
   "component": "Systems",
   "date": "2026-10-22",
-  "aliases": [
-    "Backtracking + stack",
-    "Why must recursive search undo its changes?"
-  ],
+  "aliases": ["Backtracking + stack", "Why must recursive search undo its changes?"],
   "family": "Backtracking + stack",
   "stage": {
     "width": 960,
@@ -71,9 +68,7 @@
               {
                 "do": "rows",
                 "actor": "results",
-                "value": [
-                  "[]"
-                ]
+                "value": ["[]"]
               }
             ]
           },
@@ -85,9 +80,7 @@
               {
                 "do": "rows",
                 "actor": "path",
-                "value": [
-                  "2"
-                ]
+                "value": ["2"]
               }
             ]
           },
@@ -99,10 +92,7 @@
               {
                 "do": "rows",
                 "actor": "results",
-                "value": [
-                  "[]",
-                  "[2]"
-                ]
+                "value": ["[]", "[2]"]
               }
             ]
           },
@@ -126,9 +116,7 @@
               {
                 "do": "rows",
                 "actor": "path",
-                "value": [
-                  "1"
-                ]
+                "value": ["1"]
               }
             ]
           },
@@ -146,11 +134,7 @@
               {
                 "do": "rows",
                 "actor": "results",
-                "value": [
-                  "[]",
-                  "[2]",
-                  "[1]"
-                ]
+                "value": ["[]", "[2]", "[1]"]
               }
             ]
           },
@@ -162,10 +146,7 @@
               {
                 "do": "rows",
                 "actor": "path",
-                "value": [
-                  "1",
-                  "2"
-                ]
+                "value": ["1", "2"]
               }
             ]
           },
@@ -177,12 +158,7 @@
               {
                 "do": "rows",
                 "actor": "results",
-                "value": [
-                  "[]",
-                  "[2]",
-                  "[1]",
-                  "[1, 2]"
-                ]
+                "value": ["[]", "[2]", "[1]", "[1, 2]"]
               }
             ]
           },
@@ -194,9 +170,7 @@
               {
                 "do": "rows",
                 "actor": "path",
-                "value": [
-                  "1"
-                ]
+                "value": ["1"]
               }
             ]
           },
@@ -262,9 +236,7 @@
               {
                 "do": "rows",
                 "actor": "results",
-                "value": [
-                  "[]"
-                ]
+                "value": ["[]"]
               }
             ]
           },
@@ -276,9 +248,7 @@
               {
                 "do": "rows",
                 "actor": "path",
-                "value": [
-                  "7"
-                ]
+                "value": ["7"]
               }
             ]
           },
@@ -290,10 +260,7 @@
               {
                 "do": "rows",
                 "actor": "results",
-                "value": [
-                  "[]",
-                  "[7]"
-                ]
+                "value": ["[]", "[7]"]
               }
             ]
           },
@@ -353,9 +320,7 @@
               {
                 "do": "rows",
                 "actor": "results",
-                "value": [
-                  "[]"
-                ]
+                "value": ["[]"]
               }
             ]
           }

@@ -6,10 +6,7 @@
   "subtitle": "An authored trace built from reusable Motion Lab primitives.",
   "component": "Systems",
   "date": "2026-10-22",
-  "aliases": [
-    "Tree + heap array",
-    "How does a priority queue restore heap order?"
-  ],
+  "aliases": ["Tree + heap array", "How does a priority queue restore heap order?"],
   "family": "Tree + heap array",
   "stage": {
     "width": 960,
@@ -62,9 +59,7 @@
             "w": 320,
             "h": 220,
             "label": "Array representation",
-            "rows": [
-              "[2, 5, 8, 1]"
-            ]
+            "rows": ["[2, 5, 8, 1]"]
           }
         ],
         "links": [
@@ -111,9 +106,7 @@
               {
                 "do": "rows",
                 "actor": "heap",
-                "value": [
-                  "[2, 1, 8, 5]"
-                ]
+                "value": ["[2, 1, 8, 5]"]
               }
             ]
           },
@@ -137,9 +130,7 @@
               {
                 "do": "rows",
                 "actor": "heap",
-                "value": [
-                  "[1, 2, 8, 5]"
-                ]
+                "value": ["[1, 2, 8, 5]"]
               }
             ]
           },
@@ -202,9 +193,7 @@
             "w": 320,
             "h": 220,
             "label": "Array representation",
-            "rows": [
-              "[2, 5, 8, 7]"
-            ]
+            "rows": ["[2, 5, 8, 7]"]
           }
         ],
         "links": [
@@ -290,9 +279,7 @@
             "w": 320,
             "h": 220,
             "label": "Array representation",
-            "rows": [
-              "[2, 5, 8, 2]"
-            ]
+            "rows": ["[2, 5, 8, 2]"]
           }
         ],
         "links": [
@@ -339,9 +326,7 @@
               {
                 "do": "rows",
                 "actor": "heap",
-                "value": [
-                  "[2, 2, 8, 5]"
-                ]
+                "value": ["[2, 2, 8, 5]"]
               }
             ]
           },

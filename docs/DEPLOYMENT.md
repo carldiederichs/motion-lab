@@ -31,7 +31,7 @@ See Railway's [Dockerfile guide](https://docs.railway.com/builds/dockerfiles) an
 From the repository:
 
 ```sh
-node scripts/smoke.mjs https://motion-lab-alpha-three.vercel.app
+npx tsx scripts/smoke.ts https://motion-lab-alpha-three.vercel.app
 ```
 
 This performs read-only requests to the landing page, catalogue, every lesson, assets and toolkit ZIP. It checks that private and unknown routes return 404. It does not fill forms, call a model or send local files.
@@ -47,7 +47,7 @@ npm run build
 npm run check:privacy
 npx playwright install chromium
 npm run test:browser
-node scripts/test-release.mjs --checkout
+npx tsx scripts/test-release.ts --checkout
 ```
 
 A successful local build is not evidence that a hosting account or public URL exists. Record the deployed URL and smoke result after connecting the selected provider.

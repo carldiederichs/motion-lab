@@ -11,11 +11,7 @@
     <link rel="icon" href="/icon.svg" />
     <link rel="stylesheet" href="/style.css" />
     <script>
-      try {
-        const t = localStorage.getItem("motionlab.theme");
-        if (t === "dark" || t === "light")
-          document.documentElement.dataset.theme = t;
-      } catch {}
+      /*__THEME__*/
     </script>
     <script src="/app.js" defer></script>
   </head>
@@ -26,59 +22,38 @@
         ><img src="/icon.svg" alt="" width="28" height="28" />Motion Lab</a
       >
       <nav aria-label="Main">
-        <a href="#examples">Explore</a
-        ><button id="tour-start" class="quiet">Take a tour</button
-        ><button
-          id="theme"
-          class="icon"
-          aria-label="Theme: system"
-          title="Change theme"
-        >
-          ◐</button
-        ><button class="button" data-setup>
-          Run locally <span aria-hidden="true">↗</span>
-        </button>
+        <a href="#examples">Explore</a><button id="tour-start" class="quiet">Take a tour</button
+        ><button id="theme" class="icon" aria-label="Theme: system" title="Change theme">◐</button
+        ><button class="button" data-setup>Run locally <span aria-hidden="true">↗</span></button>
       </nav>
     </header>
     <main class="wrap">
       <section class="intro" aria-labelledby="headline">
         <div>
           <p class="eyebrow">
-            <span class="status-dot"></span> Interactive engineering
-            explanations
+            <span class="status-dot"></span> Interactive engineering explanations
           </p>
           <h1 id="headline">See how it works.<br />Then make it yours.</h1>
           <p class="lead">
-            Turn the thing you’re working on into a visual you can pause, change
-            and understand. Start with an example. Build the next one with your
-            own AI assistant.
+            Turn the thing you’re working on into a visual you can pause, change and understand.
+            Start with an example. Build the next one with your own AI assistant.
           </p>
           <div class="actions">
             <a class="button primary" href="#demo"
               >Try the walkthrough <span aria-hidden="true">↓</span></a
             ><button class="quiet" data-setup>Create your own →</button>
           </div>
-          <p class="small desktop-note">
-            Made for desktop. No account needed to explore.
-          </p>
+          <p class="small desktop-note">Made for desktop. No account needed to explore.</p>
         </div>
         <div class="intro-aside">
           <span class="eyebrow">One change. Follow the consequences.</span>
-          <div
-            id="hero-ring"
-            class="hero-ring"
-            aria-label="Hash ring preview"
-          ></div>
+          <div id="hero-ring" class="hero-ring" aria-label="Hash ring preview"></div>
           <div class="hero-controls">
-            <button class="button" id="hero-toggle" aria-pressed="false">
-              Add server D +</button
-            ><span id="hero-result" class="small" aria-live="polite"
-              >Key 60 belongs to C.</span
-            >
+            <button class="button" id="hero-toggle" aria-pressed="false">Add server D +</button
+            ><span id="hero-result" class="small" aria-live="polite">Key 60 belongs to C.</span>
           </div>
           <p class="small">
-            Change the system. See what moves. Open the walkthrough below to
-            inspect every step.
+            Change the system. See what moves. Open the walkthrough below to inspect every step.
           </p>
         </div>
       </section>
@@ -104,21 +79,16 @@
           <div class="prompt-actions">
             <button id="demo-run" class="button primary">
               Show the example <span aria-hidden="true">↓</span></button
-            ><button class="quiet" data-setup>
-              How do I ask my own question?
-            </button>
+            ><button class="quiet" data-setup>How do I ask my own question?</button>
           </div>
         </div>
         <div id="demo-result" class="result" hidden>
           <div class="result-head">
             <div>
-              <span class="status-dot"></span
-              ><strong>Your interactive explanation</strong
+              <span class="status-dot"></span><strong>Your interactive explanation</strong
               ><span class="small">Prepared example</span>
             </div>
-            <a class="quiet" href="/lessons/consistent-hashing.html"
-              >Open full workspace ↗</a
-            >
+            <a class="quiet" href="/lessons/consistent-hashing.html">Open full workspace ↗</a>
           </div>
           <iframe
             id="demo-frame"
@@ -127,8 +97,7 @@
             sandbox="allow-scripts allow-same-origin allow-downloads"
           ></iframe>
           <p class="small result-foot">
-            Press Play or use the chapter controls. The explanation waits for
-            you.
+            Press Play or use the chapter controls. The explanation waits for you.
           </p>
         </div>
       </section>
@@ -141,33 +110,20 @@
           <span id="count" class="small" aria-live="polite"></span>
         </div>
         <p class="section-intro">
-          These are starting points. Use the same toolkit to explain a service,
-          a data structure or a tricky piece of your own code.
+          These are starting points. Use the same toolkit to explain a service, a data structure or
+          a tricky piece of your own code.
         </p>
         <div class="filters" id="filters">
           <label class="search-label"
             ><span class="sr-only">Search examples</span
-            ><input
-              id="search"
-              type="search"
-              placeholder="Search a question, concept or diagram…"
+            ><input id="search" type="search" placeholder="Search a question, concept or diagram…"
           /></label>
-          <div
-            id="categories"
-            class="chips"
-            role="group"
-            aria-label="Filter examples"
-          >
+          <div id="categories" class="chips" role="group" aria-label="Filter examples">
             <button data-category="" aria-pressed="true">All examples</button
-            ><button data-category="Algorithms" aria-pressed="false">
-              Algorithms</button
-            ><button data-category="Systems" aria-pressed="false">
-              Systems</button
-            ><button data-category="Architecture" aria-pressed="false">
-              Architecture</button
-            ><button data-category="Concurrency" aria-pressed="false">
-              Concurrency
-            </button>
+            ><button data-category="Algorithms" aria-pressed="false">Algorithms</button
+            ><button data-category="Systems" aria-pressed="false">Systems</button
+            ><button data-category="Architecture" aria-pressed="false">Architecture</button
+            ><button data-category="Concurrency" aria-pressed="false">Concurrency</button>
           </div>
         </div>
         <div id="cards" class="cards"></div>
@@ -180,21 +136,18 @@
           <p class="eyebrow">Bring the question you actually have</p>
           <h2>Your code. Your assistant.<br />Your next explanation.</h2>
           <p>
-            “Why does this retry create two records?”<br />“Walk through this
-            cache invalidation path.”<br />“Show the boundaries in this
-            service.”
+            “Why does this retry create two records?”<br />“Walk through this cache invalidation
+            path.”<br />“Show the boundaries in this service.”
           </p>
         </div>
         <div>
           <p>
-            The included skill helps your assistant choose a diagram, build a
-            concrete example and check the result. It runs on your machine with
-            the model you already use.
+            The included skill helps your assistant choose a diagram, build a concrete example and
+            check the result. It runs on your machine with the model you already use.
           </p>
           <p class="small">
-            Motion Lab does not provide or bill for model access. Your
-            assistant’s normal permissions, privacy settings and usage limits
-            apply.
+            Motion Lab does not provide or bill for model access. Your assistant’s normal
+            permissions, privacy settings and usage limits apply.
           </p>
           <button class="button primary" id="local-toolkit" data-setup>
             Get the local toolkit <span aria-hidden="true">↗</span>
@@ -203,8 +156,7 @@
       </section>
     </main>
     <footer class="wrap">
-      <span>Motion Lab</span
-      ><span>Made for understanding, one change at a time.</span
+      <span>Motion Lab</span><span>Made for understanding, one change at a time.</span
       ><a
         href="https://github.com/carldiederichs/motion-lab"
         target="_blank"
@@ -215,29 +167,21 @@
     <dialog id="setup" aria-labelledby="setup-title">
       <div class="dialog-head">
         <span class="eyebrow">Create with your own assistant</span
-        ><button id="setup-close" class="icon" aria-label="Close setup">
-          ✕
-        </button>
+        ><button id="setup-close" class="icon" aria-label="Close setup">✕</button>
       </div>
       <h2 id="setup-title">Take Motion Lab with you.</h2>
       <p>
-        Use a desktop with Node.js 22 or newer and an AI coding assistant. The
-        download contains the player, examples and skill. It does not run
-        anything until you start it.
+        Use a desktop with Node.js 22.13 or newer and an AI coding assistant. The download contains
+        the player, examples and skill. It does not run anything until you start it.
       </p>
       <ol class="setup-steps">
         <li>
           <strong>Download and unzip the toolkit.</strong
-          ><a
-            class="button primary"
-            id="download"
-            href="/downloads/motion-lab-toolkit.zip"
-            download
+          ><a class="button primary" id="download" href="/downloads/motion-lab-toolkit.zip" download
             >Download toolkit .zip ↓</a
           ><span class="small">Or clone the repository:</span>
           <div class="command">
-            <code
-              >git clone https://github.com/carldiederichs/motion-lab.git</code
+            <code>git clone https://github.com/carldiederichs/motion-lab.git</code
             ><button
               class="quiet copy"
               data-copy="git clone https://github.com/carldiederichs/motion-lab.git"
@@ -250,26 +194,25 @@
         <li>
           <strong>Open the folder in a terminal.</strong>
           <div class="command">
-            <code>cd motion-lab<br />npm run dev</code
+            <code>cd motion-lab<br />npm ci --ignore-scripts<br />npm run dev</code
             ><button
               class="quiet copy"
-              data-copy="cd motion-lab&#10;npm run dev"
+              data-copy="cd motion-lab&#10;npm ci --ignore-scripts&#10;npm run dev"
               aria-label="Copy run commands"
             >
               Copy
             </button>
           </div>
           <span class="small"
-            >Open http://127.0.0.1:4173. No dependency install is needed to
-            explore or build.</span
+            >Open http://127.0.0.1:4173. The gallery runs locally in your browser.</span
           >
         </li>
         <li>
           <strong>Open your assistant in this folder and ask:</strong>
           <div class="command">
             <code
-              >Use the motion-lab skill to explain how a retry can create
-              duplicate records. Show the broken and safe versions.</code
+              >Use the motion-lab skill to explain how a retry can create duplicate records. Show
+              the broken and safe versions.</code
             ><button
               class="quiet copy"
               data-copy="Read .agents/skills/motion-lab/SKILL.md and use it to explain how a retry can create duplicate records. Show the broken and safe versions."
@@ -279,15 +222,15 @@
             </button>
           </div>
           <span class="small"
-            >The skill is included in .agents/skills/motion-lab/. Assistants
-            without skill discovery can read that file directly.</span
+            >The skill is included in .agents/skills/motion-lab/. Assistants without skill discovery
+            can read that file directly.</span
           >
         </li>
       </ol>
       <p id="copy-status" class="small" aria-live="polite"></p>
       <p class="small">
-        Generated work stays in local/, outside the public build. A local file
-        may still be sent to your model provider by your chosen assistant.
+        Generated work stays in local/, outside the public build. A local file may still be sent to
+        your model provider by your chosen assistant.
       </p>
     </dialog>
     <div id="tour-layer" hidden>
@@ -301,9 +244,7 @@
       >
         <div class="dialog-head">
           <span id="tour-count" class="eyebrow"></span
-          ><button id="tour-close" class="icon" aria-label="Close tour">
-            ✕
-          </button>
+          ><button id="tour-close" class="icon" aria-label="Close tour">✕</button>
         </div>
         <h2 id="tour-title"></h2>
         <p id="tour-text"></p>

@@ -6,10 +6,7 @@
   "subtitle": "Watch depth-first search connect land cells, mark visits and return to the remaining frontier.",
   "component": "Algorithms",
   "date": "2026-10-22",
-  "aliases": [
-    "Number of Islands",
-    "Matrix + traversal"
-  ],
+  "aliases": ["Number of Islands", "Matrix + traversal"],
   "stage": {
     "width": 960,
     "height": 520
@@ -24,11 +21,7 @@
         "id": "grid",
         "label": "Grid rows",
         "type": "list",
-        "default": [
-          "1100",
-          "0101",
-          "0011"
-        ],
+        "default": ["1100", "0101", "0011"],
         "max": 4,
         "pattern": "^[01]{1,5}$",
         "formatHint": "Use rows of 1 to 5 binary digits, such as 1100."
@@ -60,21 +53,14 @@
       "label": "Diagonal contact",
       "why": "Diagonal cells remain separate islands.",
       "params": {
-        "grid": [
-          "100",
-          "010",
-          "001"
-        ]
+        "grid": ["100", "010", "001"]
       }
     },
     {
       "label": "All water",
       "why": "No cell starts a traversal.",
       "params": {
-        "grid": [
-          "000",
-          "000"
-        ]
+        "grid": ["000", "000"]
       }
     }
   ]

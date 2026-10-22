@@ -6,10 +6,7 @@
   "subtitle": "Follow a queue through a graph. Try a cycle or a destination that cannot be reached.",
   "component": "Algorithms",
   "date": "2026-10-22",
-  "aliases": [
-    "Shortest Path with BFS",
-    "Graph + queue"
-  ],
+  "aliases": ["Shortest Path with BFS", "Graph + queue"],
   "family": "Graph + queue",
   "stage": {
     "width": 960,

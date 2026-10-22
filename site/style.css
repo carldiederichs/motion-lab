@@ -20,14 +20,14 @@
   --tok-comment: #f0f0f099;
   --tok-function: #efb080;
   --radius: 0.5rem;
-  --mono: Menlo, Monaco, Consolas, "SF Mono", monospace;
+  --mono: Menlo, Monaco, Consolas, 'SF Mono', monospace;
   --sans:
-    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
-    "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui, sans-serif;
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Helvetica,
+    Arial, ui-sans-serif, system-ui, sans-serif;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
+  :root:not([data-theme='dark']) {
     --bg: oklch(0.975 0.004 260);
     --surface: oklch(1 0 0);
     --surface-2: oklch(0.955 0.006 260);
@@ -50,7 +50,7 @@
     color-scheme: light;
   }
 }
-:root[data-theme="light"] {
+:root[data-theme='light'] {
   --bg: oklch(0.975 0.004 260);
   --surface: oklch(1 0 0);
   --surface-2: oklch(0.955 0.006 260);
@@ -363,7 +363,7 @@ h2 {
   display: block;
   margin-bottom: 14px;
 }
-input[type="search"] {
+input[type='search'] {
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 9px;
@@ -389,7 +389,7 @@ input::placeholder {
   border-radius: 7px;
   cursor: pointer;
 }
-.chips button[aria-pressed="true"] {
+.chips button[aria-pressed='true'] {
   background: var(--surface-2);
   color: var(--text);
   border-color: var(--blue);
@@ -610,7 +610,7 @@ dialog > p {
   box-shadow: 0 12px 36px rgb(0 0 0/0.3);
 }
 #tour-card:before {
-  content: "";
+  content: '';
   position: absolute;
   top: -8px;
   left: 22px;

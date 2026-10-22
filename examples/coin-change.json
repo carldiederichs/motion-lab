@@ -6,10 +6,7 @@
   "subtitle": "Build a dynamic-programming table from smaller amounts and inspect unreachable states.",
   "component": "Algorithms",
   "date": "2026-10-22",
-  "aliases": [
-    "Coin Change",
-    "DP table + dependencies"
-  ],
+  "aliases": ["Coin Change", "DP table + dependencies"],
   "family": "DP table + dependencies",
   "stage": {
     "width": 960,
@@ -24,11 +21,7 @@
         "id": "coins",
         "label": "Coin values",
         "type": "numbers",
-        "default": [
-          1,
-          3,
-          4
-        ],
+        "default": [1, 3, 4],
         "max": 4,
         "positiveInteger": true
       },
@@ -47,10 +40,7 @@
       "label": "Unreachable",
       "why": "Even-valued coins cannot make an odd amount.",
       "params": {
-        "coins": [
-          2,
-          4
-        ],
+        "coins": [2, 4],
         "amount": 5
       }
     },
@@ -78,8 +68,6 @@
   "complexity": {
     "time": "O(amount \u00b7 coins)",
     "space": "O(amount)",
-    "derivation": [
-      "Each amount tries each positive coin. One table stores the smaller answers."
-    ]
+    "derivation": ["Each amount tries each positive coin. One table stores the smaller answers."]
   }
 }

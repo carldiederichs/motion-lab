@@ -6,10 +6,7 @@
   "subtitle": "A concrete trace you can adapt to your own engineering question.",
   "component": "Algorithms",
   "date": "2026-10-22",
-  "aliases": [
-    "Prefix tree",
-    "Why is a matching prefix not always a word?"
-  ],
+  "aliases": ["Prefix tree", "Why is a matching prefix not always a word?"],
   "family": "Prefix tree",
   "stage": {
     "width": 960,
@@ -140,9 +137,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Follow c",
@@ -160,10 +155,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Follow a",
@@ -181,10 +173,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Follow r",
@@ -202,10 +191,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Check the end of the word",
@@ -223,9 +209,7 @@
                 "tone": "success"
               }
             ],
-            "lines": [
-              6
-            ]
+            "lines": [6]
           }
         ]
       }
@@ -352,9 +336,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Follow c",
@@ -372,10 +354,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Follow a",
@@ -393,10 +372,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Check the end of the word",
@@ -414,9 +390,7 @@
                 "tone": "failure"
               }
             ],
-            "lines": [
-              6
-            ]
+            "lines": [6]
           }
         ]
       }
@@ -543,9 +517,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Follow c",
@@ -563,10 +535,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Follow a",
@@ -584,10 +553,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Follow t",
@@ -605,10 +571,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "No edge for z",
@@ -621,10 +584,7 @@
                 "tone": "failure"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Check the end of the word",
@@ -642,9 +602,7 @@
                 "tone": "failure"
               }
             ],
-            "lines": [
-              6
-            ]
+            "lines": [6]
           }
         ]
       }

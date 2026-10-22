@@ -8,13 +8,14 @@ The public site is a static collection of examples. New explanations are created
 
 ## Run locally
 
-Requires Node.js 22 or newer. Download and unzip the toolkit, or clone this repository. In the project folder:
+Requires Node.js 22.13 or newer. Download and unzip the toolkit, or clone this repository. In the project folder:
 
 ```sh
+npm ci --ignore-scripts
 npm run dev
 ```
 
-Open **http://127.0.0.1:4173**. No dependency installation is needed for the player, builder or local server. Desktop browsers are the supported target; use a window at least 1024 pixels wide.
+Open **http://127.0.0.1:4173**. Desktop browsers are the supported target; use a window at least 1024 pixels wide.
 
 Open your coding assistant in this folder and ask:
 
@@ -25,20 +26,19 @@ Codex discovers the repository skill under `.agents/skills/`. For an assistant w
 ## Make an explanation
 
 ```sh
-node scripts/cli.mjs new my-flow --template request-sequence
+npx tsx scripts/cli.ts new my-flow --template request-sequence
 # Edit local/my-flow.json, or ask your assistant to edit it.
-node scripts/cli.mjs validate local/my-flow.json
-node scripts/cli.mjs build local/my-flow.json
+npx tsx scripts/cli.ts validate local/my-flow.json
+npx tsx scripts/cli.ts build local/my-flow.json
 ```
 
 Open the generated HTML directly, or visit `/local/my-flow.html` on the local dev server. The JSON describes actors, connections, chapter explanations and changes over time. It does not execute arbitrary code. For a different diagram family, choose an example from `examples/catalogue.json` and consult [the authoring guide](docs/AUTHORING.md).
 
-Before sharing, install the test tools and verify the result:
+Before sharing, install a browser for verification and check the result:
 
 ```sh
-npm ci --ignore-scripts
 npx playwright install chromium
-node scripts/verify.mjs local/my-flow.html
+npx tsx scripts/verify.ts local/my-flow.html
 ```
 
 The verifier checks the player in both themes. Also inspect the actual diagram, code and transitions; automated geometry checks cannot establish that an explanation is correct.
@@ -47,6 +47,7 @@ The verifier checks the player in both themes. Also inspect the actual diagram, 
 
 ```sh
 npm ci --ignore-scripts
+npm run check
 npm test
 npm run build
 npm run test:browser

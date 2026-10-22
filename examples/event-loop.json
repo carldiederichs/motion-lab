@@ -6,10 +6,7 @@
   "subtitle": "Edit a small program and follow callbacks through the stack, microtasks and timers.",
   "component": "Concurrency",
   "date": "2026-10-22",
-  "aliases": [
-    "JavaScript Event Loop",
-    "Queues + execution"
-  ],
+  "aliases": ["JavaScript Event Loop", "Queues + execution"],
   "stage": {
     "width": 960,
     "height": 540

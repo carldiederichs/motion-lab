@@ -6,10 +6,7 @@
   "subtitle": "A concrete trace you can adapt to your own engineering question.",
   "component": "Algorithms",
   "date": "2026-10-22",
-  "aliases": [
-    "Bit flags",
-    "Are all required feature flags enabled?"
-  ],
+  "aliases": ["Bit flags", "Are all required feature flags enabled?"],
   "family": "Bit flags",
   "stage": {
     "width": 960,
@@ -41,12 +38,7 @@
             "kind": "cells",
             "x": 360,
             "y": 155,
-            "values": [
-              0,
-              1,
-              0,
-              1
-            ],
+            "values": [0, 1, 0, 1],
             "cell": 85
           },
           {
@@ -61,12 +53,7 @@
             "kind": "cells",
             "x": 360,
             "y": 275,
-            "values": [
-              0,
-              0,
-              0,
-              1
-            ],
+            "values": [0, 0, 0, 1],
             "cell": 85
           },
           {
@@ -81,12 +68,7 @@
             "kind": "cells",
             "x": 360,
             "y": 395,
-            "values": [
-              "?",
-              "?",
-              "?",
-              "?"
-            ],
+            "values": ["?", "?", "?", "?"],
             "cell": 85
           },
           {
@@ -119,9 +101,7 @@
                 "tone": "warning"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 3",
@@ -137,16 +117,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 2",
@@ -162,16 +137,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 1",
@@ -187,16 +157,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 0",
@@ -212,16 +177,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  3,
-                  3
-                ],
+                "range": [3, 3],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Compare against the entire required mask",
@@ -239,9 +199,7 @@
                 "tone": "success"
               }
             ],
-            "lines": [
-              2
-            ]
+            "lines": [2]
           }
         ]
       }
@@ -269,12 +227,7 @@
             "kind": "cells",
             "x": 360,
             "y": 155,
-            "values": [
-              0,
-              1,
-              0,
-              1
-            ],
+            "values": [0, 1, 0, 1],
             "cell": 85
           },
           {
@@ -289,12 +242,7 @@
             "kind": "cells",
             "x": 360,
             "y": 275,
-            "values": [
-              0,
-              0,
-              1,
-              1
-            ],
+            "values": [0, 0, 1, 1],
             "cell": 85
           },
           {
@@ -309,12 +257,7 @@
             "kind": "cells",
             "x": 360,
             "y": 395,
-            "values": [
-              "?",
-              "?",
-              "?",
-              "?"
-            ],
+            "values": ["?", "?", "?", "?"],
             "cell": 85
           },
           {
@@ -347,9 +290,7 @@
                 "tone": "warning"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 3",
@@ -365,16 +306,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 2",
@@ -390,16 +326,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 1",
@@ -415,16 +346,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 0",
@@ -440,16 +366,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  3,
-                  3
-                ],
+                "range": [3, 3],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Compare against the entire required mask",
@@ -467,9 +388,7 @@
                 "tone": "failure"
               }
             ],
-            "lines": [
-              2
-            ]
+            "lines": [2]
           }
         ]
       }
@@ -497,12 +416,7 @@
             "kind": "cells",
             "x": 360,
             "y": 155,
-            "values": [
-              0,
-              1,
-              0,
-              1
-            ],
+            "values": [0, 1, 0, 1],
             "cell": 85
           },
           {
@@ -517,12 +431,7 @@
             "kind": "cells",
             "x": 360,
             "y": 275,
-            "values": [
-              0,
-              0,
-              0,
-              0
-            ],
+            "values": [0, 0, 0, 0],
             "cell": 85
           },
           {
@@ -537,12 +446,7 @@
             "kind": "cells",
             "x": 360,
             "y": 395,
-            "values": [
-              "?",
-              "?",
-              "?",
-              "?"
-            ],
+            "values": ["?", "?", "?", "?"],
             "cell": 85
           },
           {
@@ -575,9 +479,7 @@
                 "tone": "warning"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 3",
@@ -593,16 +495,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 2",
@@ -618,16 +515,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 1",
@@ -643,16 +535,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Check bit 0",
@@ -668,16 +555,11 @@
               {
                 "do": "cells",
                 "actor": "intersection",
-                "range": [
-                  3,
-                  3
-                ],
+                "range": [3, 3],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1
-            ]
+            "lines": [1]
           },
           {
             "title": "Compare against the entire required mask",
@@ -695,9 +577,7 @@
                 "tone": "success"
               }
             ],
-            "lines": [
-              2
-            ]
+            "lines": [2]
           }
         ]
       }
@@ -717,10 +597,7 @@
   ],
   "code": {
     "language": "ts",
-    "lines": [
-      "const present = enabled & required;",
-      "return present === required;"
-    ]
+    "lines": ["const present = enabled & required;", "return present === required;"]
   },
   "complexity": {
     "time": "O(1) for a fixed-width mask",

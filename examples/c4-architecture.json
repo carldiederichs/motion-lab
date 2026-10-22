@@ -6,10 +6,7 @@
   "subtitle": "Move from system context to containers while preserving responsibilities and ownership boundaries.",
   "component": "Architecture",
   "date": "2026-10-22",
-  "aliases": [
-    "C4 Architecture",
-    "C4 boundaries"
-  ],
+  "aliases": ["C4 Architecture", "C4 boundaries"],
   "stage": {
     "width": 960,
     "height": 500
@@ -91,10 +88,7 @@
                 "do": "move",
                 "token": "request",
                 "link": "browse",
-                "at": [
-                  0,
-                  0.75
-                ]
+                "at": [0, 0.75]
               },
               {
                 "do": "tone",
@@ -104,10 +98,7 @@
               {
                 "do": "hide",
                 "token": "request",
-                "at": [
-                  0.8,
-                  0.9
-                ]
+                "at": [0.8, 0.9]
               }
             ]
           },
@@ -120,10 +111,7 @@
                 "do": "move",
                 "token": "request",
                 "link": "charge",
-                "at": [
-                  0,
-                  0.75
-                ]
+                "at": [0, 0.75]
               },
               {
                 "do": "tone",
@@ -133,10 +121,7 @@
               {
                 "do": "hide",
                 "token": "request",
-                "at": [
-                  0.8,
-                  0.9
-                ]
+                "at": [0.8, 0.9]
               }
             ]
           }
@@ -194,9 +179,7 @@
             "w": 220,
             "h": 110,
             "label": "Product database",
-            "rows": [
-              "product 42"
-            ],
+            "rows": ["product 42"],
             "sub": "Database \u00b7 SQL"
           }
         ],
@@ -245,18 +228,12 @@
                 "do": "move",
                 "token": "request",
                 "link": "browse",
-                "at": [
-                  0,
-                  0.75
-                ]
+                "at": [0, 0.75]
               },
               {
                 "do": "hide",
                 "token": "request",
-                "at": [
-                  0.8,
-                  0.9
-                ]
+                "at": [0.8, 0.9]
               }
             ]
           },
@@ -269,18 +246,12 @@
                 "do": "move",
                 "token": "request",
                 "link": "fetch",
-                "at": [
-                  0,
-                  0.75
-                ]
+                "at": [0, 0.75]
               },
               {
                 "do": "hide",
                 "token": "request",
-                "at": [
-                  0.8,
-                  0.9
-                ]
+                "at": [0.8, 0.9]
               }
             ]
           },
@@ -293,18 +264,12 @@
                 "do": "move",
                 "token": "request",
                 "link": "query",
-                "at": [
-                  0,
-                  0.75
-                ]
+                "at": [0, 0.75]
               },
               {
                 "do": "hide",
                 "token": "request",
-                "at": [
-                  0.8,
-                  0.9
-                ]
+                "at": [0.8, 0.9]
               }
             ]
           }
@@ -362,9 +327,7 @@
             "w": 220,
             "h": 110,
             "label": "Product database",
-            "rows": [
-              "product 42"
-            ],
+            "rows": ["product 42"],
             "sub": "Database \u00b7 SQL"
           }
         ],
@@ -413,18 +376,12 @@
                 "do": "move",
                 "token": "request",
                 "link": "browse",
-                "at": [
-                  0,
-                  0.75
-                ]
+                "at": [0, 0.75]
               },
               {
                 "do": "hide",
                 "token": "request",
-                "at": [
-                  0.8,
-                  0.9
-                ]
+                "at": [0.8, 0.9]
               }
             ]
           },
@@ -437,18 +394,12 @@
                 "do": "move",
                 "token": "request",
                 "link": "fetch",
-                "at": [
-                  0,
-                  0.75
-                ]
+                "at": [0, 0.75]
               },
               {
                 "do": "hide",
                 "token": "request",
-                "at": [
-                  0.8,
-                  0.9
-                ]
+                "at": [0.8, 0.9]
               }
             ]
           },
@@ -461,18 +412,12 @@
                 "do": "move",
                 "token": "request",
                 "link": "query",
-                "at": [
-                  0,
-                  0.75
-                ]
+                "at": [0, 0.75]
               },
               {
                 "do": "hide",
                 "token": "request",
-                "at": [
-                  0.8,
-                  0.9
-                ]
+                "at": [0.8, 0.9]
               }
             ]
           },

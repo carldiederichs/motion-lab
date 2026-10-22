@@ -6,10 +6,7 @@
   "subtitle": "A concrete trace you can adapt to your own engineering question.",
   "component": "Algorithms",
   "date": "2026-10-22",
-  "aliases": [
-    "Prefix totals",
-    "How can range totals avoid rescanning values?"
-  ],
+  "aliases": ["Prefix totals", "How can range totals avoid rescanning values?"],
   "family": "Prefix totals",
   "stage": {
     "width": 960,
@@ -34,12 +31,7 @@
             "kind": "cells",
             "x": 180,
             "y": 150,
-            "values": [
-              2,
-              1,
-              3,
-              4
-            ],
+            "values": [2, 1, 3, 4],
             "cell": 90
           },
           {
@@ -54,13 +46,7 @@
             "kind": "cells",
             "x": 135,
             "y": 300,
-            "values": [
-              0,
-              "?",
-              "?",
-              "?",
-              "?"
-            ],
+            "values": [0, "?", "?", "?", "?"],
             "cell": 90
           },
           {
@@ -95,10 +81,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1,
-              2
-            ]
+            "lines": [1, 2]
           },
           {
             "title": "Build prefix 1",
@@ -114,17 +97,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Build prefix 2",
@@ -140,17 +117,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Build prefix 3",
@@ -166,17 +137,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Build prefix 4",
@@ -192,17 +157,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  3,
-                  3
-                ],
+                "range": [3, 3],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Subtract the part before the range",
@@ -212,25 +171,17 @@
               {
                 "do": "cells",
                 "actor": "prefix",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "warning"
               },
               {
                 "do": "cells",
                 "actor": "prefix",
-                "range": [
-                  3,
-                  3
-                ],
+                "range": [3, 3],
                 "tone": "success"
               }
             ],
-            "lines": [
-              6
-            ]
+            "lines": [6]
           },
           {
             "title": "Read the range total",
@@ -248,9 +199,7 @@
                 "tone": "success"
               }
             ],
-            "lines": [
-              6
-            ]
+            "lines": [6]
           }
         ]
       }
@@ -271,12 +220,7 @@
             "kind": "cells",
             "x": 180,
             "y": 150,
-            "values": [
-              2,
-              1,
-              3,
-              4
-            ],
+            "values": [2, 1, 3, 4],
             "cell": 90
           },
           {
@@ -291,13 +235,7 @@
             "kind": "cells",
             "x": 135,
             "y": 300,
-            "values": [
-              0,
-              "?",
-              "?",
-              "?",
-              "?"
-            ],
+            "values": [0, "?", "?", "?", "?"],
             "cell": 90
           },
           {
@@ -332,10 +270,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1,
-              2
-            ]
+            "lines": [1, 2]
           },
           {
             "title": "Build prefix 1",
@@ -351,17 +286,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Build prefix 2",
@@ -377,17 +306,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Build prefix 3",
@@ -403,17 +326,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Build prefix 4",
@@ -429,17 +346,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  3,
-                  3
-                ],
+                "range": [3, 3],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Subtract the part before the range",
@@ -449,25 +360,17 @@
               {
                 "do": "cells",
                 "actor": "prefix",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "warning"
               },
               {
                 "do": "cells",
                 "actor": "prefix",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "success"
               }
             ],
-            "lines": [
-              6
-            ]
+            "lines": [6]
           },
           {
             "title": "Read the range total",
@@ -485,9 +388,7 @@
                 "tone": "success"
               }
             ],
-            "lines": [
-              6
-            ]
+            "lines": [6]
           }
         ]
       }
@@ -508,12 +409,7 @@
             "kind": "cells",
             "x": 180,
             "y": 150,
-            "values": [
-              -2,
-              5,
-              -1,
-              4
-            ],
+            "values": [-2, 5, -1, 4],
             "cell": 90
           },
           {
@@ -528,13 +424,7 @@
             "kind": "cells",
             "x": 135,
             "y": 300,
-            "values": [
-              0,
-              "?",
-              "?",
-              "?",
-              "?"
-            ],
+            "values": [0, "?", "?", "?", "?"],
             "cell": 90
           },
           {
@@ -569,10 +459,7 @@
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              1,
-              2
-            ]
+            "lines": [1, 2]
           },
           {
             "title": "Build prefix 1",
@@ -588,17 +475,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Build prefix 2",
@@ -614,17 +495,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  1,
-                  1
-                ],
+                "range": [1, 1],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Build prefix 3",
@@ -640,17 +515,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  2,
-                  2
-                ],
+                "range": [2, 2],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Build prefix 4",
@@ -666,17 +535,11 @@
               {
                 "do": "cells",
                 "actor": "input",
-                "range": [
-                  3,
-                  3
-                ],
+                "range": [3, 3],
                 "tone": "mechanism"
               }
             ],
-            "lines": [
-              3,
-              4
-            ]
+            "lines": [3, 4]
           },
           {
             "title": "Subtract the part before the range",
@@ -686,25 +549,17 @@
               {
                 "do": "cells",
                 "actor": "prefix",
-                "range": [
-                  0,
-                  0
-                ],
+                "range": [0, 0],
                 "tone": "warning"
               },
               {
                 "do": "cells",
                 "actor": "prefix",
-                "range": [
-                  3,
-                  3
-                ],
+                "range": [3, 3],
                 "tone": "success"
               }
             ],
-            "lines": [
-              6
-            ]
+            "lines": [6]
           },
           {
             "title": "Read the range total",
@@ -722,9 +577,7 @@
                 "tone": "success"
               }
             ],
-            "lines": [
-              6
-            ]
+            "lines": [6]
           }
         ]
       }

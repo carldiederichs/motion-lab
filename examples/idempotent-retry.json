@@ -6,11 +6,7 @@
   "subtitle": "A lost response triggers a retry. Compare creating twice with reusing an idempotency key.",
   "component": "Systems",
   "date": "2026-10-22",
-  "aliases": [
-    "idempotency",
-    "retry",
-    "duplicate order"
-  ],
+  "aliases": ["idempotency", "retry", "duplicate order"],
   "stage": {
     "width": 960,
     "height": 510

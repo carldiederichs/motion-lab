@@ -12,21 +12,21 @@ The application is live at [motion-lab-alpha-three.vercel.app](https://motion-la
 
 ## Verified for this release
 
-| Check | Result |
-| --- | --- |
-| Node tests | 54 passed |
-| Browser tests | 70 passed |
-| Final connector adjustment | All 6 gallery geometry/theme tests passed again |
-| Desktop layouts | 1024, 1440 and 1920px; light and dark |
-| Visual review | Inspected rendered screenshots of all 15 public examples; interacted with the landing page and tour |
-| Toolkit ZIP | Unpacked, built and authored a local explanation without runtime dependencies |
-| Fresh Git checkout | Build, authoring, production routes and isolation passed |
-| Privacy audit | No findings in the current release files and static output |
-| Docker | Built and served all lessons, assets and toolkit; protected routes returned 404 |
-| Container restrictions | Non-root user, read-only filesystem and all Linux capabilities dropped |
-| Public deployment | Unauthenticated smoke check passed for all 15 lessons, assets, download and private-route isolation |
-| Deployed code | Public JavaScript matched the merged connector and gallery fixes byte for byte |
-| Live Chrome review | Both connector states, distinct previews, both themes and the BFS disconnected case with chapter controls and inspector |
+| Check                      | Result                                                                                                                  |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Node tests                 | 54 passed                                                                                                               |
+| Browser tests              | 70 passed                                                                                                               |
+| Final connector adjustment | All 6 gallery geometry/theme tests passed again                                                                         |
+| Desktop layouts            | 1024, 1440 and 1920px; light and dark                                                                                   |
+| Visual review              | Inspected rendered screenshots of all 15 public examples; interacted with the landing page and tour                     |
+| Toolkit ZIP                | Unpacked, built and authored a local explanation without runtime dependencies                                           |
+| Fresh Git checkout         | Build, authoring, production routes and isolation passed                                                                |
+| Privacy audit              | No findings in the current release files and static output                                                              |
+| Docker                     | Built and served all lessons, assets and toolkit; protected routes returned 404                                         |
+| Container restrictions     | Non-root user, read-only filesystem and all Linux capabilities dropped                                                  |
+| Public deployment          | Unauthenticated smoke check passed for all 15 lessons, assets, download and private-route isolation                     |
+| Deployed code              | Public JavaScript matched the merged connector and gallery fixes byte for byte                                          |
+| Live Chrome review         | Both connector states, distinct previews, both themes and the BFS disconnected case with chapter controls and inspector |
 
 The browser suite checks every example and template in both themes, timeline geometry, scenario changes, controls, inputs, search, tour positioning and explicit downloads. Algorithm tests use independent reference implementations where applicable. See [the testing strategy](TESTING.md) for the checks and their limits.
 

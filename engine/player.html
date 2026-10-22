@@ -55,9 +55,9 @@
           --on-accent: oklch(1 0 0);
           --tok-keyword: #0f766e;
           --tok-string: #a21caf;
-          --tok-number: #b45309;
-          --tok-comment: #6b7280;
-          --tok-function: #c2410c;
+          --tok-number: #a94708;
+          --tok-comment: #626976;
+          --tok-function: #b63c0b;
           color-scheme: light;
         }
       }
@@ -78,9 +78,9 @@
         --on-accent: oklch(1 0 0);
         --tok-keyword: #0f766e;
         --tok-string: #a21caf;
-        --tok-number: #b45309;
-        --tok-comment: #6b7280;
-        --tok-function: #c2410c;
+        --tok-number: #a94708;
+        --tok-comment: #626976;
+        --tok-function: #b63c0b;
         color-scheme: light;
       }
       * {
@@ -642,8 +642,8 @@
         color: var(--blue);
       }
       .mp-code {
-        background: #181818;
-        color: #f0f0f0;
+        background: var(--surface);
+        color: var(--text);
       }
       .mp-code-body {
         padding: 9px 0;
@@ -659,12 +659,12 @@
         border-left: 3px solid transparent;
       }
       .mp-code .ln.on {
-        border-left-color: #5b9bd5;
-        background: #262626;
+        border-left-color: var(--blue);
+        background: var(--surface-2);
       }
       .mp-code .ln .no {
         padding-right: 9px;
-        color: #f0f0f05c;
+        color: var(--muted);
         text-align: right;
         user-select: none;
       }
@@ -673,29 +673,29 @@
         overflow-wrap: anywhere;
         min-width: 0;
       }
-      /* Cursor Dark Anysphere v0.0.3 token palette (same as the step walkthroughs). */
+      /* Code and inline fragments follow the active theme. */
       .mp-code .tok-keyword,
       .mp-inline .tok-keyword {
-        color: #82d2ce;
+        color: var(--tok-keyword);
       }
       .mp-code .tok-string,
       .mp-inline .tok-string {
-        color: #e394dc;
+        color: var(--tok-string);
       }
       .mp-code .tok-number,
       .mp-inline .tok-number {
-        color: #ebc88d;
+        color: var(--tok-number);
       }
       .mp-code .tok-comment,
       .mp-inline .tok-comment {
-        color: #f0f0f099;
+        color: var(--tok-comment);
         font-style: italic;
       }
       .mp-code .tok-function,
       .mp-code .tok-type,
       .mp-inline .tok-function,
       .mp-inline .tok-type {
-        color: #efb080;
+        color: var(--tok-function);
       }
       :is(.mp-caption, .mp-predict, .mp-badge, .mp-cx, .mp-chapter) .tok-number {
         color: var(--tok-number);
@@ -715,8 +715,8 @@
       }
       .mp-inline {
         font: 0.92em var(--mono);
-        background: #181818;
-        color: #f0f0f0;
+        background: var(--surface);
+        color: var(--text);
         border-radius: 5px;
         padding: 1px 5px;
       }

@@ -89,3 +89,11 @@ Additional tested starting points:
 | Why does a stack avoid rescanning?   | next-greater         | Mixed, decreasing and equal values                  |
 
 These are authored explanations with reviewed synthetic traces. The outbox example assumes one transactional database and atomic consumer deduplication with its database effect; it does not promise exactly-once external side effects.
+
+## Code language choices
+
+A `code` block can include up to four `alternatives`. Each alternative contains `language` (`js`, `ts`, `python`, `java`, or `cpp`), `lines` and `sourceLines`. `sourceLines[i]` lists the original one-based lines explained by translated line `i + 1`; use an empty array for imports or type declarations. Keep every line within 58 characters. The schema rejects duplicate languages, missing mappings and references beyond the original code.
+
+The player remembers a visitor's language choice and maps chapter highlights to that language. If a lesson has no matching alternative, it shows its original source and says so. Changing language never changes the timeline or simulation. These are teaching excerpts: imports, surrounding application types and service implementations may be omitted. Match the selected scenario and state the assumptions. Do not translate language-specific scheduling rules as if other runtimes behaved identically.
+
+The public algorithm and portable-system code panels offer TypeScript, JavaScript, Python, Java and C++. JavaScript event-loop source stays in its original runtime. Sequence and C4 lessons teach requests and boundaries without inventing a code implementation. `npm run test:languages` compiles and executes the published Python, Java and C++ algorithm implementations against boundary and counterexample cases; it requires Python 3, a JDK and a C++17 compiler.

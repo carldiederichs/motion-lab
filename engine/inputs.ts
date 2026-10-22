@@ -74,7 +74,12 @@ export const inputSchemas = {
       edge: z.object({ label: z.string(), why: z.string() }).optional(),
     }),
   }),
-  'consistent-hash': z.object({ keys: numbers.max(6).default([12, 35, 60, 92]) }),
+  'consistent-hash': z.object({
+    keys: z
+      .array(z.number().int('Use whole numbers for hash positions.').min(-999).max(999))
+      .max(6)
+      .default([12, 35, 60, 92]),
+  }),
   'binary-search': z.object({ values: numbers.max(10).default([]), target: z.number().finite() }),
   islands: z.object({
     grid: z

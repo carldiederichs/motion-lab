@@ -182,11 +182,37 @@ export const tokenSchema = z.strictObject({
   lang: text.optional(),
 });
 export type Token = z.infer<typeof tokenSchema>;
-const codeSchema = z.strictObject({
-  language: text.optional(),
-  title: text.optional(),
-  lines: z.array(z.string().max(58)).max(100),
-});
+export const codeLanguageSchema = z.enum(['ts', 'js', 'python', 'java', 'cpp']);
+const codeLines = z.array(z.string().max(58)).min(1).max(100);
+const codeAlternativeSchema = z
+  .strictObject({
+    language: codeLanguageSchema,
+    title: text.optional(),
+    lines: codeLines,
+    sourceLines: z.array(z.array(z.int().positive()).max(10)).max(100),
+  })
+  .refine(
+    (code) => code.sourceLines.length === code.lines.length,
+    'Each translated line needs its source-line mapping',
+  );
+export type CodeAlternative = z.infer<typeof codeAlternativeSchema>;
+const codeSchema = z
+  .strictObject({
+    language: text.optional(),
+    title: text.optional(),
+    lines: codeLines,
+    alternatives: z.array(codeAlternativeSchema).max(4).optional(),
+  })
+  .superRefine((code, ctx) => {
+    const languages = new Set([code.language]);
+    for (const alternative of code.alternatives ?? []) {
+      if (languages.has(alternative.language))
+        ctx.addIssue({ code: 'custom', message: 'Duplicate code language' });
+      languages.add(alternative.language);
+      if (alternative.sourceLines.flat().some((line) => line > code.lines.length))
+        ctx.addIssue({ code: 'custom', message: 'Translated line references missing source line' });
+    }
+  });
 export type Code = z.infer<typeof codeSchema>;
 const complexitySchema = z.strictObject({
   time: z.string().min(1),

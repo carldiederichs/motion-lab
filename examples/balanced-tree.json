@@ -45,6 +45,79 @@
           "  return 1 + Math.max(left, right);",
           "}",
           "const balanced = heightOrFail(root) !== -1;"
+        ],
+        "alternatives": [
+          {
+            "language": "js",
+            "lines": [
+              "function heightOrFail(node) {",
+              "  if (!node) return 0;",
+              "  const left = heightOrFail(node.left);",
+              "  if (left === -1) return -1;",
+              "  const right = heightOrFail(node.right);",
+              "  if (right === -1) return -1;",
+              "  if (Math.abs(left - right) > 1) return -1;",
+              "  return 1 + Math.max(left, right);",
+              "}",
+              "const balanced = heightOrFail(root) !== -1;"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]]
+          },
+          {
+            "language": "python",
+            "lines": [
+              "def height_or_fail(node):",
+              "    if node is None:",
+              "        return 0",
+              "    left = height_or_fail(node.left)",
+              "    if left == -1:",
+              "        return -1",
+              "    right = height_or_fail(node.right)",
+              "    if right == -1:",
+              "        return -1",
+              "    if abs(left - right) > 1:",
+              "        return -1",
+              "    return 1 + max(left, right)",
+              "balanced = height_or_fail(root) != -1"
+            ],
+            "sourceLines": [[1], [2], [2], [3], [4], [4], [5], [6], [6], [7], [7], [8], [10]]
+          },
+          {
+            "language": "java",
+            "lines": [
+              "static int heightOrFail(Node node) {",
+              "  if (node == null) return 0;",
+              "  int left = heightOrFail(node.left);",
+              "  if (left == -1) return -1;",
+              "  int right = heightOrFail(node.right);",
+              "  if (right == -1) return -1;",
+              "  if (Math.abs(left - right) > 1) return -1;",
+              "  return 1 + Math.max(left, right);",
+              "}",
+              "static boolean isBalanced(Node root) {",
+              "  return heightOrFail(root) != -1;",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [10], [10]]
+          },
+          {
+            "language": "cpp",
+            "lines": [
+              "int heightOrFail(Node* node) {",
+              "  if (node == nullptr) return 0;",
+              "  int left = heightOrFail(node->left);",
+              "  if (left == -1) return -1;",
+              "  int right = heightOrFail(node->right);",
+              "  if (right == -1) return -1;",
+              "  if (std::abs(left - right) > 1) return -1;",
+              "  return 1 + std::max(left, right);",
+              "}",
+              "bool isBalanced(Node* root) {",
+              "  return heightOrFail(root) != -1;",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [10], [10]]
+          }
         ]
       },
       "complexity": {
@@ -77,10 +150,102 @@
           "  return isBalanced(node.left) &&",
           "    isBalanced(node.right);",
           "}"
+        ],
+        "alternatives": [
+          {
+            "language": "js",
+            "lines": [
+              "function height(node) {",
+              "  if (!node) return 0;",
+              "  return 1 + Math.max(",
+              "    height(node.left), height(node.right));",
+              "}",
+              "function isBalanced(node) {",
+              "  if (!node) return true;",
+              "  const left = height(node.left);",
+              "  const right = height(node.right);",
+              "  if (Math.abs(left - right) > 1) return false;",
+              "  return isBalanced(node.left) &&",
+              "    isBalanced(node.right);",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13]]
+          },
+          {
+            "language": "python",
+            "lines": [
+              "def height(node):",
+              "    if node is None:",
+              "        return 0",
+              "    return 1 + max(height(node.left), height(node.right))",
+              "def is_balanced(node):",
+              "    if node is None:",
+              "        return True",
+              "    left = height(node.left)",
+              "    right = height(node.right)",
+              "    if abs(left - right) > 1:",
+              "        return False",
+              "    return (is_balanced(node.left)",
+              "            and is_balanced(node.right))"
+            ],
+            "sourceLines": [
+              [1],
+              [2],
+              [2],
+              [3, 4],
+              [6],
+              [7],
+              [7],
+              [8],
+              [9],
+              [10],
+              [10],
+              [11, 12],
+              [11, 12]
+            ]
+          },
+          {
+            "language": "java",
+            "lines": [
+              "static int height(Node node) {",
+              "  if (node == null) return 0;",
+              "  return 1 + Math.max(",
+              "    height(node.left), height(node.right));",
+              "}",
+              "static boolean isBalanced(Node node) {",
+              "  if (node == null) return true;",
+              "  int left = height(node.left);",
+              "  int right = height(node.right);",
+              "  if (Math.abs(left - right) > 1) return false;",
+              "  return isBalanced(node.left) &&",
+              "    isBalanced(node.right);",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13]]
+          },
+          {
+            "language": "cpp",
+            "lines": [
+              "int height(Node* node) {",
+              "  if (node == nullptr) return 0;",
+              "  return 1 + std::max(",
+              "    height(node->left), height(node->right));",
+              "}",
+              "bool isBalanced(Node* node) {",
+              "  if (node == nullptr) return true;",
+              "  int left = height(node->left);",
+              "  int right = height(node->right);",
+              "  if (std::abs(left - right) > 1) return false;",
+              "  return isBalanced(node->left) &&",
+              "    isBalanced(node->right);",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13]]
+          }
         ]
       },
       "complexity": {
-        "time": "O(n²) upper bound",
+        "time": "O(n\u00b2) upper bound",
         "space": "O(h)",
         "derivation": [
           "n is the number of nodes and h the tree height. Recursion uses at most h stack frames.",

@@ -22,9 +22,11 @@
         "label": "Key hash positions",
         "type": "numbers",
         "default": [12, 35, 60, 92],
-        "max": 6
+        "max": 6,
+        "allowEmpty": true
       }
-    ]
+    ],
+    "hint": "Up to 6 whole numbers, −999 to 999; wraps at 100. Empty is allowed."
   },
   "code": {
     "language": "ts",
@@ -36,6 +38,72 @@
       "}",
       "ring.push({ name: \"D\", hash: 64 });",
       "ring.sort((a, b) => a.hash - b.hash);"
+    ],
+    "alternatives": [
+      {
+        "language": "js",
+        "lines": [
+          "const ring = servers.sort((a, b) => a.hash - b.hash);",
+          "function owner(hash) {",
+          "  return ring.find(server => server.hash >= hash)",
+          "    ?? ring[0];",
+          "}",
+          "ring.push({ name: \"D\", hash: 64 });",
+          "ring.sort((a, b) => a.hash - b.hash);"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6], [7]]
+      },
+      {
+        "language": "python",
+        "lines": [
+          "ring = sorted(servers, key=lambda server: server['hash'])",
+          "def owner(key_hash):",
+          "    for server in ring:",
+          "        if server['hash'] >= key_hash:",
+          "            return server",
+          "    return ring[0]",
+          "ring.append({'name': 'D', 'hash': 64})",
+          "ring.sort(key=lambda server: server['hash'])"
+        ],
+        "sourceLines": [[1], [2], [3], [3], [3], [4], [6], [7]]
+      },
+      {
+        "language": "java",
+        "lines": [
+          "// Server has fields: String name, int hash.",
+          "servers.sort(Comparator.comparingInt(s -> s.hash));",
+          "List<Server> ring = servers;",
+          "// Find the owner of keyHash in the nonempty ring:",
+          "Server owner = ring.get(0);",
+          "for (Server server : ring) {",
+          "  if (server.hash >= keyHash) {",
+          "    owner = server; break;",
+          "  }",
+          "}",
+          "ring.add(new Server(\"D\", 64));",
+          "ring.sort(Comparator.comparingInt(s -> s.hash));"
+        ],
+        "sourceLines": [[1], [1], [1], [2], [4], [3], [3], [3], [5], [5], [6], [7]]
+      },
+      {
+        "language": "cpp",
+        "lines": [
+          "// Server has fields: std::string name; int hash;",
+          "auto byHash = [](const Server& a, const Server& b) {",
+          "  return a.hash < b.hash;",
+          "};",
+          "std::sort(servers.begin(), servers.end(), byHash);",
+          "auto& ring = servers;",
+          "auto owner = [&](int hash) -> Server {",
+          "  for (const auto& server : ring)",
+          "    if (server.hash >= hash) return server;",
+          "  return ring.front(); // ring must be nonempty",
+          "};",
+          "ring.push_back({\"D\", 64});",
+          "std::sort(ring.begin(), ring.end(), byHash);"
+        ],
+        "sourceLines": [[1], [1], [1], [1], [1], [1], [2], [3], [3], [4], [5], [6], [7]]
+      }
     ]
   },
   "complexity": {

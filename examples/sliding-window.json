@@ -62,13 +62,87 @@
           "  }",
           "  return best;",
           "}"
+        ],
+        "alternatives": [
+          {
+            "language": "js",
+            "lines": [
+              "function bestWindow(nums, k) {",
+              "  if (k < 1 || k > nums.length) return null;",
+              "  let best = -Infinity;",
+              "  for (let start = 0; start + k <= nums.length; start++) {",
+              "    let sum = 0;",
+              "    for (let j = start; j < start + k; j++) {",
+              "      sum += nums[j];",
+              "    }",
+              "    best = Math.max(best, sum);",
+              "  }",
+              "  return best;",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12]]
+          },
+          {
+            "language": "python",
+            "lines": [
+              "def best_window(nums, k):",
+              "    if k < 1 or k > len(nums):",
+              "        return None",
+              "    best = float('-inf')",
+              "    for start in range(len(nums) - k + 1):",
+              "        total = 0",
+              "        for j in range(start, start + k):",
+              "            total += nums[j]",
+              "        best = max(best, total)",
+              "    return best"
+            ],
+            "sourceLines": [[1], [2], [2], [3], [4], [5], [6], [7], [9], [11]]
+          },
+          {
+            "language": "java",
+            "lines": [
+              "static Long bestWindow(int[] nums, int k) {",
+              "  if (k < 1 || k > nums.length) return null;",
+              "  long best = Long.MIN_VALUE;",
+              "  for (int s = 0; s + k <= nums.length; s++) {",
+              "    long sum = 0;",
+              "    for (int j = s; j < s + k; j++) {",
+              "      sum += nums[j];",
+              "    }",
+              "    best = Math.max(best, sum);",
+              "  }",
+              "  return best;",
+              "}"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12]]
+          },
+          {
+            "language": "cpp",
+            "lines": [
+              "std::optional<long long> bestWindow(",
+              "    const std::vector<int>& nums, int k) {",
+              "  int n = int(nums.size());",
+              "  if (k < 1 || k > n) return std::nullopt;",
+              "  long long best = LLONG_MIN;",
+              "  for (int s = 0; s + k <= n; ++s) {",
+              "    long long sum = 0;",
+              "    for (int j = s; j < s + k; ++j) {",
+              "      sum += nums[j];",
+              "    }",
+              "    best = std::max(best, sum);",
+              "  }",
+              "  return best;",
+              "}"
+            ],
+            "sourceLines": [[1], [1], [2], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12]]
+          }
         ]
       },
       "complexity": {
-        "time": "O(n·k)",
+        "time": "O(n\u00b7k)",
         "space": "O(1)",
         "derivation": [
-          "n is the array length and k the window size. Each of n−k+1 windows adds k values again. Only counters and a running sum are stored."
+          "n is the array length and k the window size. Each of n\u2212k+1 windows adds k values again. Only counters and a running sum are stored."
         ]
       }
     }
@@ -87,14 +161,86 @@
       "  }",
       "  return best;",
       "}"
+    ],
+    "alternatives": [
+      {
+        "language": "js",
+        "lines": [
+          "function maxWindow(nums, k) {",
+          "  if (k < 1 || k > nums.length) return null;",
+          "  let sum = 0;",
+          "  for (let j = 0; j < k; j++) sum += nums[j];",
+          "  let best = sum;",
+          "  for (let i = k; i < nums.length; i++) {",
+          "    sum += nums[i] - nums[i - k];",
+          "    best = Math.max(best, sum);",
+          "  }",
+          "  return best;",
+          "}"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11]]
+      },
+      {
+        "language": "python",
+        "lines": [
+          "def max_window(nums, k):",
+          "    if k < 1 or k > len(nums):",
+          "        return None",
+          "    total = 0",
+          "    for j in range(k):",
+          "        total += nums[j]",
+          "    best = total",
+          "    for i in range(k, len(nums)):",
+          "        total += nums[i] - nums[i - k]",
+          "        best = max(best, total)",
+          "    return best"
+        ],
+        "sourceLines": [[1], [2], [2], [3], [4], [4], [5], [6], [7], [8], [10]]
+      },
+      {
+        "language": "java",
+        "lines": [
+          "static Long maxWindow(int[] nums, int k) {",
+          "  if (k < 1 || k > nums.length) return null;",
+          "  long sum = 0;",
+          "  for (int j = 0; j < k; j++) sum += nums[j];",
+          "  long best = sum;",
+          "  for (int i = k; i < nums.length; i++) {",
+          "    sum += (long) nums[i] - nums[i - k];",
+          "    best = Math.max(best, sum);",
+          "  }",
+          "  return best;",
+          "}"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11]]
+      },
+      {
+        "language": "cpp",
+        "lines": [
+          "std::optional<long long> maxWindow(",
+          "    const std::vector<int>& nums, int k) {",
+          "  int n = int(nums.size());",
+          "  if (k < 1 || k > n) return std::nullopt;",
+          "  long long sum = 0;",
+          "  for (int j = 0; j < k; ++j) sum += nums[j];",
+          "  long long best = sum;",
+          "  for (int i = k; i < n; ++i) {",
+          "    sum += (long long) nums[i] - nums[i - k];",
+          "    best = std::max(best, sum);",
+          "  }",
+          "  return best;",
+          "}"
+        ],
+        "sourceLines": [[1], [1], [2], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11]]
+      }
     ]
   },
   "complexity": {
     "time": "O(n)",
     "space": "O(1)",
-    "example": "Prime k values, then make n−k updates with one addition and one subtraction. Brute force repeats k additions per window.",
+    "example": "Prime k values, then make n\u2212k updates with one addition and one subtraction. Brute force repeats k additions per window.",
     "derivation": [
-      "n is the array length and k the window size. Prime k values, then make n−k updates with one addition and one subtraction. Only counters and running sums are stored; the input array is not copied."
+      "n is the array length and k the window size. Prime k values, then make n\u2212k updates with one addition and one subtraction. Only counters and running sums are stored; the input array is not copied."
     ]
   },
   "edgeCases": [

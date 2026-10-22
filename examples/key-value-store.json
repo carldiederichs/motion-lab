@@ -37,6 +37,79 @@
       "label": "Value only",
       "params": {
         "tie": "none"
+      },
+      "code": {
+        "language": "ts",
+        "lines": [
+          "const store = new Map();",
+          "store.set(key, value);",
+          "const result = store.get(key);",
+          "store.delete(key);",
+          "const entries = [...store.entries()];",
+          "entries.sort(([ka, va], [kb, vb]) =>",
+          "  va.localeCompare(vb)",
+          ");"
+        ],
+        "alternatives": [
+          {
+            "language": "js",
+            "lines": [
+              "const store = new Map();",
+              "store.set(key, value);",
+              "const result = store.get(key);",
+              "store.delete(key);",
+              "const entries = [...store.entries()];",
+              "entries.sort(([ka, va], [kb, vb]) =>",
+              "  va.localeCompare(vb)",
+              ");"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8]]
+          },
+          {
+            "language": "python",
+            "lines": [
+              "store = {}",
+              "store[key] = value",
+              "result = store.get(key)",
+              "store.pop(key, None)",
+              "entries = list(store.items())",
+              "entries.sort(key=lambda entry: entry[1])"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6, 7, 8]]
+          },
+          {
+            "language": "java",
+            "lines": [
+              "Map<String, String> store = new HashMap<>();",
+              "store.put(key, value);",
+              "String result = store.get(key);",
+              "store.remove(key);",
+              "var entries = new ArrayList<>(store.entrySet());",
+              "entries.sort((a, b) -> {",
+              "  return a.getValue().compareTo(b.getValue());",
+              "});"
+            ],
+            "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8]]
+          },
+          {
+            "language": "cpp",
+            "lines": [
+              "std::unordered_map<std::string, std::string> store;",
+              "store[key] = value;",
+              "std::optional<std::string> result;",
+              "if (auto it = store.find(key); it != store.end())",
+              "  result = it->second;",
+              "store.erase(key);",
+              "using Entry = std::pair<std::string, std::string>;",
+              "std::vector<Entry> entries(store.begin(), store.end());",
+              "std::sort(entries.begin(), entries.end(),",
+              "  [](const Entry& a, const Entry& b) {",
+              "    return a.second < b.second;",
+              "  });"
+            ],
+            "sourceLines": [[1], [2], [3], [3], [3], [4], [5], [5], [6], [6], [7], [8]]
+          }
+        ]
       }
     }
   ],
@@ -51,6 +124,69 @@
       "entries.sort(([ka, va], [kb, vb]) =>",
       "  va.localeCompare(vb) || ka.localeCompare(kb)",
       ");"
+    ],
+    "alternatives": [
+      {
+        "language": "js",
+        "lines": [
+          "const store = new Map();",
+          "store.set(key, value);",
+          "const result = store.get(key);",
+          "store.delete(key);",
+          "const entries = [...store.entries()];",
+          "entries.sort(([ka, va], [kb, vb]) =>",
+          "  va.localeCompare(vb) || ka.localeCompare(kb)",
+          ");"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8]]
+      },
+      {
+        "language": "python",
+        "lines": [
+          "store = {}",
+          "store[key] = value",
+          "result = store.get(key)",
+          "store.pop(key, None)",
+          "entries = list(store.items())",
+          "entries.sort(key=lambda entry: (entry[1], entry[0]))"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6, 7, 8]]
+      },
+      {
+        "language": "java",
+        "lines": [
+          "Map<String, String> store = new HashMap<>();",
+          "store.put(key, value);",
+          "String result = store.get(key);",
+          "store.remove(key);",
+          "var entries = new ArrayList<>(store.entrySet());",
+          "entries.sort((a, b) -> {",
+          "  int byValue = a.getValue().compareTo(b.getValue());",
+          "  return byValue != 0 ? byValue",
+          "    : a.getKey().compareTo(b.getKey());",
+          "});"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [7], [7], [8]]
+      },
+      {
+        "language": "cpp",
+        "lines": [
+          "std::unordered_map<std::string, std::string> store;",
+          "store[key] = value;",
+          "std::optional<std::string> result;",
+          "if (auto it = store.find(key); it != store.end())",
+          "  result = it->second;",
+          "store.erase(key);",
+          "using Entry = std::pair<std::string, std::string>;",
+          "std::vector<Entry> entries(store.begin(), store.end());",
+          "std::sort(entries.begin(), entries.end(),",
+          "  [](const Entry& a, const Entry& b) {",
+          "    return std::tie(a.second, a.first)",
+          "      < std::tie(b.second, b.first);",
+          "  });"
+        ],
+        "sourceLines": [[1], [2], [3], [3], [3], [4], [5], [5], [6], [6], [7], [7], [8]]
+      }
     ]
   },
   "complexity": {

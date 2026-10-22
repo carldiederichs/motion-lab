@@ -7,6 +7,7 @@ import type {
   Actor,
   Beat,
   Code,
+  CodeAlternative,
   EdgeCase,
   Link,
   Params,
@@ -34,6 +35,32 @@ const variants = SPEC.variants ?? [];
 const SVGNS = 'http://www.w3.org/2000/svg';
 const params = new URLSearchParams(location.search);
 if (params.get('embed') === '1') document.body.classList.add('embedded');
+const preview = params.get('embed') === '1' && params.get('preview') === '1';
+if (preview) {
+  document.body.classList.add('preview');
+  document.addEventListener(
+    'wheel',
+    (event) => {
+      if (
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.deltaY === 0 ||
+        Math.abs(event.deltaX) > Math.abs(event.deltaY)
+      )
+        return;
+      if (
+        event.target instanceof Element &&
+        event.target.closest('#mp-side, input, select, textarea')
+      )
+        return;
+      event.preventDefault();
+      const delta =
+        event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
+      window.parent.postMessage({ type: 'motion-preview-scroll', delta }, location.origin);
+    },
+    { passive: false },
+  );
+}
 const QA = params.get('motion-qa') === '1';
 const FRAME = params.has('motion-frame') ? Number(params.get('motion-frame')) : null;
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -62,11 +89,31 @@ const THEME_NAMES: Record<string, string> = {
   light: 'Theme: light',
   dark: 'Theme: dark',
 };
-const W = SPEC.stage.width || 960;
-const H = SPEC.stage.height || 400;
+let portraitPreview =
+  preview && innerWidth <= 620 && SPEC.simulation?.generator === 'consistent-hash';
+let W = portraitPreview ? 480 : SPEC.stage.width || 960;
+let H = portraitPreview ? 440 : SPEC.stage.height || 400;
 
 /* ---------- Code highlighting (ported from the step walkthrough tokenizer) ---------- */
 const CODE_KW = new Set([
+  'def',
+  'elif',
+  'None',
+  'True',
+  'False',
+  'and',
+  'or',
+  'not',
+  'pass',
+  'int',
+  'long',
+  'double',
+  'void',
+  'static',
+  'auto',
+  'nullptr',
+  'bool',
+  'std',
   'const',
   'let',
   'var',
@@ -127,11 +174,12 @@ const CODE_KW = new Set([
   'UNIQUE',
 ]);
 const CODE_TOKEN =
-  /(\/\/.*$|--\s.*$|`(?:\\.|[^`\\])*`?|'(?:\\.|[^'\\])*'?|"(?:\\.|[^"\\])*"?|\b[A-Za-z_$][\w$]*\b|\b\d+(?:\.\d+)?\b)/g;
+  /(\/\/.*$|\#.*$|--\s.*$|`(?:\\.|[^`\\])*`?|'(?:\\.|[^'\\])*'?|"(?:\\.|[^"\\])*"?|\b[A-Za-z_$][\w$]*\b|\b\d+(?:\.\d+)?\b)/g;
 const HTTP_LINE =
   /^(?:(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)(\s+\S+)(\s+HTTP\/[\d.]+)?|([A-Za-z][\w-]*)(:)(.*))$/;
 function tokenClass(value: string, line: string, end: number): string | null {
-  if (value.startsWith('//') || value.startsWith('--')) return 'tok-comment';
+  if (value.startsWith('//') || value.startsWith('--') || value.startsWith('#'))
+    return 'tok-comment';
   if (value[0] === '"' || value[0] === "'" || value[0] === '`') return 'tok-string';
   if (/^\d/.test(value)) return 'tok-number';
   if (CODE_KW.has(value)) return 'tok-keyword';
@@ -832,6 +880,8 @@ class Stage {
       if (a.kind === 'lane' || a.kind === 'ring') continue;
       const s = required(st.actors[a.id]);
       const rec = required(els.actors[a.id]);
+      if (s.tone) rec.g.setAttribute('data-tone', s.tone);
+      else rec.g.removeAttribute('data-tone');
       if (a.kind === 'text') {
         if (a.code === true || (a.lang ?? '')) svgCodeText(rec.text, s.text ?? a.text, a.lang);
         else setText(rec.text, s.text ?? a.text);
@@ -872,8 +922,6 @@ class Stage {
         }
         continue;
       }
-      if (s.tone) rec.g.setAttribute('data-tone', String(required(s).tone));
-      else rec.g.removeAttribute('data-tone');
       if (a.kind !== 'store' && (a.labelCode === true || a.small === true))
         svgCodeText(rec.label, s.label ?? '', a.lang);
       else setText(rec.label, s.label ?? '');
@@ -1021,16 +1069,32 @@ const visibleVariants = (): [Variant, number][] =>
 
 function sceneFor(vi: number, extra: Params = {}): Scene {
   const v = variants[vi];
-  if (SPEC.simulation)
-    return sceneSchema.parse(
-      required(GENERATORS[SPEC.simulation.generator])({
-        ...paramValues,
-        ...activeEdge?.params,
-        ...extra,
-        ...v?.params,
-      }),
-    );
-  return required(v?.scene ?? SPEC.scene);
+  const scene = SPEC.simulation
+    ? sceneSchema.parse(
+        required(GENERATORS[SPEC.simulation.generator])({
+          ...paramValues,
+          ...activeEdge?.params,
+          ...extra,
+          ...v?.params,
+        }),
+      )
+    : clone(required(v?.scene ?? SPEC.scene));
+  if (portraitPreview) {
+    for (const actor of scene.actors) {
+      if (['keys', 'ring-label', 'ring-slots'].includes(actor.id)) actor.tone = 'hidden';
+      else if (actor.id === 'mapping' && actor.kind === 'store') {
+        actor.x = 240;
+        actor.y = 210;
+        actor.w = 190;
+        actor.h = 210;
+      } else {
+        actor.x = 240 + (actor.x - 290) * 0.9;
+        actor.y = 210 + (actor.y - 245) * 0.9;
+        if (actor.kind === 'ring' || actor.kind === 'circle') actor.r *= 0.9;
+      }
+    }
+  }
+  return scene;
 }
 function total(): number {
   return Math.max(A ? A.total : 0, B ? B.total : 0);
@@ -1107,19 +1171,30 @@ function load(): void {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'mp-chapter';
-    richText(btn, `${i + 1}. ${b.title}${b.predict ? ' ?' : ''}`);
+    if (preview) {
+      btn.textContent = String(i + 1);
+      btn.title = b.title;
+      btn.setAttribute('aria-label', `Step ${i + 1}: ${b.title}`);
+    } else richText(btn, `${i + 1}. ${b.title}${b.predict ? ' ?' : ''}`);
     btn.addEventListener('click', () => {
       pause();
-      seek(i === 0 ? 0 : required(activeStage().starts[i]) + b.dur - 1);
+      goToChapter(i);
       emit('chapter');
     });
     ch.appendChild(btn);
   });
   $('mp-overlay').hidden = false;
   $('mp-predict-layer').hidden = true;
+  pendingPrediction = null;
+  const predictionMode = element('mp-predict-mode', HTMLInputElement);
+  predictionMode.disabled = !A.scene.beats.some((beat) => beat.predict !== undefined);
+  predictionMode.title = predictionMode.disabled
+    ? 'This walkthrough has no prediction checkpoints.'
+    : 'Stop before a marked chapter, including when stepping.';
   draw();
 }
 let lastCompareBeat = -1;
+let pendingPrediction: number | null = null;
 function draw(): void {
   const cam = element('mp-camera', HTMLInputElement).checked && !reduceMotion;
   const a = activeStage().stateAt(Math.min(t, activeStage().total));
@@ -1154,13 +1229,15 @@ function draw(): void {
       );
     }
     const explicit = (beat.lines || []).filter(
-      (n) => Number.isInteger(n) && n > 0 && n <= ((curCode()?.lines.length ?? 0) || 0),
+      (n) => Number.isInteger(n) && n > 0 && n <= ((sourceCode()?.lines.length ?? 0) || 0),
     );
     highlightCode(explicit.length ? explicit : inferLines(activeStage(), i));
   }
   if (sidePanel === 'inspector') renderInspector(a, b);
 }
 function seek(ms: number): void {
+  $('mp-predict-layer').hidden = true;
+  pendingPrediction = null;
   t = clamp(ms, 0, total());
   $('mp-overlay').hidden = true;
   draw();
@@ -1197,7 +1274,7 @@ function tick(now: number): void {
     required(activeStage().scene.beats[nb]).predict &&
     !revealed.has(nb)
   ) {
-    t = required(activeStage().starts[nb]);
+    t = Math.max(0, required(activeStage().starts[nb]) - 0.01);
     draw();
     pause();
     showPredict(nb);
@@ -1215,6 +1292,7 @@ function tick(now: number): void {
   requestAnimationFrame(tick);
 }
 function showPredict(i: number): void {
+  pendingPrediction = i;
   const pr = required(activeStage().scene.beats[i]).predict;
   richText($('mp-predict-q'), required(pr).q);
   richText($('mp-predict-a'), required(pr).a || '');
@@ -1227,6 +1305,19 @@ function showPredict(i: number): void {
 function chapter(delta: number): void {
   pause();
   const target = clamp(activeStage().beatAt(t) + delta, 0, activeStage().scene.beats.length - 1);
+  goToChapter(target);
+}
+function goToChapter(target: number): void {
+  const beat = required(activeStage().scene.beats[target]);
+  if (
+    element('mp-predict-mode', HTMLInputElement).checked &&
+    beat.predict &&
+    !revealed.has(target)
+  ) {
+    seek(Math.max(0, required(activeStage().starts[target]) - 0.01));
+    showPredict(target);
+    return;
+  }
   // A paused step shows the chapter result; Play still animates every transition.
   const end =
     required(activeStage().starts[target]) +
@@ -1378,7 +1469,7 @@ const COMMON = new Set([
   'out',
 ]);
 function inferLines(stage: Stage, i: number): number[] {
-  const CODE = curCode();
+  const CODE = sourceCode();
   if (!CODE) return [];
   const idents = (str: string): Set<string> =>
     new Set(
@@ -1415,18 +1506,38 @@ function inferLines(stage: Stage, i: number): number[] {
 }
 function highlightCode(lines: number[]): void {
   if (sidePanel !== 'code') return;
+  const code = curCode();
+  const selectedLines =
+    code && 'sourceLines' in code
+      ? code.sourceLines.flatMap((sources, index) =>
+          sources.some((source) => lines.includes(source)) ? [index + 1] : [],
+        )
+      : lines;
   const body = $('mp-code-body');
-  body.querySelectorAll('.ln').forEach((ln, k) => ln.classList.toggle('on', lines.includes(k + 1)));
+  body
+    .querySelectorAll('.ln')
+    .forEach((ln, k) => ln.classList.toggle('on', selectedLines.includes(k + 1)));
   const on = body.querySelector('.ln.on');
   if (on !== null && !QA) on.scrollIntoView({ block: 'nearest' });
 }
 let sceneCode: Code | null = null; // a generator may return the learner's own program as the code panel (scene.code)
-const curCode = ():
-  { lines: string[]; language?: string | undefined; title?: string | undefined } | undefined => {
-  if (sceneCode) return sceneCode;
-  const v = variants[variantIndex];
-  return (v && v.code) || SPEC.code;
+let preferredLanguage = pref('motionlab.code-language') ?? 'ts';
+const languageNames: Record<string, string> = {
+  ts: 'TypeScript',
+  js: 'JavaScript',
+  python: 'Python',
+  java: 'Java',
+  cpp: 'C++',
+  http: 'HTTP',
 };
+function sourceCode(): Code | undefined {
+  if (sceneCode) return sceneCode;
+  return variants[variantIndex]?.code ?? SPEC.code;
+}
+function curCode(): Code | CodeAlternative | undefined {
+  const source = sourceCode();
+  return source?.alternatives?.find((code) => code.language === preferredLanguage) ?? source;
+}
 const curComplexity = ():
   | {
       time: string;
@@ -1449,6 +1560,23 @@ const anyComplexity = (): boolean => !!(SPEC.complexity || variants.some((v) => 
 function renderCode(): void {
   const CODE = curCode();
   if (!CODE) return;
+  const source = required(sourceCode());
+  const languages = element('mp-code-language', HTMLSelectElement);
+  languages.replaceChildren();
+  for (const code of [source, ...(source.alternatives ?? [])]) {
+    const option = document.createElement('option');
+    option.value = code.language ?? 'source';
+    option.textContent = languageNames[option.value] ?? option.value;
+    languages.appendChild(option);
+  }
+  languages.value = CODE.language ?? 'source';
+  languages.disabled = languages.options.length < 2;
+  $('mp-code-note').textContent =
+    (source.alternatives?.length ?? 0) > 0
+      ? 'Same algorithm, your language. Highlighted lines follow the current chapter.'
+      : SPEC.simulation?.generator === 'event-loop'
+        ? 'JavaScript runtime semantics. Other languages use different scheduling rules.'
+        : 'Source-specific example. This walkthrough keeps its original notation.';
   const body = $('mp-code-body');
   body.textContent = '';
   const http = CODE.language === 'http';
@@ -1526,8 +1654,12 @@ function setSide(panel: string | null, remember: boolean): void {
     panel === null &&
     ($('mp-side').contains(document.activeElement) || document.activeElement === $('mp-divider'))
   )
-    $('mp-side-toggle').focus();
+    $(preview ? 'mp-preview-code' : 'mp-side-toggle').focus();
   sidePanel = panel;
+  element('mp-preview-code', HTMLButtonElement).setAttribute(
+    'aria-pressed',
+    String(panel === 'code'),
+  );
   $('mp-side').hidden = !(panel ?? '');
   $('mp-divider').hidden = !(panel ?? '');
   $('mp-work').classList.toggle('with-side', !!(panel ?? ''));
@@ -1642,8 +1774,15 @@ function buildControls(): void {
       const commit = (): void => {
         const previous = clone(paramValues);
         const previousEdge = activeEdge;
+        const previousTime = t;
         try {
           const val = parseInput(prm, input.value);
+          if (
+            SPEC.simulation?.generator === 'consistent-hash' &&
+            Array.isArray(val) &&
+            val.some((value) => typeof value !== 'number' || !Number.isInteger(value))
+          )
+            throw new Error('Use whole numbers for hash positions.');
           paramValues[prm.id] = val;
           activeEdge = null;
           syncEdges();
@@ -1659,6 +1798,7 @@ function buildControls(): void {
           syncEdges();
           pause();
           load();
+          seek(previousTime);
           error.textContent = errorMessage(e);
           input.setAttribute('aria-invalid', 'true');
           input.setCustomValidity(errorMessage(e));
@@ -1695,6 +1835,21 @@ function buildControls(): void {
     hint.className = 'mp-hint';
     hint.textContent =
       (SPEC.simulation.hint ?? '') || 'Change an input: the whole animation is recomputed from it.';
+    if (preview) {
+      const reset = document.createElement('button');
+      reset.type = 'button';
+      reset.className = 'mp-btn';
+      reset.textContent = 'Reset input';
+      reset.addEventListener('click', () => {
+        for (const prm of SPEC.simulation?.params ?? []) paramValues[prm.id] = prm.default;
+        activeEdge = null;
+        syncInputs();
+        syncEdges();
+        pause();
+        load();
+      });
+      form.appendChild(reset);
+    }
     form.appendChild(hint);
     form.addEventListener('submit', (e) => e.preventDefault());
     syncInputs();
@@ -1750,6 +1905,13 @@ function buildControls(): void {
   element('mp-side-toggle', HTMLButtonElement).addEventListener('click', () =>
     setSide((sidePanel ?? '') ? null : (pref('motionlab.lastPanel') ?? '') || 'inspector', true),
   );
+  element('mp-preview-code', HTMLButtonElement).hidden = !preview || !anyCode();
+  element('mp-preview-code', HTMLButtonElement).addEventListener('click', () =>
+    setSide(sidePanel === 'code' ? null : 'code', false),
+  );
+  document.addEventListener('keydown', (event) => {
+    if (preview && event.key === 'Escape' && sidePanel !== null) setSide(null, false);
+  });
   const work = $('mp-work');
   const divider = $('mp-divider');
   const setWidth = (px: number, remember: boolean): void => {
@@ -1781,6 +1943,7 @@ function buildControls(): void {
     e.stopPropagation();
     setWidth($('mp-side').getBoundingClientRect().width + (e.key === 'ArrowLeft' ? 24 : -24), true);
   });
+  if (preview) element('mp-predict-mode', HTMLInputElement).checked = true;
   const saved = pref('motionlab.panel');
   const fallback = SPEC.defaultPanel === undefined ? 'inspector' : SPEC.defaultPanel;
   let want =
@@ -1796,6 +1959,21 @@ function buildControls(): void {
       : (want ?? '')
         ? 'inspector'
         : null;
+  element('mp-code-language', HTMLSelectElement).addEventListener('change', () => {
+    preferredLanguage = element('mp-code-language', HTMLSelectElement).value;
+    pref('motionlab.code-language', preferredLanguage);
+    renderCode();
+    currentBeat = -1;
+    draw();
+  });
+  element('mp-diagram-zoom', HTMLButtonElement).addEventListener('click', () => {
+    const zoomed = $('mp-stages').classList.toggle('diagram-zoom');
+    element('mp-diagram-zoom', HTMLButtonElement).textContent = zoomed
+      ? 'Fit diagram'
+      : 'Zoom diagram';
+    element('mp-diagram-zoom', HTMLButtonElement).setAttribute('aria-pressed', String(zoomed));
+  });
+  if (preview) element('mp-camera', HTMLInputElement).checked = false;
   element('mp-bigplay', HTMLButtonElement).addEventListener('click', play);
   element('mp-play', HTMLButtonElement).addEventListener('click', () =>
     playing ? pause() : play(),
@@ -1807,8 +1985,15 @@ function buildControls(): void {
     emit('reveal');
   });
   element('mp-continue', HTMLButtonElement).addEventListener('click', () => {
-    t += 1;
+    if (pendingPrediction !== null) t = required(activeStage().starts[pendingPrediction]);
+    pendingPrediction = null;
     play();
+  });
+  element('mp-predict-mode', HTMLInputElement).addEventListener('change', () => {
+    if (!element('mp-predict-mode', HTMLInputElement).checked) {
+      $('mp-predict-layer').hidden = true;
+      pendingPrediction = null;
+    }
   });
   element('mp-camera', HTMLInputElement).addEventListener('change', () => {
     pref('motionlab.camera', element('mp-camera', HTMLInputElement).checked ? '1' : '0');
@@ -1950,6 +2135,9 @@ function syncTabs(): void {
 function syncInputs(): void {
   for (const prm of SPEC.simulation?.params ?? []) {
     const input = control(`mp-param-${prm.id}`);
+    input.setCustomValidity('');
+    input.removeAttribute('aria-invalid');
+    $(`mp-error-${prm.id}`).textContent = '';
     const value = paramValues[prm.id];
     input.value = Array.isArray(value)
       ? value.map((item: unknown) => (item === null ? 'null' : String(item))).join(', ')
@@ -2429,4 +2617,22 @@ function bench(): void {
     nodes: document.getElementsByTagName('*').length,
   });
   document.body.appendChild(out);
+}
+
+if (preview && SPEC.simulation?.generator === 'consistent-hash') {
+  window.matchMedia('(max-width: 620px)').addEventListener('change', (event) => {
+    const previousTime = t;
+    const wasPlaying = playing;
+    const prediction = pendingPrediction;
+    const previouslyRevealed = new Set(revealed);
+    pause();
+    portraitPreview = event.matches;
+    W = portraitPreview ? 480 : SPEC.stage.width;
+    H = portraitPreview ? 440 : SPEC.stage.height;
+    load();
+    revealed = previouslyRevealed;
+    seek(previousTime);
+    if (prediction !== null) showPredict(prediction);
+    else if (wasPlaying) play();
+  });
 }

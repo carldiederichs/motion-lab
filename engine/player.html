@@ -189,7 +189,8 @@
         font-weight: 600;
       }
       .mp-params input,
-      .mp-params select {
+      .mp-params select,
+      .mp-code-toolbar select {
         font: 13px var(--mono);
         color: var(--text);
         background: var(--surface-2);
@@ -1006,6 +1007,333 @@
         max-width: 340px;
         line-height: 1.5;
       }
+
+      .mp-code-toolbar {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+      }
+      .mp-code-toolbar label {
+        display: block;
+        font: 12px var(--sans);
+        margin-bottom: 6px;
+      }
+      .mp-code-toolbar select {
+        width: 100%;
+      }
+      .mp-code-toolbar p {
+        font: 11px/1.5 var(--sans);
+        color: var(--muted);
+        margin: 8px 0 0;
+      }
+
+      .preview .mp {
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        padding: 18px 24px 12px;
+      }
+      .preview :is(.mp-bar, .mp-edges, .mp-legend, .mp-transport > .mp-group:last-child) {
+        display: none;
+      }
+      [data-actor][data-tone='hidden'] {
+        visibility: hidden;
+      }
+      .preview .mp-params {
+        padding: 8px 10px;
+        gap: 6px 10px;
+        flex-shrink: 0;
+      }
+      .preview .mp-params label {
+        flex: 1;
+        min-width: 0;
+      }
+      .preview .mp-params input {
+        width: 100%;
+        min-width: 0;
+      }
+      .preview .mp-params .mp-hint {
+        font-size: 11px;
+      }
+      .preview .mp-work {
+        flex: 1;
+        min-height: 0;
+      }
+      .preview .mp-main {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+        min-height: 0;
+      }
+      .preview .mp-caption {
+        height: auto;
+        min-height: 82px;
+        margin-bottom: 12px;
+      }
+      .preview .mp-stages {
+        min-height: 0;
+      }
+      .preview .mp-stage {
+        height: 100%;
+        max-height: none;
+      }
+      .preview .mp-transport {
+        display: flex;
+        justify-content: center;
+        margin-top: 12px;
+      }
+      .preview .mp-opts {
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .preview .mp-opts > :not(:first-child):not(#mp-preview-code) {
+        display: none;
+      }
+      .s-sub {
+        paint-order: stroke;
+        stroke: var(--surface);
+        stroke-width: 6px;
+        stroke-linejoin: round;
+      }
+      .preview .mp-chapters {
+        display: flex;
+        gap: 6px;
+        justify-content: center;
+        margin: 6px 0 0;
+      }
+      .preview .mp-chapter {
+        min-width: 36px;
+        min-height: 30px;
+        padding: 4px 12px;
+      }
+      .preview .mp-scrub {
+        display: block;
+        flex: 1;
+        min-width: 40px;
+      }
+      .preview .mp-work {
+        position: relative;
+      }
+      .preview .mp-side {
+        max-height: 100%;
+        overflow: auto;
+      }
+      .preview .mp-side-tabs {
+        position: sticky;
+        top: 0;
+        background: var(--surface);
+        z-index: 2;
+      }
+      .preview .mp-side-tabs [data-panel]:not([data-panel='code']) {
+        display: none;
+      }
+      .preview .mp-opts {
+        min-height: 36px;
+      }
+      @media (max-width: 1000px) {
+        .preview .mp-work.with-side {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .preview .mp-divider {
+          display: none;
+        }
+        .preview .mp-side {
+          position: absolute;
+          inset: 0;
+          z-index: 5;
+          background: var(--surface);
+        }
+      }
+      .preview .mp-btn {
+        min-height: 36px;
+      }
+
+      .mobile-diagram-zoom {
+        display: none;
+      }
+      @media (max-width: 760px) {
+        .mp {
+          padding: 12px;
+        }
+        .mp-head h1 {
+          font-size: 21px;
+        }
+        .mp-head p {
+          font-size: 13px;
+        }
+        .mp-btn,
+        .mp-tab,
+        .mp-edge {
+          min-height: 40px;
+        }
+        .mp-main,
+        .mp-side,
+        .mp-stages,
+        .mp-stage-wrap {
+          min-width: 0;
+        }
+        .mp-params {
+          gap: 12px;
+        }
+        .mp-params label {
+          min-width: 0;
+          max-width: 100%;
+          flex: 1 1 130px;
+        }
+        .mp-params :is(input, select, textarea) {
+          min-width: 0;
+          width: 100%;
+        }
+        .mp-caption,
+        .mp-work.compare-on .mp-caption {
+          height: auto;
+          min-height: 104px;
+        }
+        .mp-caption p {
+          font-size: 13px;
+        }
+        .mp-transport {
+          gap: 10px;
+        }
+        .mp-transport > .mp-group {
+          justify-content: center;
+        }
+        .mp-opts {
+          line-height: 1.6;
+        }
+        .mp-opts > span {
+          display: none;
+        }
+        .mp-side-tabs {
+          gap: 0;
+        }
+        .mp-side-tabs button {
+          padding-inline: 6px;
+          font-size: 11px;
+          min-height: 40px;
+        }
+        .mp-code-body {
+          font-size: 12px;
+        }
+        .mp-kv {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        }
+        .mp-kv .v {
+          overflow-wrap: anywhere;
+        }
+        .mobile-diagram-zoom {
+          display: block;
+          margin: 12px auto;
+        }
+        .diagram-zoom .mp-stage-wrap {
+          overflow: auto;
+        }
+        .diagram-zoom .mp-stage {
+          min-width: 800px;
+        }
+        .mp-predict {
+          margin: 10px;
+          padding: 14px;
+          max-height: calc(100% - 20px);
+          overflow: auto;
+        }
+        .mp-predict p {
+          font-size: 14px;
+        }
+        .preview .mp {
+          padding: 10px;
+        }
+        .preview .mp-caption {
+          min-height: 0;
+          padding: 10px;
+        }
+        .preview .mp-caption h2 {
+          font-size: 15px;
+        }
+        .preview .mp-caption p {
+          font-size: 12px;
+        }
+        .preview .mobile-diagram-zoom {
+          display: none;
+        }
+        .preview .mp-btn {
+          min-height: 40px;
+        }
+      }
+      @media (min-width: 621px) and (max-height: 420px) {
+        .preview .mp {
+          display: grid;
+          grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.3fr);
+          grid-template-rows: auto minmax(0, 1fr) auto auto;
+          gap: 6px 14px;
+          padding: 8px 12px;
+        }
+        .preview .mp-work,
+        .preview .mp-main {
+          display: contents;
+        }
+        .preview .mp-params {
+          grid-column: 1;
+          grid-row: 1;
+          margin: 0;
+          padding: 4px 8px;
+        }
+        .preview .mp-params .mp-hint {
+          display: none;
+        }
+        .preview .mp-caption {
+          grid-column: 1;
+          grid-row: 2;
+          min-height: 0;
+          margin: 0;
+          padding: 0 0 0 8px;
+          overflow: auto;
+        }
+        .preview .mp-caption h2 {
+          font-size: 14px;
+        }
+        .preview .mp-caption p {
+          font-size: 12px;
+          line-height: 1.4;
+        }
+        .preview .mp-count {
+          font-size: 10px;
+        }
+        .preview .mp-stages {
+          grid-column: 2;
+          grid-row: 1 / 4;
+        }
+        .preview .mp-transport {
+          grid-column: 1;
+          grid-row: 3;
+          margin: 0;
+          gap: 8px;
+        }
+        .preview .mp-chapters {
+          grid-column: 2;
+          grid-row: 4;
+          margin: 0;
+        }
+        .preview .mp-opts {
+          grid-column: 1;
+          grid-row: 4;
+          margin: 0;
+          gap: 10px;
+        }
+        .preview .mp-btn {
+          min-height: 30px;
+          padding: 4px 9px;
+        }
+        .preview .mp-side {
+          position: fixed;
+          inset: 8px;
+          z-index: 5;
+          background: var(--surface);
+        }
+        .preview .mp-divider {
+          display: none;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1142,6 +1470,14 @@
             </div>
           </div>
           <div class="mp-chapters" id="mp-chapters" aria-label="Chapters"></div>
+          <button
+            id="mp-diagram-zoom"
+            class="mp-btn mobile-diagram-zoom"
+            type="button"
+            aria-pressed="false"
+          >
+            Zoom diagram
+          </button>
           <div class="mp-legend">
             <span style="--c: var(--blue)">happening now</span
             ><span style="--c: var(--green)">correct / done</span>
@@ -1151,6 +1487,9 @@
           </div>
           <div class="mp-opts">
             <label><input type="checkbox" id="mp-predict-mode" /> Pause to predict</label>
+            <button class="mp-btn" id="mp-preview-code" type="button" aria-pressed="false" hidden>
+              Code
+            </button>
             <label
               ><input type="checkbox" id="mp-camera" checked /> Camera follows the action</label
             >
@@ -1184,6 +1523,13 @@
           </div>
           <div class="mp-inspector" id="mp-panel-inspector"></div>
           <div class="mp-code" id="mp-panel-code" hidden>
+            <div class="mp-code-toolbar">
+              <label for="mp-code-language">Code language</label>
+              <div class="mp-select">
+                <select id="mp-code-language" aria-describedby="mp-code-note"></select>
+              </div>
+              <p id="mp-code-note"></p>
+            </div>
             <div class="mp-code-body" id="mp-code-body"></div>
           </div>
           <div class="mp-cx" id="mp-panel-complexity" hidden></div>

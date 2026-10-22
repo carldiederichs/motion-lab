@@ -76,3 +76,30 @@ await test('monotonic stack results agree with independent suffix search', async
     assert.deepEqual(result?.value, expected);
   }
 });
+
+await test('equal hash positions migrate one sample at a time', () => {
+  const scene = generate('consistent-hash', { keys: [60, 60, 160] });
+  const updates = required(scene.beats[3]).actions.filter((action) => action.do === 'rows');
+  assert.deepEqual(
+    updates.map((action) => action.value),
+    [
+      ['60 → D', '60 → C', '60 → C'],
+      ['60 → D', '60 → D', '60 → C'],
+      ['60 → D', '60 → D', '60 → D'],
+    ],
+  );
+});
+
+await test('empty hash input is truthful and extreme inputs cannot create oversized labels', () => {
+  const empty = generate('consistent-hash', { keys: [] });
+  assert.match(required(empty.beats[1]).text, /no sample keys/);
+  assert.equal(required(empty.beats[3]).title, '0 of 0 keys move');
+  for (const key of [1e100, Number.MAX_SAFE_INTEGER, Infinity, NaN, 0.5])
+    assert.throws(() => generate('consistent-hash', { keys: [key] }));
+  const wrapped = generate('consistent-hash', { keys: [-999, 999, 100] });
+  assert.deepEqual(
+    required(wrapped.beats[1]).actions.find((action) => action.do === 'rows')?.value,
+    ['1 → A', '99 → A', '0 → A'],
+  );
+  assert.equal(empty.actors.find((actor) => actor.id === 'node-d')?.tone, 'hidden');
+});

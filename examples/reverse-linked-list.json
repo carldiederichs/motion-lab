@@ -56,6 +56,71 @@
       "  }",
       "  return prev;",
       "}"
+    ],
+    "alternatives": [
+      {
+        "language": "js",
+        "lines": [
+          "function reverse(head) {",
+          "  let prev = null, curr = head;",
+          "  while (curr) {",
+          "    const next = curr.next;",
+          "    curr.next = prev;",
+          "    prev = curr;",
+          "    curr = next;",
+          "  }",
+          "  return prev;",
+          "}"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]]
+      },
+      {
+        "language": "python",
+        "lines": [
+          "def reverse(head):",
+          "    prev, curr = None, head",
+          "    while curr is not None:",
+          "        nxt = curr.next",
+          "        curr.next = prev",
+          "        prev = curr",
+          "        curr = nxt",
+          "    return prev"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [9]]
+      },
+      {
+        "language": "java",
+        "lines": [
+          "static Node reverse(Node head) {",
+          "  Node prev = null, curr = head;",
+          "  while (curr != null) {",
+          "    Node next = curr.next;",
+          "    curr.next = prev;",
+          "    prev = curr;",
+          "    curr = next;",
+          "  }",
+          "  return prev;",
+          "}"
+        ],
+        "sourceLines": [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]]
+      },
+      {
+        "language": "cpp",
+        "lines": [
+          "Node* reverse(Node* head) {",
+          "  Node* prev = nullptr;",
+          "  Node* curr = head;",
+          "  while (curr != nullptr) {",
+          "    Node* next = curr->next;",
+          "    curr->next = prev;",
+          "    prev = curr;",
+          "    curr = next;",
+          "  }",
+          "  return prev;",
+          "}"
+        ],
+        "sourceLines": [[1], [2], [2], [3], [4], [5], [6], [7], [8], [9], [10]]
+      }
     ]
   },
   "complexity": {

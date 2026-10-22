@@ -5,30 +5,32 @@ The application is live at [motion-lab-alpha-three.vercel.app](https://motion-la
 ## Delivered
 
 - Fifteen interactive examples across algorithms, data structures, architecture, requests, storage and concurrency.
-- Nine additional authoring templates: LRU caching, circuit breakers, grid paths, subsets, heap insertion, prefix ranges, interval sweeps, tries and bit flags.
+- Twelve authoring templates: LRU caching, circuit breakers, grid paths, subsets, heap insertion, prefix ranges, interval sweeps, tries, bit flags, transactional outbox delivery, replica reads and next-greater stacks.
 - Search and category filters, a guided tour, light/dark themes and a labelled scripted generation demo.
 - An explicitly triggered toolkit download and a portable skill for the visitor's own coding assistant.
 - Static Vercel configuration and a Railway-compatible, non-root Docker server.
 
 ## Verified for this release
 
-| Check                      | Result                                                                                                                  |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Node tests                 | 84 passed                                                                                                               |
-| Browser tests              | 116 passed, including scenario-recovery checks                                                                          |
-| Final connector adjustment | All 6 gallery geometry/theme tests passed again                                                                         |
-| Desktop layouts            | 1024, 1440 and 1920px; light and dark                                                                                   |
-| Visual review              | Inspected rendered screenshots of all 15 public examples; interacted with the landing page and tour                     |
-| Toolkit ZIP                | Unpacked, installed locked dependencies, built and authored a local explanation                                         |
-| Fresh Git checkout         | Build, authoring, production routes and isolation passed                                                                |
-| Privacy audit              | No findings in the current release files and static output                                                              |
-| Docker                     | Built and served all lessons, assets and toolkit; protected routes returned 404                                         |
-| Container restrictions     | Non-root user, read-only filesystem and all Linux capabilities dropped                                                  |
-| Public deployment          | Unauthenticated smoke check passed for all 15 lessons, assets, download and private-route isolation                     |
-| Deployed code              | Public JavaScript matched the merged connector and gallery fixes byte for byte                                          |
-| Live Chrome review         | Both connector states, distinct previews, both themes and the BFS disconnected case with chapter controls and inspector |
+| Check                  | Result                                                                                                      |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Node tests             | 92 passed                                                                                                   |
+| Browser tests          | 155 passed, including arrival timing, reverse scrubbing, code contrast, exact clipboard text and navigation |
+| Transfer timing        | Payload labels, receiving state and reverse scrubbing covered by browser and semantic checks                |
+| Desktop layouts        | 1024, 1440 and 1920px; light and dark                                                                       |
+| Visual review          | Inspected rendered screenshots of all 15 public examples; interacted with the landing page and tour         |
+| Toolkit ZIP            | Unpacked, installed locked dependencies, built, created and revised three engineering explanations          |
+| Fresh Git checkout     | Strict checks, build, revised authoring, local serving, production routes and isolation passed              |
+| Privacy audit          | No findings in the current release files and static output                                                  |
+| Docker                 | Built and served all lessons, assets and toolkit; protected routes returned 404                             |
+| Container restrictions | Non-root user, read-only filesystem and all Linux capabilities dropped                                      |
+| Public deployment      | Unauthenticated smoke check passed for all 15 lessons, assets, download and private-route isolation         |
+| Deployed code          | Public runtime and toolkit files compared with the released source                                          |
+| Live Chrome review     | BFS transport and code panel, setup commands, both themes and representative authored cases                 |
 
 The browser suite checks every example and template in both themes, timeline geometry, scenario changes, controls, inputs, search, tour positioning and explicit downloads. Algorithm tests use independent reference implementations where applicable. See [the testing strategy](TESTING.md) for the checks and their limits.
+
+The transport and complexity review is recorded in [the catalogue audit](TRANSPORT-AUDIT.md). Code follows both themes, including highlighted lines. BFS uses a head-index queue, local setup supports the visitor's own question, and chapter selection shows the selected result.
 
 Review fixes included incorrect comparison code, invalid-input recovery, long code lines, overlapping graph edges, lingering sequence packets, off-screen tour targets and chapter buttons showing an earlier state than their captions described.
 
